@@ -132,8 +132,8 @@ export function HomePage({ onNavigate }: HomePageProps) {
               <div className="bg-white p-4 rounded-lg shadow-xl">
                 <div className="aspect-[4/3] rounded-lg overflow-hidden">
                   <ImageWithFallback
-                    src="https://images.unsplash.com/photo-1675101337462-a19b63af8b1b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3R0ZXJ5JTIwaGFuZHMlMjBjbGF5fGVufDF8fHx8MTc2MTk3NzA0NXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-                    alt="Hands shaping clay on pottery wheel"
+                    src="public/images/WhatsApp Image 2025-10-23 at 16.14.29.jpeg"
+                    alt="Pottery studio hero"
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -453,4 +453,51 @@ export function HomePage({ onNavigate }: HomePageProps) {
       </section>
     </div>
   );
+}
+import BuilderSection from '../components/BuilderSection'
+
+export default function HomePage() {
+  return (
+    <div className="home">
+      {/* NAVIGATION - Keep your code */}
+      <nav className="navbar">
+        {/* Your existing nav code */}
+      </nav>
+
+      {/* HERO SECTION - Make it EDITABLE */}
+      <BuilderSection 
+        modelName="hero" 
+        fallback={
+          // Fallback: Your original hero if nothing in Builder yet
+          <section className="hero">
+            <h1>Callipottery Studio</h1>
+            <p>Crafted by Hand. Centered in Calm.</p>
+          </section>
+        }
+      />
+
+      {/* PRODUCTS SECTION - Make it EDITABLE */}
+      <BuilderSection 
+        modelName="products" 
+        fallback={
+          // Your original products
+          <section className="products">
+            <h2>Our Products</h2>
+            {/* Your existing products code */}
+          </section>
+        }
+      />
+
+      {/* ABOUT SECTION - Keep your code */}
+      <section className="about">
+        <h2>About Us</h2>
+        {/* Your existing about code */}
+      </section>
+
+      {/* FOOTER - Keep your code */}
+      <footer>
+        {/* Your existing footer */}
+      </footer>
+    </div>
+  )
 }
