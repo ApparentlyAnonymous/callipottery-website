@@ -3,10 +3,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 
 export function PoliciesPage() {
   return (
-    <div className="min-h-screen py-12 px-4">
+    <div className="min-h-screen py-12 px-4 border-t-4 border-[#A67C52]">
       <div className="container mx-auto max-w-4xl">
         {/* Header */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-12 border-b-4 border-[#A67C52] pb-12">
           <h1 
             className="text-4xl sm:text-5xl md:text-6xl mb-4 text-[#3E2F24]"
             style={{ fontFamily: 'var(--font-serif)' }}
@@ -19,7 +19,7 @@ export function PoliciesPage() {
         </div>
 
         {/* Tabs */}
-        <Tabs defaultValue="shipping" className="w-full">
+        <Tabs defaultValue="shipping" className="w-full border-b-4 border-[#A67C52] pb-12">
           <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 mb-8">
             <TabsTrigger value="shipping">Shipping</TabsTrigger>
             <TabsTrigger value="returns">Returns</TabsTrigger>
@@ -29,7 +29,7 @@ export function PoliciesPage() {
 
           {/* Shipping Policy */}
           <TabsContent value="shipping">
-            <Card className="p-8 border-[#3E2F24]/10 bg-[#F7F3EF]">
+            <Card className="p-8 border-4 border-[#A67C52] bg-[#F7F3EF]">
               <h2 
                 className="text-2xl mb-6 text-[#3E2F24]"
                 style={{ fontFamily: 'var(--font-serif)' }}
@@ -92,7 +92,7 @@ export function PoliciesPage() {
 
           {/* Returns & Exchanges */}
           <TabsContent value="returns">
-            <Card className="p-8 border-[#3E2F24]/10 bg-[#F7F3EF]">
+            <Card className="p-8 border-4 border-[#A67C52] bg-[#F7F3EF]">
               <h2 
                 className="text-2xl mb-6 text-[#3E2F24]"
                 style={{ fontFamily: 'var(--font-serif)' }}
@@ -161,7 +161,7 @@ export function PoliciesPage() {
 
           {/* Kiln Use Terms */}
           <TabsContent value="kiln">
-            <Card className="p-8 border-[#3E2F24]/10 bg-[#F7F3EF]">
+            <Card className="p-8 border-4 border-[#A67C52] bg-[#F7F3EF]">
               <h2 
                 className="text-2xl mb-6 text-[#3E2F24]"
                 style={{ fontFamily: 'var(--font-serif)' }}
@@ -236,7 +236,7 @@ export function PoliciesPage() {
 
           {/* Privacy Policy */}
           <TabsContent value="privacy">
-            <Card className="p-8 border-[#3E2F24]/10 bg-[#F7F3EF]">
+            <Card className="p-8 border-4 border-[#A67C52] bg-[#F7F3EF]">
               <h2 
                 className="text-2xl mb-6 text-[#3E2F24]"
                 style={{ fontFamily: 'var(--font-serif)' }}

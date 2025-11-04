@@ -33,7 +33,7 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
   ];
 
   return (
-    <header className="sticky top-0 z-50 border-b-4 border-[#A67C52] bg-[#E5E0DC] shadow-md">
+    <header className="sticky top-0 z-50 bg-[#F7F3EF] shadow-lg">
       <motion.div 
         className="mx-auto max-w-7xl"
         initial={{ y: -100 }}
@@ -42,22 +42,24 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
       >
         <div className="px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
-            {/* Logo */}
+            {/* Logo with Image */}
             <motion.button
               onClick={() => onNavigate('home')}
-              className="flex items-center space-x-2 transition-all hover:scale-105"
-              style={{ fontFamily: 'var(--font-serif)' }}
-              whileHover={{ scale: 1.05 }}
+              className="flex items-center space-x-3 transition-all"
+              whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              <motion.div 
-                className="w-9 h-9 bg-gradient-to-br from-[#A67C52] to-[#8B6644] rounded-full flex items-center justify-center shadow-md"
-                whileHover={{ rotate: 180 }}
-                transition={{ duration: 0.5 }}
-              >
-                <span className="text-[#F7F3EF]">C</span>
-              </motion.div>
-              <span className="text-lg sm:text-xl text-[#3E2F24] hidden sm:inline-block">Callipottery</span>
+              <div className="relative w-12 h-12 rounded-full overflow-hidden bg-white shadow-md border-2 border-[#A67C52]">
+                <img
+                  src="https://images.unsplash.com/photo-1590605103416-230704277b05?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3R0ZXJ5JTIwc3R1ZGlvJTIwbG9nbyUyMGNlcmFtaWN8ZW58MXx8fHwxNzYyMTg2MTYxfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                  alt="Callipottery Studio"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="flex flex-col items-start">
+                <span className="text-xl text-[#3E2F24] tracking-wide" style={{ fontFamily: 'var(--font-serif)', fontWeight: '600' }}>Callipottery</span>
+                <span className="text-xs text-[#A67C52] tracking-wider" style={{ fontFamily: 'var(--font-sans)', fontStyle: 'italic' }}>Studio</span>
+              </div>
             </motion.button>
 
             {/* Desktop Navigation */}

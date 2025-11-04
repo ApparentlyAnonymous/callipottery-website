@@ -39,17 +39,17 @@ export function HomePage({ onNavigate }: HomePageProps) {
   const workshops = [
     {
       title: 'Wheel-Throwing',
-      icon: <Flame className="w-8 h-8 text-[#A67C52]" />,
+      icon: <Flame className="w-12 h-12 text-[#A67C52]" />,
       description: 'Learn to center clay and create functional pieces on the pottery wheel.',
     },
     {
       title: 'Hand-Building',
-      icon: <Hand className="w-8 h-8 text-[#A67C52]" />,
+      icon: <Hand className="w-12 h-12 text-[#A67C52]" />,
       description: 'Explore coil, slab, and pinch techniques to craft unique ceramics.',
     },
     {
       title: 'Glazing & Firing',
-      icon: <Palette className="w-8 h-8 text-[#A67C52]" />,
+      icon: <Palette className="w-12 h-12 text-[#A67C52]" />,
       description: 'Master the art of surface treatments and kiln firing processes.',
     },
   ];
@@ -70,33 +70,33 @@ export function HomePage({ onNavigate }: HomePageProps) {
   ];
 
   return (
-    <div className="min-h-screen">
-      {/* Hero Section - Split Layout */}
-      <section className="relative min-h-[85vh] flex items-center overflow-hidden border-b-4 border-[#A67C52]">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Left - Text Content */}
+    <div className="min-h-screen bg-[#F7F3EF]">
+      {/* Hero Section - Classic Block Layout */}
+      <section className="relative py-20 lg:py-32 overflow-hidden">
+        <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            {/* Left - Text Block */}
             <motion.div 
-              className="text-left px-4 lg:px-12 py-12"
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
+              className="bg-white p-8 lg:p-12 rounded-lg shadow-xl"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
             >
               <motion.h1 
                 className="text-[#3E2F24] mb-6"
                 style={{ fontFamily: 'var(--font-serif)' }}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
               >
                 Crafted by Hand.<br />Centered in Calm.
               </motion.h1>
               <motion.p 
-                className="text-[#6B5D52] mb-10 max-w-xl"
+                className="text-[#6B5D52] mb-8"
                 style={{ fontFamily: 'var(--font-sans)', fontSize: '18px', lineHeight: '1.8' }}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.6 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
               >
                 Every piece tells a story of touch, time, and transformation. At Callipottery Studio, we blend ancient craft with modern design to create ceramics that bring beauty and intention to your everyday life.
               </motion.p>
@@ -104,231 +104,169 @@ export function HomePage({ onNavigate }: HomePageProps) {
                 className="flex flex-col sm:flex-row gap-4"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.8 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
               >
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Button
-                    onClick={() => onNavigate('shop')}
-                    className="bg-[#A67C52] hover:bg-[#8B6644] text-[#F7F3EF] px-8 py-6 rounded-lg shadow-lg w-full sm:w-auto"
-                  >
-                    Shop Ceramics
-                  </Button>
-                </motion.div>
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Button
-                    onClick={() => handleWhatsApp('I would like to book a workshop at Callipottery Studio')}
-                    variant="outline"
-                    className="border-2 border-[#A67C52] text-[#A67C52] bg-white hover:bg-[#A67C52] hover:text-[#F7F3EF] px-8 py-6 rounded-lg shadow-lg w-full sm:w-auto"
-                  >
-                    Book a Workshop
-                  </Button>
-                </motion.div>
+                <Button
+                  onClick={() => onNavigate('shop')}
+                  className="bg-[#A67C52] hover:bg-[#8B6644] text-white px-8 py-6 rounded-lg shadow-lg"
+                >
+                  Shop Ceramics
+                </Button>
+                <Button
+                  onClick={() => handleWhatsApp('I would like to book a workshop at Callipottery Studio')}
+                  variant="outline"
+                  className="border-2 border-[#A67C52] text-[#A67C52] bg-white hover:bg-[#A67C52] hover:text-white px-8 py-6 rounded-lg"
+                >
+                  Book a Workshop
+                </Button>
               </motion.div>
             </motion.div>
 
-            {/* Right - Hero Image */}
+            {/* Right - Image Block */}
             <motion.div 
-              className="relative h-[60vh] lg:h-[85vh]"
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
+              className="relative"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <div className="absolute inset-0 rounded-lg overflow-hidden shadow-2xl">
-                <ImageWithFallback
-                  src="https://images.unsplash.com/photo-1675101337462-a19b63af8b1b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3R0ZXJ5JTIwaGFuZHMlMjBjbGF5fGVufDF8fHx8MTc2MTk3NzA0NXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-                  alt="Hands shaping clay on pottery wheel"
-                  className="w-full h-full object-cover"
-                />
+              <div className="bg-white p-4 rounded-lg shadow-xl">
+                <div className="aspect-[4/3] rounded-lg overflow-hidden">
+                  <ImageWithFallback
+                    src="https://images.unsplash.com/photo-1675101337462-a19b63af8b1b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3R0ZXJ5JTIwaGFuZHMlMjBjbGF5fGVufDF8fHx8MTc2MTk3NzA0NXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                    alt="Hands shaping clay on pottery wheel"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
               </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Featured Collections - Auto Scrolling Marquee */}
-      <section className="py-24 overflow-hidden border-b-4 border-[#A67C52]">
-        <h2 
-          className="text-center mb-16 text-[#3E2F24] px-4"
-          style={{ fontFamily: 'var(--font-serif)' }}
-        >
-          Our Collections
-        </h2>
-        
-        <div className="relative">
-          {/* Gradient overlays for fade effect */}
-          <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#F7F3EF] to-transparent z-10" />
-          <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#F7F3EF] to-transparent z-10" />
+      {/* Studio Introduction Block */}
+      <section className="py-20 lg:py-32">
+        <div className="container mx-auto px-4 lg:px-8 max-w-5xl">
+          <motion.div
+            className="bg-[#E5E0DC] p-8 lg:p-16 rounded-lg shadow-xl text-center"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <h2 
+              className="mb-6 text-[#3E2F24]"
+              style={{ fontFamily: 'var(--font-serif)' }}
+            >
+              Our Clay, Our Way
+            </h2>
+            <p 
+              className="text-[#3E2F24] mb-6 max-w-3xl mx-auto"
+              style={{ fontSize: '18px', lineHeight: '1.8' }}
+            >
+              At Callipottery Studio, we believe every pot begins as a pause — a moment to connect 
+              with earth, fire, and yourself. Founded in 2020, our studio is a haven for makers, 
+              dreamers, and anyone seeking to slow down and create something beautiful with their hands.
+            </p>
+            <p 
+              className="text-[#3E2F24] max-w-3xl mx-auto"
+              style={{ fontSize: '18px', lineHeight: '1.8' }}
+            >
+              We blend traditional pottery techniques with contemporary design, creating pieces that 
+              honor the craft while celebrating modern minimalism. Each creation is a meditation in clay.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Collections Grid - Block Layout */}
+      <section className="py-20 lg:py-32 bg-white">
+        <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
+          <h2 
+            className="text-center mb-16 text-[#3E2F24]"
+            style={{ fontFamily: 'var(--font-serif)' }}
+          >
+            Our Collections
+          </h2>
           
-          <div className="flex gap-8 animate-marquee">
-            {[...collections, ...collections, ...collections].map((collection, index) => (
-              <Card
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {collections.map((collection, index) => (
+              <motion.div
                 key={index}
-                className="group flex-shrink-0 w-80 overflow-hidden border-0 hover:shadow-[0_4px_12px_rgba(0,0,0,0.08)] transition-all cursor-pointer bg-white"
-                onClick={() => onNavigate('shop')}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
               >
-                <div className="aspect-square overflow-hidden rounded-lg">
-                  <ImageWithFallback
-                    src={collection.image}
-                    alt={collection.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                  />
-                </div>
-                <div className="p-6 text-center bg-white">
-                  <h3 
-                    className="mb-2 text-[#3E2F24]" 
-                    style={{ fontFamily: 'var(--font-serif)', fontSize: '20px' }}
-                  >
-                    {collection.name}
-                  </h3>
-                </div>
-              </Card>
+                <Card
+                  className="group overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all cursor-pointer bg-[#F7F3EF]"
+                  onClick={() => onNavigate('shop')}
+                >
+                  <div className="p-4">
+                    <div className="aspect-square overflow-hidden rounded-lg mb-4">
+                      <ImageWithFallback
+                        src={collection.image}
+                        alt={collection.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      />
+                    </div>
+                    <h3 
+                      className="text-center text-[#3E2F24] mb-2" 
+                      style={{ fontFamily: 'var(--font-serif)', fontSize: '20px' }}
+                    >
+                      {collection.name}
+                    </h3>
+                    <p 
+                      className="text-center text-[#6B5D52] text-sm"
+                      style={{ fontFamily: 'var(--font-sans)' }}
+                    >
+                      {collection.description}
+                    </p>
+                  </div>
+                </Card>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Impact Stats Section */}
-      <section className="py-24 px-4 bg-[#8DA9A0]/10 overflow-hidden border-b-4 border-[#A67C52]">
-        <div className="container mx-auto max-w-6xl">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-12 text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <div className="text-[#A67C52]" style={{ fontFamily: 'var(--font-serif)', fontSize: '48px' }}>
-                500+
-              </div>
-              <p className="text-[#3E2F24] mt-2" style={{ fontSize: '14px' }}>
-                Pieces Crafted
-              </p>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-            >
-              <div className="text-[#A67C52]" style={{ fontFamily: 'var(--font-serif)', fontSize: '48px' }}>
-                200+
-              </div>
-              <p className="text-[#3E2F24] mt-2" style={{ fontSize: '14px' }}>
-                Students Taught
-              </p>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <div className="text-[#A67C52]" style={{ fontFamily: 'var(--font-serif)', fontSize: '48px' }}>
-                4
-              </div>
-              <p className="text-[#3E2F24] mt-2" style={{ fontSize: '14px' }}>
-                Years of Calm
-              </p>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-            >
-              <div className="text-[#A67C52]" style={{ fontFamily: 'var(--font-serif)', fontSize: '48px' }}>
-                100%
-              </div>
-              <p className="text-[#3E2F24] mt-2" style={{ fontSize: '14px' }}>
-                Handmade
-              </p>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Studio Introduction */}
-      <section className="py-24 px-4 bg-[#E5E0DC] overflow-hidden border-b-4 border-[#A67C52]">
-        <div className="container mx-auto max-w-3xl text-center">
-          <motion.h2 
-            className="mb-8 text-[#3E2F24]"
-            style={{ fontFamily: 'var(--font-serif)', fontSize: '40px' }}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+      {/* Workshops Block */}
+      <section className="py-20 lg:py-32">
+        <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
+          <h2 
+            className="text-center mb-4 text-[#3E2F24]"
+            style={{ fontFamily: 'var(--font-serif)' }}
           >
-            Our Clay, Our Way
-          </motion.h2>
-          <motion.p 
-            className="text-[#3E2F24] mb-6"
-            style={{ fontSize: '18px', lineHeight: '1.8' }}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            Workshops & Classes
+          </h2>
+          <p 
+            className="text-center mb-16 text-[#6B5D52]"
+            style={{ fontFamily: 'var(--font-sans)', fontStyle: 'italic', fontSize: '18px' }}
           >
-            At Callipottery Studio, we believe every pot begins as a pause — a moment to connect 
-            with earth, fire, and yourself. Founded in 2020, our studio is a haven for makers, 
-            dreamers, and anyone seeking to slow down and create something beautiful with their hands.
-          </motion.p>
-          <motion.p 
-            className="text-[#3E2F24]"
-            style={{ fontSize: '18px', lineHeight: '1.8' }}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-          >
-            We blend traditional pottery techniques with contemporary design, creating pieces that 
-            honor the craft while celebrating modern minimalism. Each creation is a meditation in clay.
-          </motion.p>
-        </div>
-      </section>
+            Find peace in your hands.
+          </p>
 
-      {/* Workshops & Classes */}
-      <section className="py-24 px-4 container mx-auto border-b-4 border-[#A67C52]">
-        <h2 
-          className="text-center mb-4 text-[#3E2F24]"
-          style={{ fontFamily: 'var(--font-serif)' }}
-        >
-          Workshops & Classes
-        </h2>
-        <p 
-          className="text-center mb-16 text-[#6B5D52]"
-          style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontSize: '18px' }}
-        >
-          Find peace in your hands.
-        </p>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          {workshops.map((workshop, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.15 }}
-              whileHover={{ y: -8 }}
-            >
-              <Card className="p-8 text-center border-0 shadow-[0_4px_12px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.12)] transition-all h-full">
-                <motion.div 
-                  className="flex justify-center mb-4"
-                  whileHover={{ rotate: [0, -10, 10, -10, 0] }}
-                  transition={{ duration: 0.5 }}
-                >
-                  {workshop.icon}
-                </motion.div>
-                <h3 
-                  className="mb-4 text-[#3E2F24]" 
-                  style={{ fontFamily: 'var(--font-serif)', fontSize: '24px' }}
-                >
-                  {workshop.title}
-                </h3>
-                <p className="text-[#6B5D52] mb-6" style={{ fontSize: '16px', lineHeight: '1.6' }}>
-                  {workshop.description}
-                </p>
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {workshops.map((workshop, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.15 }}
+              >
+                <Card className="p-8 text-center bg-white border-0 shadow-lg hover:shadow-2xl transition-all h-full">
+                  <div className="flex justify-center mb-6">
+                    {workshop.icon}
+                  </div>
+                  <h3 
+                    className="mb-4 text-[#3E2F24]" 
+                    style={{ fontFamily: 'var(--font-serif)', fontSize: '24px' }}
+                  >
+                    {workshop.title}
+                  </h3>
+                  <p className="text-[#6B5D52] mb-6" style={{ fontSize: '16px', lineHeight: '1.6' }}>
+                    {workshop.description}
+                  </p>
                   <Button
                     onClick={() => onNavigate('classes')}
                     variant="outline"
@@ -336,99 +274,81 @@ export function HomePage({ onNavigate }: HomePageProps) {
                   >
                     Learn More
                   </Button>
-                </motion.div>
-              </Card>
-            </motion.div>
-          ))}
+                </Card>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Kiln & Studio Preview */}
-      <section className="py-24 px-4 bg-[#8DA9A0]/10 border-b-4 border-[#A67C52]">
-        <div className="container mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            {/* Kiln Booking */}
+      {/* Studio Services Block */}
+      <section className="py-20 lg:py-32 bg-[#8DA9A0]/10">
+        <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              whileHover={{ scale: 1.03 }}
             >
-              <Card className="overflow-hidden border-0 shadow-[0_4px_12px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.12)] transition-shadow h-full">
-                <div className="aspect-[4/3] overflow-hidden rounded-lg">
-                  <motion.div
-                    whileHover={{ scale: 1.1 }}
-                    transition={{ duration: 0.4 }}
-                  >
-                    <ImageWithFallback
-                      src="https://images.unsplash.com/photo-1650065962232-e4b7f95ebf1f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxraWxuJTIwZmlyZSUyMGNlcmFtaWNzfGVufDF8fHx8MTc2MTQ1NDAyMnww&ixlib=rb-4.1.0&q=80&w=1080"
-                      alt="Kiln firing ceramics"
-                      className="w-full h-full object-cover"
-                    />
-                  </motion.div>
+              <Card className="overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-shadow h-full bg-white">
+                <div className="aspect-video overflow-hidden">
+                  <ImageWithFallback
+                    src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3R0ZXJ5JTIwa2lsbnxlbnwxfHx8fDE3NjE0NTQwMjJ8MA&ixlib=rb-4.1.0&q=80&w=1080"
+                    alt="Kiln firing"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-                <div className="p-6 bg-white">
+                <div className="p-8">
                   <h3 
                     className="mb-3 text-[#3E2F24]" 
                     style={{ fontFamily: 'var(--font-serif)', fontSize: '24px' }}
                   >
                     Book Kiln Time
                   </h3>
-                  <p className="text-[#6B5D52] mb-4" style={{ fontSize: '16px', lineHeight: '1.6' }}>
+                  <p className="text-[#6B5D52] mb-6" style={{ fontSize: '16px', lineHeight: '1.6' }}>
                     Fire your creations in our professional kilns. Multiple cone options available.
                   </p>
-                  <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
-                    <Button
-                      onClick={() => handleWhatsApp('I would like to book kiln time')}
-                      className="w-full bg-[#A67C52] hover:bg-[#8B6644] text-white rounded-lg"
-                    >
-                      Book via WhatsApp
-                    </Button>
-                  </motion.div>
+                  <Button
+                    onClick={() => handleWhatsApp('I would like to book kiln time')}
+                    className="w-full bg-[#A67C52] hover:bg-[#8B6644] text-white rounded-lg"
+                  >
+                    Book via WhatsApp
+                  </Button>
                 </div>
               </Card>
             </motion.div>
 
-            {/* Open Studio */}
             <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              whileHover={{ scale: 1.03 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <Card className="overflow-hidden border-0 shadow-[0_4px_12px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.12)] transition-shadow h-full">
-                <div className="aspect-[4/3] overflow-hidden rounded-lg">
-                  <motion.div
-                    whileHover={{ scale: 1.1 }}
-                    transition={{ duration: 0.4 }}
-                  >
-                    <ImageWithFallback
-                      src="https://images.unsplash.com/photo-1638341840302-a2d9579b821e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3R0ZXJ5JTIwc3R1ZGlvJTIwd29ya3NwYWNlfGVufDF8fHx8MTc2MTM3NzY4NHww&ixlib=rb-4.1.0&q=80&w=1080"
-                      alt="Pottery studio workspace"
-                      className="w-full h-full object-cover"
-                    />
-                  </motion.div>
+              <Card className="overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-shadow h-full bg-white">
+                <div className="aspect-video overflow-hidden">
+                  <ImageWithFallback
+                    src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3R0ZXJ5JTIwc3R1ZGlvJTIwd29ya3NwYWNlfGVufDF8fHx8MTc2MTQ1NDAyMnww&ixlib=rb-4.1.0&q=80&w=1080"
+                    alt="Open studio"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-                <div className="p-6 bg-white">
+                <div className="p-8">
                   <h3 
                     className="mb-3 text-[#3E2F24]" 
                     style={{ fontFamily: 'var(--font-serif)', fontSize: '24px' }}
                   >
                     Reserve Studio Space
                   </h3>
-                  <p className="text-[#6B5D52] mb-4" style={{ fontSize: '16px', lineHeight: '1.6' }}>
+                  <p className="text-[#6B5D52] mb-6" style={{ fontSize: '16px', lineHeight: '1.6' }}>
                     Work independently in our fully-equipped open studio. Tools and materials available.
                   </p>
-                  <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
-                    <Button
-                      onClick={() => handleWhatsApp('I would like to reserve studio space')}
-                      className="w-full bg-[#A67C52] hover:bg-[#8B6644] text-white rounded-lg"
-                    >
-                      Book via WhatsApp
-                    </Button>
-                  </motion.div>
+                  <Button
+                    onClick={() => handleWhatsApp('I would like to reserve studio space')}
+                    className="w-full bg-[#A67C52] hover:bg-[#8B6644] text-white rounded-lg"
+                  >
+                    Book via WhatsApp
+                  </Button>
                 </div>
               </Card>
             </motion.div>
@@ -436,18 +356,57 @@ export function HomePage({ onNavigate }: HomePageProps) {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="py-24 px-4 relative border-b-4 border-[#A67C52]">
-        <div 
-          className="absolute inset-0 opacity-5"
-          style={{
-            backgroundImage: 'url(https://images.unsplash.com/photo-1751564360748-3b5652060a7e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjZXJhbWljJTIwdGV4dHVyZSUyMG5hdHVyYWx8ZW58MXx8fHwxNzYxNDU0MDI0fDA&ixlib=rb-4.1.0&q=80&w=1080)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        />
-        
-        <div className="container mx-auto max-w-5xl relative z-10">
+      {/* Impact Stats Block */}
+      <section className="py-20 lg:py-32 bg-white">
+        <div className="container mx-auto px-4 lg:px-8 max-w-6xl">
+          <motion.div
+            className="bg-[#E5E0DC] p-8 lg:p-12 rounded-lg shadow-xl"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+              <div>
+                <div className="text-[#A67C52]" style={{ fontFamily: 'var(--font-serif)', fontSize: '48px' }}>
+                  500+
+                </div>
+                <p className="text-[#3E2F24] mt-2" style={{ fontSize: '14px' }}>
+                  Pieces Crafted
+                </p>
+              </div>
+              <div>
+                <div className="text-[#A67C52]" style={{ fontFamily: 'var(--font-serif)', fontSize: '48px' }}>
+                  200+
+                </div>
+                <p className="text-[#3E2F24] mt-2" style={{ fontSize: '14px' }}>
+                  Students Taught
+                </p>
+              </div>
+              <div>
+                <div className="text-[#A67C52]" style={{ fontFamily: 'var(--font-serif)', fontSize: '48px' }}>
+                  4
+                </div>
+                <p className="text-[#3E2F24] mt-2" style={{ fontSize: '14px' }}>
+                  Years of Calm
+                </p>
+              </div>
+              <div>
+                <div className="text-[#A67C52]" style={{ fontFamily: 'var(--font-serif)', fontSize: '48px' }}>
+                  100%
+                </div>
+                <p className="text-[#3E2F24] mt-2" style={{ fontSize: '14px' }}>
+                  Handmade
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Testimonials Block */}
+      <section className="py-20 lg:py-32">
+        <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
           <h2 
             className="text-center mb-16 text-[#3E2F24]"
             style={{ fontFamily: 'var(--font-serif)' }}
@@ -463,12 +422,11 @@ export function HomePage({ onNavigate }: HomePageProps) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.15 }}
-                whileHover={{ y: -8, scale: 1.02 }}
               >
-                <Card className="p-8 border-0 bg-white shadow-[0_4px_12px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.12)] transition-shadow h-full">
+                <Card className="p-8 border-0 bg-white shadow-lg hover:shadow-2xl transition-shadow h-full">
                   <p 
-                    className="text-[#3E2F24] mb-4 italic"
-                    style={{ fontFamily: 'var(--font-serif)', fontSize: '18px', lineHeight: '1.6' }}
+                    className="text-[#3E2F24] mb-6 italic"
+                    style={{ fontFamily: 'var(--font-sans)', fontSize: '18px', lineHeight: '1.6' }}
                   >
                     "{testimonial.quote}"
                   </p>
@@ -482,14 +440,16 @@ export function HomePage({ onNavigate }: HomePageProps) {
         </div>
       </section>
 
-      {/* Quote Banner */}
-      <section className="py-20 px-4 bg-[#3E2F24] text-center">
-        <p 
-          className="text-[#F7F3EF]"
-          style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontSize: '32px', lineHeight: '1.4' }}
-        >
-          "Clay remembers every touch."
-        </p>
+      {/* Quote Banner Block */}
+      <section className="py-20 bg-[#3E2F24]">
+        <div className="container mx-auto px-4 lg:px-8 max-w-4xl text-center">
+          <p 
+            className="text-[#F7F3EF]"
+            style={{ fontFamily: 'var(--font-sans)', fontStyle: 'italic', fontSize: '32px', lineHeight: '1.4' }}
+          >
+            "Clay remembers every touch."
+          </p>
+        </div>
       </section>
     </div>
   );

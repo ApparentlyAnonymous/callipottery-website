@@ -51,10 +51,10 @@ export function ContactPage() {
   ];
 
   return (
-    <div className="min-h-screen py-12 px-4">
+    <div className="min-h-screen py-12 px-4 border-t-4 border-[#A67C52]">
       <div className="container mx-auto max-w-6xl">
         {/* Header */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-12 border-b-4 border-[#A67C52] pb-12">
           <h1 
             className="text-4xl sm:text-5xl md:text-6xl mb-4 text-[#3E2F24]"
             style={{ fontFamily: 'var(--font-serif)' }}
@@ -66,10 +66,10 @@ export function ContactPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16 border-b-4 border-[#A67C52] pb-16">
           {/* Contact Form */}
           <div>
-            <Card className="p-8 border-[#3E2F24]/10">
+            <Card className="p-8 border-4 border-[#A67C52] shadow-[0_4px_12px_rgba(0,0,0,0.08)]">
               <h2 
                 className="text-2xl mb-6 text-[#3E2F24]"
                 style={{ fontFamily: 'var(--font-serif)' }}
@@ -134,7 +134,7 @@ export function ContactPage() {
 
           {/* Contact Info */}
           <div className="space-y-6">
-            <Card className="p-6 border-[#3E2F24]/10 hover:shadow-lg transition-shadow">
+            <Card className="p-6 border-4 border-[#A67C52] hover:shadow-lg transition-shadow">
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 bg-[#A67C52] rounded-full flex items-center justify-center flex-shrink-0">
                   <MessageCircle className="w-6 h-6 text-white" />
@@ -157,7 +157,7 @@ export function ContactPage() {
               </div>
             </Card>
 
-            <Card className="p-6 border-[#3E2F24]/10 hover:shadow-lg transition-shadow">
+            <Card className="p-6 border-4 border-[#A67C52] hover:shadow-lg transition-shadow">
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 bg-[#8DA9A0] rounded-full flex items-center justify-center flex-shrink-0">
                   <Mail className="w-6 h-6 text-white" />
@@ -176,7 +176,7 @@ export function ContactPage() {
               </div>
             </Card>
 
-            <Card className="p-6 border-[#3E2F24]/10 hover:shadow-lg transition-shadow">
+            <Card className="p-6 border-4 border-[#A67C52] hover:shadow-lg transition-shadow">
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 bg-[#8DA9A0] rounded-full flex items-center justify-center flex-shrink-0">
                   <Phone className="w-6 h-6 text-white" />
@@ -196,7 +196,7 @@ export function ContactPage() {
               </div>
             </Card>
 
-            <Card className="p-6 border-[#3E2F24]/10 hover:shadow-lg transition-shadow">
+            <Card className="p-6 border-4 border-[#A67C52] hover:shadow-lg transition-shadow">
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 bg-[#8DA9A0] rounded-full flex items-center justify-center flex-shrink-0">
                   <MapPin className="w-6 h-6 text-white" />
@@ -215,7 +215,7 @@ export function ContactPage() {
             </Card>
 
             {/* Social Media */}
-            <Card className="p-6 border-[#3E2F24]/10 bg-[#F7F3EF]">
+            <Card className="p-6 border-4 border-[#A67C52] bg-[#F7F3EF]">
               <h3 className="mb-4 text-[#3E2F24]" style={{ fontFamily: 'var(--font-serif)' }}>
                 Follow Our Journey
               </h3>
@@ -254,7 +254,7 @@ export function ContactPage() {
             Frequently Asked Questions
           </h2>
 
-          <Card className="border-[#3E2F24]/10">
+          <Card className="border-4 border-[#A67C52]">
             <Accordion type="single" collapsible className="w-full">
               {faqs.map((faq, index) => (
                 <AccordionItem key={index} value={`item-${index}`}>
