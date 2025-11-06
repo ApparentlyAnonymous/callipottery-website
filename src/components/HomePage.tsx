@@ -72,7 +72,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
   return (
     <div className="min-h-screen bg-[#F7F3EF]">
       {/* Hero Section - Classic Block Layout */}
-      <section className="relative py-20 lg:py-32 overflow-hidden">
+      <section className="relative py-20 lg:py-32 overflow-hidden bg-white">
         <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             {/* Left - Text Block */}
@@ -84,7 +84,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
             >
               <motion.h1 
                 className="text-[#3E2F24] mb-6"
-                style={{ fontFamily: 'var(--font-serif)' }}
+                style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(48px, 7vw, 72px)', lineHeight: '1.1' }}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
@@ -129,11 +129,11 @@ export function HomePage({ onNavigate }: HomePageProps) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <div className="bg-white p-4 rounded-lg shadow-xl">
-                <div className="aspect-[4/3] rounded-lg overflow-hidden">
+              <div className="bg-white p-4 rounded-lg shadow-xl canvas-texture">
+                <div className="aspect-[4/3] rounded-lg overflow-hidden ceramic-texture">
                   <ImageWithFallback
-                    src="public/images/WhatsApp Image 2025-10-23 at 16.14.29.jpeg"
-                    alt="Pottery studio hero"
+                    src="https://images.unsplash.com/photo-1675101337462-a19b63af8b1b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3R0ZXJ5JTIwaGFuZHMlMjBjbGF5fGVufDF8fHx8MTc2MTk3NzA0NXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                    alt="Hands shaping clay on pottery wheel"
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -143,50 +143,65 @@ export function HomePage({ onNavigate }: HomePageProps) {
         </div>
       </section>
 
+      {/* Brush Stroke Divider */}
+      <div className="brush-divider my-12" />
+
       {/* Studio Introduction Block */}
-      <section className="py-20 lg:py-32">
+      <section className="py-20 lg:py-32 bg-white">
         <div className="container mx-auto px-4 lg:px-8 max-w-5xl">
           <motion.div
-            className="bg-[#E5E0DC] p-8 lg:p-16 rounded-lg shadow-xl text-center"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <h2 
-              className="mb-6 text-[#3E2F24]"
-              style={{ fontFamily: 'var(--font-serif)' }}
+            {/* Terracotta Header */}
+            <div className="terracotta-header p-8 lg:p-12 rounded-t-lg text-center">
+              <h2 
+                className="text-white"
+                style={{ fontFamily: 'var(--font-serif)' }}
+              >
+                Our Clay, Our Way
+              </h2>
+            </div>
+            {/* Content Block */}
+            <div className="bg-[#F7F3EF] p-8 lg:p-12 rounded-b-lg shadow-xl"
             >
-              Our Clay, Our Way
-            </h2>
-            <p 
-              className="text-[#3E2F24] mb-6 max-w-3xl mx-auto"
-              style={{ fontSize: '18px', lineHeight: '1.8' }}
-            >
-              At Callipottery Studio, we believe every pot begins as a pause — a moment to connect 
-              with earth, fire, and yourself. Founded in 2020, our studio is a haven for makers, 
-              dreamers, and anyone seeking to slow down and create something beautiful with their hands.
-            </p>
-            <p 
-              className="text-[#3E2F24] max-w-3xl mx-auto"
-              style={{ fontSize: '18px', lineHeight: '1.8' }}
-            >
-              We blend traditional pottery techniques with contemporary design, creating pieces that 
-              honor the craft while celebrating modern minimalism. Each creation is a meditation in clay.
-            </p>
+              <p 
+                className="text-[#3E2F24] mb-6 max-w-3xl mx-auto"
+                style={{ fontSize: '18px', lineHeight: '1.8' }}
+              >
+                At Callipottery Studio, we believe every pot begins as a pause — a moment to connect 
+                with earth, fire, and yourself. Founded in 2020, our studio is a haven for makers, 
+                dreamers, and anyone seeking to slow down and create something beautiful with their hands.
+              </p>
+              <p 
+                className="text-[#3E2F24] max-w-3xl mx-auto"
+                style={{ fontSize: '18px', lineHeight: '1.8' }}
+              >
+                We blend traditional pottery techniques with contemporary design, creating pieces that 
+                honor the craft while celebrating modern minimalism. Each creation is a meditation in clay.
+              </p>
+            </div>
           </motion.div>
         </div>
       </section>
 
+      {/* Brush Stroke Divider */}
+      <div className="brush-divider my-12" />
+
       {/* Collections Grid - Block Layout */}
-      <section className="py-20 lg:py-32 bg-white">
+      <section className="py-20 lg:py-32 bg-[#F7F3EF]">
         <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
-          <h2 
-            className="text-center mb-16 text-[#3E2F24]"
-            style={{ fontFamily: 'var(--font-serif)' }}
-          >
-            Our Collections
-          </h2>
+          {/* Terracotta Header */}
+          <div className="terracotta-header py-6 px-8 rounded-lg mb-16 text-center max-w-md mx-auto">
+            <h2 
+              className="text-white"
+              style={{ fontFamily: 'var(--font-serif)' }}
+            >
+              Our Collections
+            </h2>
+          </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {collections.map((collection, index) => (
@@ -198,11 +213,11 @@ export function HomePage({ onNavigate }: HomePageProps) {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
               >
                 <Card
-                  className="group overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all cursor-pointer bg-[#F7F3EF]"
+                  className="group overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all cursor-pointer bg-white canvas-texture"
                   onClick={() => onNavigate('shop')}
                 >
                   <div className="p-4">
-                    <div className="aspect-square overflow-hidden rounded-lg mb-4">
+                    <div className="aspect-square overflow-hidden rounded-lg mb-4 ceramic-texture relative">
                       <ImageWithFallback
                         src={collection.image}
                         alt={collection.name}
@@ -229,15 +244,21 @@ export function HomePage({ onNavigate }: HomePageProps) {
         </div>
       </section>
 
+      {/* Brush Stroke Divider */}
+      <div className="brush-divider my-12" />
+
       {/* Workshops Block */}
-      <section className="py-20 lg:py-32">
+      <section className="py-20 lg:py-32 bg-white">
         <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
-          <h2 
-            className="text-center mb-4 text-[#3E2F24]"
-            style={{ fontFamily: 'var(--font-serif)' }}
-          >
-            Workshops & Classes
-          </h2>
+          {/* Terracotta Header */}
+          <div className="terracotta-header py-6 px-8 rounded-lg mb-4 text-center max-w-lg mx-auto">
+            <h2 
+              className="text-white"
+              style={{ fontFamily: 'var(--font-serif)' }}
+            >
+              Workshops & Classes
+            </h2>
+          </div>
           <p 
             className="text-center mb-16 text-[#6B5D52]"
             style={{ fontFamily: 'var(--font-sans)', fontStyle: 'italic', fontSize: '18px' }}
@@ -254,7 +275,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.15 }}
               >
-                <Card className="p-8 text-center bg-white border-0 shadow-lg hover:shadow-2xl transition-all h-full">
+                <Card className="p-8 text-center bg-[#F7F3EF] border-0 shadow-lg hover:shadow-2xl transition-all h-full">
                   <div className="flex justify-center mb-6">
                     {workshop.icon}
                   </div>
@@ -281,8 +302,11 @@ export function HomePage({ onNavigate }: HomePageProps) {
         </div>
       </section>
 
+      {/* Brush Stroke Divider */}
+      <div className="brush-divider my-12" />
+
       {/* Studio Services Block */}
-      <section className="py-20 lg:py-32 bg-[#8DA9A0]/10">
+      <section className="py-20 lg:py-32 bg-[#F7F3EF]">
         <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <motion.div
@@ -291,8 +315,8 @@ export function HomePage({ onNavigate }: HomePageProps) {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <Card className="overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-shadow h-full bg-white">
-                <div className="aspect-video overflow-hidden">
+              <Card className="overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-shadow h-full bg-white canvas-texture">
+                <div className="aspect-video overflow-hidden ceramic-texture">
                   <ImageWithFallback
                     src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3R0ZXJ5JTIwa2lsbnxlbnwxfHx8fDE3NjE0NTQwMjJ8MA&ixlib=rb-4.1.0&q=80&w=1080"
                     alt="Kiln firing"
@@ -325,8 +349,8 @@ export function HomePage({ onNavigate }: HomePageProps) {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <Card className="overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-shadow h-full bg-white">
-                <div className="aspect-video overflow-hidden">
+              <Card className="overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-shadow h-full bg-white canvas-texture">
+                <div className="aspect-video overflow-hidden ceramic-texture">
                   <ImageWithFallback
                     src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3R0ZXJ5JTIwc3R1ZGlvJTIwd29ya3NwYWNlfGVufDF8fHx8MTc2MTQ1NDAyMnww&ixlib=rb-4.1.0&q=80&w=1080"
                     alt="Open studio"
@@ -356,11 +380,14 @@ export function HomePage({ onNavigate }: HomePageProps) {
         </div>
       </section>
 
+      {/* Brush Stroke Divider */}
+      <div className="brush-divider my-12" />
+
       {/* Impact Stats Block */}
       <section className="py-20 lg:py-32 bg-white">
         <div className="container mx-auto px-4 lg:px-8 max-w-6xl">
           <motion.div
-            className="bg-[#E5E0DC] p-8 lg:p-12 rounded-lg shadow-xl"
+            className="bg-[#F7F3EF] p-8 lg:p-12 rounded-lg shadow-xl border-2 border-[#E5E0DC]"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -404,15 +431,21 @@ export function HomePage({ onNavigate }: HomePageProps) {
         </div>
       </section>
 
+      {/* Brush Stroke Divider */}
+      <div className="brush-divider my-12" />
+
       {/* Testimonials Block */}
-      <section className="py-20 lg:py-32">
+      <section className="py-20 lg:py-32 bg-[#F7F3EF]">
         <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
-          <h2 
-            className="text-center mb-16 text-[#3E2F24]"
-            style={{ fontFamily: 'var(--font-serif)' }}
-          >
-            Stories from Our Studio
-          </h2>
+          {/* Terracotta Header */}
+          <div className="terracotta-header py-6 px-8 rounded-lg mb-16 text-center max-w-lg mx-auto">
+            <h2 
+              className="text-white"
+              style={{ fontFamily: 'var(--font-serif)' }}
+            >
+              Stories from Our Studio
+            </h2>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
@@ -440,6 +473,9 @@ export function HomePage({ onNavigate }: HomePageProps) {
         </div>
       </section>
 
+      {/* Brush Stroke Divider */}
+      <div className="brush-divider my-12" />
+
       {/* Quote Banner Block */}
       <section className="py-20 bg-[#3E2F24]">
         <div className="container mx-auto px-4 lg:px-8 max-w-4xl text-center">
@@ -453,51 +489,4 @@ export function HomePage({ onNavigate }: HomePageProps) {
       </section>
     </div>
   );
-}
-import BuilderSection from '../components/BuilderSection'
-
-export default function HomePage() {
-  return (
-    <div className="home">
-      {/* NAVIGATION - Keep your code */}
-      <nav className="navbar">
-        {/* Your existing nav code */}
-      </nav>
-
-      {/* HERO SECTION - Make it EDITABLE */}
-      <BuilderSection 
-        modelName="hero" 
-        fallback={
-          // Fallback: Your original hero if nothing in Builder yet
-          <section className="hero">
-            <h1>Callipottery Studio</h1>
-            <p>Crafted by Hand. Centered in Calm.</p>
-          </section>
-        }
-      />
-
-      {/* PRODUCTS SECTION - Make it EDITABLE */}
-      <BuilderSection 
-        modelName="products" 
-        fallback={
-          // Your original products
-          <section className="products">
-            <h2>Our Products</h2>
-            {/* Your existing products code */}
-          </section>
-        }
-      />
-
-      {/* ABOUT SECTION - Keep your code */}
-      <section className="about">
-        <h2>About Us</h2>
-        {/* Your existing about code */}
-      </section>
-
-      {/* FOOTER - Keep your code */}
-      <footer>
-        {/* Your existing footer */}
-      </footer>
-    </div>
-  )
 }

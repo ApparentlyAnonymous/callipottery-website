@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Menu, X } from 'lucide-react';
+import logoImage from 'figma:asset/55444fa918731e90614328e53d7ea8f791334b7c.png';
 
 interface HeaderProps {
   currentPage: string;
@@ -33,7 +34,7 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
   ];
 
   return (
-    <header className="sticky top-0 z-50 bg-[#F7F3EF] shadow-lg">
+    <header className="sticky top-0 z-50 bg-[#F7F3EF] shadow-lg border-b-2 border-[#E5E0DC]">
       <motion.div 
         className="mx-auto max-w-7xl"
         initial={{ y: -100 }}
@@ -42,23 +43,19 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
       >
         <div className="px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
-            {/* Logo with Image */}
+            {/* Logo with Uploaded Image */}
             <motion.button
               onClick={() => onNavigate('home')}
-              className="flex items-center space-x-3 transition-all"
+              className="flex items-center transition-all"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              <div className="relative w-12 h-12 rounded-full overflow-hidden bg-white shadow-md border-2 border-[#A67C52]">
+              <div className="h-14 w-auto">
                 <img
-                  src="https://images.unsplash.com/photo-1590605103416-230704277b05?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3R0ZXJ5JTIwc3R1ZGlvJTIwbG9nbyUyMGNlcmFtaWN8ZW58MXx8fHwxNzYyMTg2MTYxfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                  src={logoImage}
                   alt="Callipottery Studio"
-                  className="w-full h-full object-cover"
+                  className="h-full w-auto object-contain"
                 />
-              </div>
-              <div className="flex flex-col items-start">
-                <span className="text-xl text-[#3E2F24] tracking-wide" style={{ fontFamily: 'var(--font-serif)', fontWeight: '600' }}>Callipottery</span>
-                <span className="text-xs text-[#A67C52] tracking-wider" style={{ fontFamily: 'var(--font-sans)', fontStyle: 'italic' }}>Studio</span>
               </div>
             </motion.button>
 
