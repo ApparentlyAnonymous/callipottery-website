@@ -1,333 +1,184 @@
-import { Card } from './ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
+import { motion } from 'motion/react';
+import { FileText, Package, RotateCcw, Flame, Shield } from 'lucide-react';
 
-export function PoliciesPage() {
+const sections = [
+  {
+    icon: Package,
+    title: 'Shipping Policy',
+    content: [
+      'We ship within India via reputable courier services',
+      'Processing time: 2-3 business days',
+      'Delivery time: 5-7 business days (metro cities), 7-10 business days (other locations)',
+      'Shipping costs calculated at checkout based on weight and destination',
+      'All items are carefully packaged with bubble wrap and cushioning',
+      'Tracking information provided via email once shipped',
+      'For custom orders, shipping timeline may vary - we\'ll keep you informed',
+    ],
+  },
+  {
+    icon: RotateCcw,
+    title: 'Returns & Exchanges',
+    content: [
+      'We want you to love your purchase! If you\'re not satisfied, we accept returns within 7 days of delivery',
+      'Items must be unused, in original packaging, and in resalable condition',
+      'Custom or personalized items cannot be returned unless defective',
+      'To initiate a return, contact us via email or WhatsApp with order details and photos',
+      'Refunds processed within 7-10 business days after receiving the returned item',
+      'Return shipping costs are borne by the customer unless the item is damaged or incorrect',
+      'Exchanges available for size or color variations, subject to availability',
+      'Damaged or defective items: Contact us immediately with photos - we\'ll arrange replacement or full refund',
+    ],
+  },
+  {
+    icon: Flame,
+    title: 'Kiln Use Terms',
+    content: [
+      'Advance booking required (minimum 48 hours notice)',
+      'All pottery must be bone dry before submission for firing',
+      'Label all pieces clearly with your name, date, and desired firing temperature',
+      'We are not responsible for warping, cracking, glaze defects, or other damage during firing',
+      'Standard turnaround time: 3-5 business days',
+      'Payment due at time of booking',
+      'Cancellations must be made 24 hours in advance for refund eligibility',
+      'Pieces must be picked up within 10 days of completion notification',
+      'Unclaimed pieces after 30 days may be donated or discarded',
+      'The studio reserves the right to refuse firing of pieces that may damage the kiln or other work',
+    ],
+  },
+  {
+    icon: Shield,
+    title: 'Privacy Policy',
+    content: [
+      'We collect personal information (name, email, phone, address) only for order processing and communication',
+      'Payment information is processed securely through encrypted third-party payment gateways',
+      'We do not share, sell, or rent your personal information to third parties',
+      'Your data may be used to send promotional emails (you can unsubscribe anytime)',
+      'We use cookies to enhance your browsing experience',
+      'You have the right to request deletion of your personal data',
+      'Contact us at info@callipottery.com for data-related inquiries',
+      'By using our website, you consent to this privacy policy',
+    ],
+  },
+  {
+    icon: FileText,
+    title: 'Terms of Service',
+    content: [
+      'All content on this website is the property of Callipottery Studio',
+      'Prices are subject to change without notice',
+      'We reserve the right to refuse service to anyone for any reason',
+      'Workshop and class policies: Full payment required at registration. Cancellations made 7 days before the start date receive 50% refund. No refunds for cancellations within 7 days or no-shows',
+      'Open studio passes are non-transferable and non-refundable',
+      'Studio guidelines must be followed at all times. Violation may result in removal without refund',
+      'The studio is not responsible for personal belongings or injury on premises',
+      'Photography and videography may occur in the studio - by entering, you consent to appear in promotional materials',
+      'These terms may be updated periodically - check this page for the latest version',
+    ],
+  },
+];
+
+export default function PoliciesPage() {
   return (
-    <div className="min-h-screen py-12 px-4 border-t-4 border-[#A67C52]">
-      <div className="container mx-auto max-w-4xl">
-        {/* Header */}
-        <div className="text-center mb-12 border-b-4 border-[#A67C52] pb-12">
-          <h1 
-            className="text-4xl sm:text-5xl md:text-6xl mb-4 text-[#3E2F24]"
-            style={{ fontFamily: 'var(--font-serif)' }}
+    <div className="min-h-screen pt-20 bg-[#F5F2EB]">
+      {/* Header */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
           >
-            Policies
-          </h1>
-          <p className="text-lg text-[#6B5D52]">
-            Our guidelines to ensure a smooth and positive experience for everyone.
-          </p>
+            <div className="w-20 h-20 bg-[#A35D38] rounded-full flex items-center justify-center mx-auto mb-6">
+              <FileText className="w-10 h-10 text-white" />
+            </div>
+            <p className="text-[#A35D38] tracking-widest mb-2 uppercase text-sm">
+              Terms & Conditions
+            </p>
+            <h1 className="text-5xl md:text-6xl text-[#2F2925] mb-4">Policies</h1>
+            <p className="text-xl text-[#6B6560] max-w-2xl mx-auto">
+              Everything you need to know about working with Callipottery Studio
+            </p>
+          </motion.div>
         </div>
+      </section>
 
-        {/* Tabs */}
-        <Tabs defaultValue="shipping" className="w-full border-b-4 border-[#A67C52] pb-12">
-          <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 mb-8">
-            <TabsTrigger value="shipping">Shipping</TabsTrigger>
-            <TabsTrigger value="returns">Returns</TabsTrigger>
-            <TabsTrigger value="kiln">Kiln Use</TabsTrigger>
-            <TabsTrigger value="privacy">Privacy</TabsTrigger>
-          </TabsList>
-
-          {/* Shipping Policy */}
-          <TabsContent value="shipping">
-            <Card className="p-8 border-4 border-[#A67C52] bg-[#F7F3EF]">
-              <h2 
-                className="text-2xl mb-6 text-[#3E2F24]"
-                style={{ fontFamily: 'var(--font-serif)' }}
-              >
-                Shipping Policy
-              </h2>
-              
-              <div className="space-y-6 text-[#3E2F24]">
-                <div>
-                  <h3 className="mb-2" style={{ fontFamily: 'var(--font-serif)' }}>
-                    Domestic Shipping (India)
-                  </h3>
-                  <p className="leading-relaxed">
-                    We ship ceramics across India using secure, eco-friendly packaging. Each piece is 
-                    carefully wrapped and cushioned to prevent damage during transit.
-                  </p>
-                  <ul className="mt-3 space-y-1 ml-4">
-                    <li>• Bangalore: 2-3 business days</li>
-                    <li>• Major cities: 4-6 business days</li>
-                    <li>• Other locations: 7-10 business days</li>
-                  </ul>
+      {/* Policy Sections */}
+      <section className="py-16">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+          {sections.map((section, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: index * 0.1 }}
+              className="bg-white rounded-sm p-8 shadow-lg"
+            >
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-14 h-14 bg-[#A35D38] rounded-full flex items-center justify-center flex-shrink-0">
+                  <section.icon className="w-7 h-7 text-white" />
                 </div>
-
-                <div>
-                  <h3 className="mb-2" style={{ fontFamily: 'var(--font-serif)' }}>
-                    Shipping Costs
-                  </h3>
-                  <p className="leading-relaxed">
-                    Shipping costs are calculated based on weight, dimensions, and destination. You'll 
-                    see the exact cost during checkout.
-                  </p>
-                  <ul className="mt-3 space-y-1 ml-4">
-                    <li>• Free shipping on orders above ₹5,000 within Karnataka</li>
-                    <li>• Flat rate of ₹200 for orders within Bangalore</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h3 className="mb-2" style={{ fontFamily: 'var(--font-serif)' }}>
-                    Order Processing
-                  </h3>
-                  <p className="leading-relaxed">
-                    Orders are processed within 2-3 business days. You'll receive tracking information 
-                    once your order ships. Custom orders require 4-6 weeks production time.
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="mb-2" style={{ fontFamily: 'var(--font-serif)' }}>
-                    Damaged in Transit
-                  </h3>
-                  <p className="leading-relaxed">
-                    While we take extreme care in packaging, if your item arrives damaged, please contact 
-                    us within 48 hours with photos. We'll arrange a replacement or refund.
-                  </p>
-                </div>
+                <h2 className="text-3xl text-[#2F2925]">{section.title}</h2>
               </div>
-            </Card>
-          </TabsContent>
 
-          {/* Returns & Exchanges */}
-          <TabsContent value="returns">
-            <Card className="p-8 border-4 border-[#A67C52] bg-[#F7F3EF]">
-              <h2 
-                className="text-2xl mb-6 text-[#3E2F24]"
-                style={{ fontFamily: 'var(--font-serif)' }}
+              <ul className="space-y-3">
+                {section.content.map((item, idx) => (
+                  <motion.li
+                    key={idx}
+                    initial={{ opacity: 0, x: -10 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: idx * 0.05 }}
+                    className="flex items-start gap-3"
+                  >
+                    <div className="w-2 h-2 bg-[#A35D38] rounded-full mt-2 flex-shrink-0" />
+                    <span className="text-[#6B6560] leading-relaxed">{item}</span>
+                  </motion.li>
+                ))}
+              </ul>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section className="py-16 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <h3 className="text-3xl text-[#2F2925] mb-4">Questions About Our Policies?</h3>
+            <p className="text-[#6B6560] mb-8">
+              We're here to help! Contact us if you need clarification on any of our terms.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a
+                href="mailto:info@callipottery.com"
+                className="px-8 py-3 bg-[#A35D38] hover:bg-[#8B4D2E] text-white rounded transition-colors duration-300"
               >
-                Returns & Exchanges
-              </h2>
-              
-              <div className="space-y-6 text-[#3E2F24]">
-                <div>
-                  <h3 className="mb-2" style={{ fontFamily: 'var(--font-serif)' }}>
-                    Return Window
-                  </h3>
-                  <p className="leading-relaxed">
-                    We accept returns within 7 days of delivery for unused, undamaged items in original 
-                    packaging. Given the handmade nature of our ceramics, slight variations in color and 
-                    size are not grounds for return.
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="mb-2" style={{ fontFamily: 'var(--font-serif)' }}>
-                    Non-Returnable Items
-                  </h3>
-                  <ul className="space-y-1 ml-4">
-                    <li>• Custom or personalized ceramics</li>
-                    <li>• Items marked as final sale</li>
-                    <li>• Used or damaged items</li>
-                    <li>• Class or workshop fees (see cancellation policy)</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h3 className="mb-2" style={{ fontFamily: 'var(--font-serif)' }}>
-                    Exchange Process
-                  </h3>
-                  <p className="leading-relaxed">
-                    We're happy to exchange items of equal or greater value. Contact us via WhatsApp or 
-                    email to initiate an exchange. Return shipping costs are the customer's responsibility 
-                    unless the item was defective.
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="mb-2" style={{ fontFamily: 'var(--font-serif)' }}>
-                    Refunds
-                  </h3>
-                  <p className="leading-relaxed">
-                    Refunds are processed within 5-7 business days after we receive the returned item. 
-                    Original shipping costs are non-refundable. Refunds are issued to the original payment method.
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="mb-2" style={{ fontFamily: 'var(--font-serif)' }}>
-                    Class Cancellations
-                  </h3>
-                  <p className="leading-relaxed">
-                    Workshop and class fees can be refunded if cancelled at least 48 hours before the 
-                    scheduled time. Cancellations within 48 hours will receive studio credit valid for 
-                    6 months.
-                  </p>
-                </div>
-              </div>
-            </Card>
-          </TabsContent>
-
-          {/* Kiln Use Terms */}
-          <TabsContent value="kiln">
-            <Card className="p-8 border-4 border-[#A67C52] bg-[#F7F3EF]">
-              <h2 
-                className="text-2xl mb-6 text-[#3E2F24]"
-                style={{ fontFamily: 'var(--font-serif)' }}
+                Email Us
+              </a>
+              <a
+                href="https://wa.me/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-8 py-3 bg-white border-2 border-[#A35D38] text-[#A35D38] hover:bg-[#A35D38] hover:text-white rounded transition-all duration-300"
               >
-                Kiln Use Terms & Conditions
-              </h2>
-              
-              <div className="space-y-6 text-[#3E2F24]">
-                <div>
-                  <h3 className="mb-2" style={{ fontFamily: 'var(--font-serif)' }}>
-                    Booking Requirements
-                  </h3>
-                  <ul className="space-y-1 ml-4">
-                    <li>• All pieces must be bone dry before kiln loading</li>
-                    <li>• Payment required in advance to reserve kiln space</li>
-                    <li>• Cancellations accepted up to 48 hours before scheduled firing</li>
-                    <li>• Late cancellations forfeit 50% of booking fee</li>
-                  </ul>
-                </div>
+                WhatsApp
+              </a>
+            </div>
+          </motion.div>
+        </div>
+      </section>
 
-                <div>
-                  <h3 className="mb-2" style={{ fontFamily: 'var(--font-serif)' }}>
-                    Piece Requirements
-                  </h3>
-                  <p className="leading-relaxed">
-                    All pieces must be clearly labeled with your name and firing cone number. We reserve 
-                    the right to refuse firing pieces that appear structurally unsound or may pose a 
-                    risk to the kiln or other work.
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="mb-2" style={{ fontFamily: 'var(--font-serif)' }}>
-                    Kiln Loss Policy
-                  </h3>
-                  <p className="leading-relaxed">
-                    While we take utmost care in loading and firing, Callipottery Studio is not 
-                    responsible for pieces that crack, warp, or are otherwise damaged during firing 
-                    due to:
-                  </p>
-                  <ul className="mt-2 space-y-1 ml-4">
-                    <li>• Improper construction or drying</li>
-                    <li>• Air pockets or structural weaknesses</li>
-                    <li>• Incompatible clay and glaze combinations</li>
-                    <li>• Uneven thickness or poor attachment</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h3 className="mb-2" style={{ fontFamily: 'var(--font-serif)' }}>
-                    Firing Timeline
-                  </h3>
-                  <p className="leading-relaxed">
-                    Bisque and glaze firings take 3-5 days including cooling time. We fire on Tuesdays 
-                    and Fridays when kilns are full. Rush firings available for additional fee.
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="mb-2" style={{ fontFamily: 'var(--font-serif)' }}>
-                    Pick-up Policy
-                  </h3>
-                  <p className="leading-relaxed">
-                    Fired pieces must be picked up within 2 weeks of completion. After 30 days, unclaimed 
-                    pieces become property of the studio. We are not responsible for storing pieces 
-                    long-term.
-                  </p>
-                </div>
-              </div>
-            </Card>
-          </TabsContent>
-
-          {/* Privacy Policy */}
-          <TabsContent value="privacy">
-            <Card className="p-8 border-4 border-[#A67C52] bg-[#F7F3EF]">
-              <h2 
-                className="text-2xl mb-6 text-[#3E2F24]"
-                style={{ fontFamily: 'var(--font-serif)' }}
-              >
-                Privacy Policy
-              </h2>
-              
-              <div className="space-y-6 text-[#3E2F24]">
-                <div>
-                  <h3 className="mb-2" style={{ fontFamily: 'var(--font-serif)' }}>
-                    Information We Collect
-                  </h3>
-                  <p className="leading-relaxed">
-                    We collect information you provide when placing orders, booking classes, or contacting 
-                    us. This includes name, email, phone number, and shipping address.
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="mb-2" style={{ fontFamily: 'var(--font-serif)' }}>
-                    How We Use Your Information
-                  </h3>
-                  <ul className="space-y-1 ml-4">
-                    <li>• Process orders and bookings</li>
-                    <li>• Send order confirmations and shipping updates</li>
-                    <li>• Communicate about classes and studio events</li>
-                    <li>• Send occasional newsletters (you can opt out anytime)</li>
-                    <li>• Improve our products and services</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h3 className="mb-2" style={{ fontFamily: 'var(--font-serif)' }}>
-                    Data Security
-                  </h3>
-                  <p className="leading-relaxed">
-                    We use secure methods to protect your personal information. Payment information is 
-                    processed through secure payment gateways and is never stored on our servers.
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="mb-2" style={{ fontFamily: 'var(--font-serif)' }}>
-                    Sharing Your Information
-                  </h3>
-                  <p className="leading-relaxed">
-                    We never sell your personal information to third parties. We only share information 
-                    with shipping carriers (for delivery) and payment processors (for transactions).
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="mb-2" style={{ fontFamily: 'var(--font-serif)' }}>
-                    Cookies
-                  </h3>
-                  <p className="leading-relaxed">
-                    Our website uses cookies to improve your browsing experience and remember your 
-                    preferences. You can disable cookies in your browser settings.
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="mb-2" style={{ fontFamily: 'var(--font-serif)' }}>
-                    Photography & Social Media
-                  </h3>
-                  <p className="leading-relaxed">
-                    We occasionally photograph classes and studio sessions for social media and marketing. 
-                    If you prefer not to be photographed, please let us know.
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="mb-2" style={{ fontFamily: 'var(--font-serif)' }}>
-                    Your Rights
-                  </h3>
-                  <p className="leading-relaxed">
-                    You have the right to access, update, or delete your personal information. Contact 
-                    us at hello@callipottery.in for data requests.
-                  </p>
-                </div>
-
-                <div className="pt-4 border-t border-[#3E2F24]/10">
-                  <p className="text-sm text-[#6B5D52] italic">
-                    Last updated: October 26, 2025
-                  </p>
-                </div>
-              </div>
-            </Card>
-          </TabsContent>
-        </Tabs>
-      </div>
+      {/* Last Updated */}
+      <section className="py-8 bg-[#F5F2EB]">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="text-sm text-[#6B6560]">Last updated: November 9, 2025</p>
+        </div>
+      </section>
     </div>
   );
 }

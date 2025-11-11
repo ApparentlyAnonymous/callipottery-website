@@ -1,229 +1,237 @@
-import { Card } from './ui/card';
-import { ImageWithFallback } from './figma/ImageWithFallback';
-import { MapPin, Clock, Train, Car, Mail, Phone } from 'lucide-react';
+import { motion } from 'motion/react';
+import { MapPin, Clock, Phone, Mail, MessageCircle, Instagram, Navigation } from 'lucide-react';
+import { Button } from './ui/button';
 
-export function VisitPage() {
-  const studioImages = [
-    'https://images.unsplash.com/photo-1638341840302-a2d9579b821e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3R0ZXJ5JTIwc3R1ZGlvJTIwd29ya3NwYWNlfGVufDF8fHx8MTc2MTM3NzY4NHww&ixlib=rb-4.1.0&q=80&w=1080',
-    'https://images.unsplash.com/photo-1673436765927-2c94b9705f5b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3R0ZXJ5JTIwc2hlbHZlcyUyMGNlcmFtaWNzfGVufDF8fHx8MTc2MTQ1NDAyNXww&ixlib=rb-4.1.0&q=80&w=1080',
-    'https://images.unsplash.com/photo-1662845114342-256fdc45981d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3R0ZXJ5JTIwdG9vbHMlMjBzdHVkaW98ZW58MXx8fHwxNzYxNDU0MDI0fDA&ixlib=rb-4.1.0&q=80&w=1080',
-    'https://images.unsplash.com/photo-1590605049074-f1780f70b791?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3R0ZXJ5JTIwd2hlZWwlMjBjbGF5fGVufDF8fHx8MTc2MTM3NTc4OXww&ixlib=rb-4.1.0&q=80&w=1080',
-  ];
+const studioImages = [
+  'https://images.unsplash.com/photo-1638341840302-a2d9579b821e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3R0ZXJ5JTIwc3R1ZGlvJTIwd29ya3NwYWNlfGVufDF8fHx8MTc2MjYyNTMyNnww&ixlib=rb-4.1.0&q=80&w=1080',
+  'https://images.unsplash.com/photo-1753164725052-47a9c5e8067f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3R0ZXJ5JTIwd2hlZWwlMjB3b3Jrc2hvcHxlbnwxfHx8fDE3NjI3MTA4MDB8MA&ixlib=rb-4.1.0&q=80&w=1080',
+  'https://images.unsplash.com/photo-1753164726043-31e583f8a9b8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYW5kcyUyMHNoYXBpbmclMjBjbGF5JTIwcG90dGVyeXxlbnwxfHx8fDE3NjI3MTA4MDB8MA&ixlib=rb-4.1.0&q=80&w=1080',
+  'https://images.unsplash.com/photo-1637548580984-10c48d61b168?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3R0ZXJ5JTIwZ2xhemluZyUyMHByb2Nlc3N8ZW58MXx8fHwxNzYyNzEwODAxfDA&ixlib=rb-4.1.0&q=80&w=1080',
+];
 
+const openingHours = [
+  { day: 'Monday - Friday', hours: '10:00 AM - 7:00 PM' },
+  { day: 'Saturday', hours: '9:00 AM - 8:00 PM' },
+  { day: 'Sunday', hours: '9:00 AM - 8:00 PM' },
+  { day: 'Public Holidays', hours: 'Closed' },
+];
+
+export default function VisitPage() {
   return (
-    <div className="min-h-screen py-12 px-4 border-t-4 border-[#A67C52]">
-      <div className="container mx-auto max-w-6xl">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 
-            className="text-4xl sm:text-5xl md:text-6xl mb-4 text-[#3E2F24]"
-            style={{ fontFamily: 'var(--font-serif)' }}
+    <div className="min-h-screen pt-20 bg-[#F5F2EB]">
+      {/* Header */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
           >
-            Visit Our Studio
-          </h1>
-          <p className="text-lg text-[#6B5D52] max-w-2xl mx-auto">
-            Come experience the calm and creativity of Callipottery Studio in person.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
-          {/* Location & Map */}
-          <div>
-            <Card className="p-6 border-[#3E2F24]/10 mb-6">
-              <div className="flex items-start gap-4 mb-6">
-                <div className="w-12 h-12 bg-[#A67C52] rounded-full flex items-center justify-center flex-shrink-0">
-                  <MapPin className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="mb-2 text-[#3E2F24]" style={{ fontFamily: 'var(--font-serif)' }}>
-                    Studio Location
-                  </h3>
-                  <p className="text-[#3E2F24]" style={{ fontFamily: 'var(--font-serif)' }}>
-                    42 Pottery Lane<br />
-                    Indiranagar, Bangalore<br />
-                    Karnataka 560038
-                  </p>
-                </div>
-              </div>
-
-              {/* Mock Google Map */}
-              <div className="aspect-video bg-[#E5E0DC] rounded-lg overflow-hidden">
-                <div className="w-full h-full flex items-center justify-center relative">
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#8DA9A0]/20 to-[#A67C52]/20" />
-                  <MapPin className="w-16 h-16 text-[#A67C52] relative z-10" />
-                </div>
-              </div>
-            </Card>
-
-            {/* Opening Hours */}
-            <Card className="p-6 border-[#3E2F24]/10 bg-[#F7F3EF]">
-              <div className="flex items-start gap-4 mb-4">
-                <div className="w-12 h-12 bg-[#A67C52] rounded-full flex items-center justify-center flex-shrink-0">
-                  <Clock className="w-6 h-6 text-white" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="mb-4 text-[#3E2F24]" style={{ fontFamily: 'var(--font-serif)' }}>
-                    Opening Hours
-                  </h3>
-                  <div className="space-y-2 text-[#3E2F24]">
-                    <div className="flex justify-between">
-                      <span>Monday - Friday</span>
-                      <span style={{ fontFamily: 'var(--font-serif)' }}>10:00 AM - 8:00 PM</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Saturday</span>
-                      <span style={{ fontFamily: 'var(--font-serif)' }}>9:00 AM - 6:00 PM</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Sunday</span>
-                      <span style={{ fontFamily: 'var(--font-serif)' }}>10:00 AM - 4:00 PM</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </Card>
-          </div>
-
-          {/* Getting Here */}
-          <div>
-            <h2 
-              className="text-3xl mb-6 text-[#3E2F24]"
-              style={{ fontFamily: 'var(--font-serif)' }}
-            >
-              Getting Here
-            </h2>
-
-            <Card className="p-6 border-[#3E2F24]/10 mb-6">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-[#8DA9A0] rounded-full flex items-center justify-center flex-shrink-0">
-                  <Train className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="mb-2 text-[#3E2F24]" style={{ fontFamily: 'var(--font-serif)' }}>
-                    By Metro
-                  </h3>
-                  <p className="text-[#3E2F24] leading-relaxed">
-                    Take the Purple Line to Indiranagar Metro Station. The studio is a 
-                    10-minute walk from Exit B, heading towards 100 Feet Road.
-                  </p>
-                </div>
-              </div>
-            </Card>
-
-            <Card className="p-6 border-[#3E2F24]/10 mb-6">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-[#8DA9A0] rounded-full flex items-center justify-center flex-shrink-0">
-                  <Car className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="mb-2 text-[#3E2F24]" style={{ fontFamily: 'var(--font-serif)' }}>
-                    By Car
-                  </h3>
-                  <p className="text-[#3E2F24] leading-relaxed">
-                    Parking available on Pottery Lane and in the adjacent parking lot. 
-                    Street parking is free on weekends.
-                  </p>
-                </div>
-              </div>
-            </Card>
-
-            {/* Contact Info */}
-            <div className="space-y-4">
-              <Card className="p-4 border-[#3E2F24]/10 bg-white">
-                <div className="flex items-center gap-3">
-                  <Mail className="w-5 h-5 text-[#A67C52]" />
-                  <div>
-                    <div className="text-sm text-[#6B5D52]">Email</div>
-                    <a 
-                      href="mailto:hello@callipottery.in"
-                      className="text-[#3E2F24] hover:text-[#A67C52] transition-colors"
-                    >
-                      hello@callipottery.in
-                    </a>
-                  </div>
-                </div>
-              </Card>
-
-              <Card className="p-4 border-[#3E2F24]/10 bg-white">
-                <div className="flex items-center gap-3">
-                  <Phone className="w-5 h-5 text-[#A67C52]" />
-                  <div>
-                    <div className="text-sm text-[#6B5D52]">Phone</div>
-                    <a 
-                      href="tel:+919876543210"
-                      className="text-[#3E2F24] hover:text-[#A67C52] transition-colors"
-                    >
-                      +91 98765 43210
-                    </a>
-                  </div>
-                </div>
-              </Card>
+            <div className="w-20 h-20 bg-[#A35D38] rounded-full flex items-center justify-center mx-auto mb-6">
+              <MapPin className="w-10 h-10 text-white" />
             </div>
+            <p className="text-[#A35D38] tracking-widest mb-2 uppercase text-sm">
+              Come See Us
+            </p>
+            <h1 className="text-5xl md:text-6xl text-[#2F2925] mb-4">Visit the Studio</h1>
+            <p className="text-xl text-[#6B6560] max-w-2xl mx-auto">
+              Stop by to see our work, browse our collection, or simply enjoy the creative
+              atmosphere of our studio.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Map & Contact Info */}
+      <section className="py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            {/* Map */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <div className="bg-white rounded-sm overflow-hidden shadow-lg h-full min-h-[400px]">
+                <div className="w-full h-full bg-[#E8E3D9] flex items-center justify-center p-12">
+                  <div className="text-center">
+                    <MapPin className="w-16 h-16 text-[#A35D38] mx-auto mb-4" />
+                    <h3 className="text-2xl text-[#2F2925] mb-2">Studio Location</h3>
+                    <p className="text-[#6B6560] mb-4">
+                      [Map integration would go here]
+                      <br />
+                      Contact us for exact address
+                    </p>
+                    <Button className="bg-[#A35D38] hover:bg-[#8B4D2E] text-white uppercase tracking-widest">
+                      <Navigation className="w-4 h-4 mr-2" />
+                      GET DIRECTIONS
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Contact Details */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="space-y-8"
+            >
+              {/* Address */}
+              <div className="bg-white p-8 rounded-sm shadow-lg">
+                <h3 className="text-2xl text-[#2F2925] mb-4">Studio Address</h3>
+                <div className="flex items-start gap-4">
+                  <MapPin className="w-6 h-6 text-[#A35D38] flex-shrink-0 mt-1" />
+                  <div className="text-[#6B6560]">
+                    <p>Callipottery Studio</p>
+                    <p>[Street Address]</p>
+                    <p>[City, State, ZIP]</p>
+                    <p>India</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Opening Hours */}
+              <div className="bg-white p-8 rounded-sm shadow-lg">
+                <div className="flex items-center gap-3 mb-4">
+                  <Clock className="w-6 h-6 text-[#A35D38]" />
+                  <h3 className="text-2xl text-[#2F2925]">Opening Hours</h3>
+                </div>
+                <div className="space-y-3">
+                  {openingHours.map((schedule, index) => (
+                    <div
+                      key={index}
+                      className="flex justify-between items-center pb-3 border-b border-[#E8E3D9] last:border-0"
+                    >
+                      <span className="text-[#2F2925]">{schedule.day}</span>
+                      <span className="text-[#6B6560]">{schedule.hours}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Contact Methods */}
+              <div className="bg-white p-8 rounded-sm shadow-lg">
+                <h3 className="text-2xl text-[#2F2925] mb-4">Get in Touch</h3>
+                <div className="space-y-4">
+                  <a
+                    href="tel:+91XXXXXXXXXX"
+                    className="flex items-center gap-4 p-3 rounded hover:bg-[#F5F2EB] transition-colors"
+                  >
+                    <Phone className="w-5 h-5 text-[#A35D38]" />
+                    <span className="text-[#6B6560]">+91 (XXX) XXX-XXXX</span>
+                  </a>
+                  <a
+                    href="mailto:info@callipottery.com"
+                    className="flex items-center gap-4 p-3 rounded hover:bg-[#F5F2EB] transition-colors"
+                  >
+                    <Mail className="w-5 h-5 text-[#A35D38]" />
+                    <span className="text-[#6B6560]">info@callipottery.com</span>
+                  </a>
+                  <a
+                    href="https://wa.me/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-4 p-3 rounded hover:bg-[#F5F2EB] transition-colors"
+                  >
+                    <MessageCircle className="w-5 h-5 text-[#A35D38]" />
+                    <span className="text-[#6B6560]">WhatsApp Us</span>
+                  </a>
+                  <a
+                    href="https://instagram.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-4 p-3 rounded hover:bg-[#F5F2EB] transition-colors"
+                  >
+                    <Instagram className="w-5 h-5 text-[#A35D38]" />
+                    <span className="text-[#6B6560]">@callipottery</span>
+                  </a>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </div>
+      </section>
 
-        {/* Studio Photos Carousel */}
-        <div className="mb-12">
-          <h2 
-            className="text-3xl mb-8 text-center text-[#3E2F24]"
-            style={{ fontFamily: 'var(--font-serif)' }}
+      {/* Studio Gallery */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-12"
           >
-            Explore Our Space
-          </h2>
+            <h2 className="text-4xl text-[#2F2925] mb-4">Studio Gallery</h2>
+            <p className="text-[#6B6560]">Take a peek inside our creative space</p>
+          </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {studioImages.map((image, index) => (
-              <div key={index} className="aspect-square rounded-lg overflow-hidden shadow-lg">
-                <ImageWithFallback
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="relative aspect-video overflow-hidden rounded-sm group"
+              >
+                <img
                   src={image}
-                  alt={`Studio space ${index + 1}`}
-                  className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                  alt={`Studio ${index + 1}`}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
+      </section>
 
-        {/* Visitor Info */}
-        <Card className="p-8 border-[#3E2F24]/10 bg-[#E5E0DC]">
-          <h3 
-            className="text-2xl mb-6 text-center text-[#3E2F24]"
-            style={{ fontFamily: 'var(--font-serif)' }}
+      {/* Directions & Parking */}
+      <section className="py-16 bg-[#F5F2EB]">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
           >
-            Plan Your Visit
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-[#3E2F24]">
-            <div className="space-y-3">
-              <div className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-[#A67C52] rounded-full mt-2 flex-shrink-0" />
-                <p>Walk-ins welcome during studio hours</p>
+            <h2 className="text-4xl text-[#2F2925] mb-8 text-center">
+              Directions & Parking
+            </h2>
+
+            <div className="bg-white p-8 rounded-sm space-y-6">
+              <div>
+                <h3 className="text-xl text-[#2F2925] mb-3">By Car</h3>
+                <p className="text-[#6B6560]">
+                  The studio is easily accessible from the main highway. Take Exit 12 and follow
+                  the signs to the Arts District. Free parking is available on-site.
+                </p>
               </div>
-              <div className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-[#A67C52] rounded-full mt-2 flex-shrink-0" />
-                <p>Classes and workshops require advance booking</p>
+
+              <div>
+                <h3 className="text-xl text-[#2F2925] mb-3">By Public Transport</h3>
+                <p className="text-[#6B6560]">
+                  The nearest metro station is [Station Name], approximately 10 minutes walk from
+                  the studio. Bus routes 23, 45, and 67 stop nearby.
+                </p>
               </div>
-              <div className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-[#A67C52] rounded-full mt-2 flex-shrink-0" />
-                <p>Shop is open during all studio hours</p>
-              </div>
-            </div>
-            <div className="space-y-3">
-              <div className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-[#A67C52] rounded-full mt-2 flex-shrink-0" />
-                <p>Free studio tours on Saturday mornings</p>
-              </div>
-              <div className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-[#A67C52] rounded-full mt-2 flex-shrink-0" />
-                <p>Wheelchair accessible entrance and facilities</p>
-              </div>
-              <div className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-[#A67C52] rounded-full mt-2 flex-shrink-0" />
-                <p>Complimentary tea and coffee for visitors</p>
+
+              <div>
+                <h3 className="text-xl text-[#2F2925] mb-3">Parking Information</h3>
+                <p className="text-[#6B6560]">
+                  Free parking available in our dedicated lot. Additional street parking available
+                  on weekends. The studio is wheelchair accessible with designated parking spaces.
+                </p>
               </div>
             </div>
-          </div>
-        </Card>
-      </div>
+          </motion.div>
+        </div>
+      </section>
     </div>
   );
 }

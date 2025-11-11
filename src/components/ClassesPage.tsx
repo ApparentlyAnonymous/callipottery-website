@@ -1,275 +1,558 @@
+import { motion, AnimatePresence } from 'motion/react';
+import { CheckCircle, Clock, Calendar, Users, ChevronLeft, ChevronRight, X, MessageCircle } from 'lucide-react';
 import { Button } from './ui/button';
-import { Card } from './ui/card';
-import { Badge } from './ui/badge';
-import { ImageWithFallback } from './figma/ImageWithFallback';
-import { Calendar, Clock, Users, MessageCircle, Check } from 'lucide-react';
+import { useState } from 'react';
+import { toast } from 'sonner@2.0.3';
 
-export function ClassesPage() {
-  const classes = [
-    {
-      title: 'Beginner – Level 1 (Wheel Throwing)',
-      level: 'Beginner',
-      duration: '12 sessions | 3 hrs each',
-      price: '₹11,600',
-      schedule: 'Saturday & Sunday | 11 AM – 2 PM / 3 PM – 6 PM',
-      image: 'https://images.unsplash.com/photo-1590605049074-f1780f70b791?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3R0ZXJ5JTIwd2hlZWwlMjBjbGF5fGVufDF8fHx8MTc2MTM3NTc4OXww&ixlib=rb-4.1.0&q=80&w=1080',
-      description: 'Discover the art of shaping clay on the potter\'s wheel. Learn every step — from Wedging & Centering to Pulling & Trimming — and create functional, food-safe pottery pieces.',
-      highlights: [
-        'Learn fundamentals of pottery',
-        'Guided by expert artists',
-        'Create & take home 5 finished pieces',
-        'Materials and firings included',
-      ],
-    },
-    {
-      title: 'Hand Building – Beginner Level 1',
-      level: 'Beginner',
-      duration: '10 sessions | 3 hrs each',
-      price: '₹11,600',
-      schedule: 'Saturday & Sunday | 11 AM – 2 PM / 3 PM – 6 PM',
-      image: 'https://images.unsplash.com/photo-1753164726043-31e583f8a9b8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYW5kcyUyMHNoYXBpbmclMjBjbGF5fGVufDF8fHx8MTc2MTQ1NDAyM3ww&ixlib=rb-4.1.0&q=80&w=1080',
-      description: 'Master the art of hand building using slabs, coils, and attachments. Perfect for beginners who want to explore sculptural and functional forms.',
-      highlights: [
-        'Learn pinch, slab, coil, and cutwork techniques',
-        'Create & take home 6 finished pieces',
-        'Unlimited clay for practice',
-        'Personalized instruction from studio artists',
-      ],
-    },
-    {
-      title: 'Glaze Application – Level 1',
-      level: 'Intermediate',
-      duration: '3 sessions | 3 hrs each',
-      price: 'Contact for pricing',
-      schedule: 'Limited to 6 students per batch',
-      prereq: 'Prerequisite: Completion of a beginner course in wheel throwing or hand building',
-      image: 'https://images.unsplash.com/photo-1637548580984-10c48d61b168?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjZXJhbWljJTIwZ2xhemluZyUyMHByb2Nlc3N8ZW58MXx8fHwxNzYxNDU0MDI0fDA&ixlib=rb-4.1.0&q=80&w=1080',
-      description: 'Glazing transforms your pottery into a finished work of art. This course introduces the foundations of glaze application, from preparation to firing.',
-      highlights: [
-        'What glazes are & how they work',
-        'Techniques: dipping, pouring, layering, underglazes',
-        'Waxing, cleaning, and finishing articles before firing',
-        'Identifying & fixing glaze defects',
-        'Tips for consistent kiln results',
-        'Use of Cone 6 glazes & Amaco underglazes',
-        'Firing & materials included',
-        'Practice on provided bisque articles',
-        'Option to glaze one of your own bisque pieces (≤ 4"x4")',
-      ],
-    },
+const courses = [
+  {
+    title: 'Beginner (Wheel Throwing)',
+    description:
+      'Discover the art of shaping clay on the potter\'s wheel. Learn every step — from Wedging & Centering to Pulling & Trimming — and create functional, food-safe pottery pieces.',
+    schedule: 'Saturday & Sunday | 11 AM – 2 PM / 3 PM – 6 PM',
+    duration: '12 sessions × 3 hrs',
+    price: '₹11,600',
+    highlights: [
+      'Learn fundamentals of pottery',
+      'Guided by expert artists',
+      'Create & take home 5 finished pieces',
+      'Materials and firings included',
+    ],
+    image: 'https://images.unsplash.com/photo-1753164725052-47a9c5e8067f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3R0ZXJ5JTIwd2hlZWwlMjB3b3Jrc2hvcHxlbnwxfHx8fDE3NjI3MTA4MDB8MA&ixlib=rb-4.1.0&q=80&w=1080',
+  },
+  {
+    title: 'Hand Building (Beginner Level 1)',
+    description:
+      'Master the art of hand building using slabs, coils, and attachments. Create unique pieces without a wheel, focusing on form, texture, and creative expression.',
+    schedule: 'Saturday & Sunday | 11 AM – 2 PM / 3 PM – 6 PM',
+    duration: '12 sessions × 3 hrs',
+    price: '₹11,600',
+    highlights: [
+      'Master slab, coil, and pinch techniques',
+      'Build sculptural and functional pieces',
+      'Expert guidance throughout',
+      'All materials and firing included',
+    ],
+    image: 'https://images.unsplash.com/photo-1662845114342-256fdc45981d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYW5kYnVpbGRpbmclMjBwb3R0ZXJ5JTIwY29pbHxlbnwxfHx8fDE3NjI3MTA4MDJ8MA&ixlib=rb-4.1.0&q=80&w=1080',
+  },
+  {
+    title: 'Glaze Application (Level 1)',
+    description:
+      'Glazing transforms your pottery into a finished work of art. Learn color theory, application techniques, and understand how different glazes interact with clay and fire.',
+    schedule: 'Saturday & Sunday | 11 AM – 2 PM / 3 PM – 6 PM',
+    duration: '8 sessions × 3 hrs',
+    price: '₹8,400',
+    highlights: [
+      'Learn professional glazing techniques',
+      'Understand glaze chemistry basics',
+      'Experiment with colors and textures',
+      'Glaze materials and firing included',
+    ],
+    image: 'https://images.unsplash.com/photo-1637548580984-10c48d61b168?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3R0ZXJ5JTIwZ2xhemluZyUyMHByb2Nlc3N8ZW58MXx8fHwxNjI3MTA4MDF8MA&ixlib=rb-4.1.0&q=80&w=1080',
+  },
+];
+
+const workshopGallery = [
+  'https://images.unsplash.com/photo-1753164725052-47a9c5e8067f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3R0ZXJ5JTIwd2hlZWwlMjB3b3Jrc2hvcHxlbnwxfHx8fDE3NjI3MTA4MDB8MA&ixlib=rb-4.1.0&q=80&w=1080',
+  'https://images.unsplash.com/photo-1638341840302-a2d9579b821e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3R0ZXJ5JTIwc3R1ZGlvJTIwd29ya3NwYWNlfGVufDF8fHx8MTc2MjYyNTMyNnww&ixlib=rb-4.1.0&q=80&w=1080',
+  'https://images.unsplash.com/photo-1753164726043-31e583f8a9b8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYW5kcyUyMHNoYXBpbmclMjBjbGF5JTIwcG90dGVyeXxlbnwxfHx8fDE3NjI3MTA4MDB8MA&ixlib=rb-4.1.0&q=80&w=1080',
+  'https://images.unsplash.com/photo-1662845114342-256fdc45981d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYW5kYnVpbGRpbmclMjBwb3R0ZXJ5JTIwY29pbHxlbnwxfHx8fDE3NjI3MTA4MDJ8MA&ixlib=rb-4.1.0&q=80&w=1080',
+];
+
+const whatsIncluded = [
+  {
+    icon: Users,
+    title: 'Expert Instruction',
+    description: 'Learn from experienced ceramic artists',
+  },
+  {
+    icon: CheckCircle,
+    title: 'Materials Included',
+    description: 'All clay, tools, and supplies provided',
+  },
+  {
+    icon: Clock,
+    title: 'Firing Included',
+    description: 'Professional kiln firing for all pieces',
+  },
+  {
+    icon: Calendar,
+    title: 'Take Home',
+    description: 'Keep your finished pottery creations',
+  },
+];
+
+const timeSlots = [
+  { id: '11am', label: '11 AM – 2 PM', available: true },
+  { id: '3pm', label: '3 PM – 6 PM', available: true },
+];
+
+export default function ClassesPage() {
+  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
+  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
+  const [selectedDate, setSelectedDate] = useState<number | null>(null);
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState<string | null>(null);
+  const [selectedCourse, setSelectedCourse] = useState<string>('');
+  const [bookingModalOpen, setBookingModalOpen] = useState(false);
+  const [bookedSlots, setBookedSlots] = useState<Set<string>>(new Set(['6-11am', '14-3pm', '27-11am']));
+  
+  const monthNames = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
   ];
+  
+  const getDaysInMonth = (month: number, year: number) => {
+    return new Date(year, month + 1, 0).getDate();
+  };
+  
+  const getFirstDayOfMonth = (month: number, year: number) => {
+    return new Date(year, month, 1).getDay();
+  };
+  
+  // Get weekends (Saturdays and Sundays) for the current month
+  const getWeekendDays = (month: number, year: number) => {
+    const daysInMonth = getDaysInMonth(month, year);
+    const weekends = [];
+    for (let day = 1; day <= daysInMonth; day++) {
+      const dayOfWeek = new Date(year, month, day).getDay();
+      if (dayOfWeek === 0 || dayOfWeek === 6) { // Sunday or Saturday
+        weekends.push(day);
+      }
+    }
+    return weekends;
+  };
+  
+  const daysInMonth = getDaysInMonth(currentMonth, currentYear);
+  const firstDay = getFirstDayOfMonth(currentMonth, currentYear);
+  const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
+  const blanks = Array.from({ length: firstDay }, (_, i) => i);
+  const weekendDays = getWeekendDays(currentMonth, currentYear);
+  
+  const handlePrevMonth = () => {
+    if (currentMonth === 0) {
+      setCurrentMonth(11);
+      setCurrentYear(currentYear - 1);
+    } else {
+      setCurrentMonth(currentMonth - 1);
+    }
+  };
+  
+  const handleNextMonth = () => {
+    if (currentMonth === 11) {
+      setCurrentMonth(0);
+      setCurrentYear(currentYear + 1);
+    } else {
+      setCurrentMonth(currentMonth + 1);
+    }
+  };
+  
+  const isDayAvailable = (day: number) => {
+    return weekendDays.includes(day);
+  };
+  
+  const isToday = (day: number) => {
+    const today = new Date();
+    return day === today.getDate() && 
+           currentMonth === today.getMonth() && 
+           currentYear === today.getFullYear();
+  };
 
-  const handleWhatsAppBooking = (className: string) => {
-    window.open(
-      `https://wa.me/919876543210?text=${encodeURIComponent(`I would like to book: ${className}`)}`,
-      '_blank'
-    );
+  const handleDayClick = (day: number) => {
+    if (isDayAvailable(day)) {
+      setSelectedDate(day);
+      setBookingModalOpen(true);
+    }
+  };
+
+  const handleBooking = () => {
+    if (selectedDate && selectedTimeSlot && selectedCourse) {
+      const slotKey = `${selectedDate}-${selectedTimeSlot}`;
+      if (bookedSlots.has(slotKey)) {
+        toast.error('This slot is already booked. Please select another time.');
+      } else {
+        // Open WhatsApp with pre-filled message
+        const message = `Hi! I'd like to book a class:\nDate: ${monthNames[currentMonth]} ${selectedDate}, ${currentYear}\nTime: ${timeSlots.find(t => t.id === selectedTimeSlot)?.label}\nCourse: ${selectedCourse}`;
+        window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
+        
+        // Mark slot as booked
+        setBookedSlots(new Set([...bookedSlots, slotKey]));
+        toast.success('Booking request sent via WhatsApp!');
+        setBookingModalOpen(false);
+        setSelectedDate(null);
+        setSelectedTimeSlot(null);
+        setSelectedCourse('');
+      }
+    } else {
+      toast.error('Please select course and time slot');
+    }
+  };
+
+  const isSlotBooked = (day: number, timeSlotId: string) => {
+    return bookedSlots.has(`${day}-${timeSlotId}`);
   };
 
   return (
-    <div className="min-h-screen py-12 sm:py-24 px-4 border-t-4 border-[#A67C52]">
-      <div className="container mx-auto">
-        {/* Header */}
-        <div className="text-center mb-12 sm:mb-16 border-b-4 border-[#A67C52] pb-12">
-          <h1 
-            className="mb-4 text-[#3E2F24]"
-            style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(40px, 6vw, 64px)' }}
+    <div className="min-h-screen pt-20 bg-[#F5F2EB]">
+      {/* Header */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
           >
-            Pottery Classes
-          </h1>
-          <p 
-            className="text-[#6B5D52] mb-6"
-            style={{ fontFamily: 'var(--font-sans)', fontStyle: 'italic', fontSize: '20px' }}
-          >
-            Find peace in your hands.
-          </p>
-          <p className="text-[#3E2F24] max-w-2xl mx-auto" style={{ fontSize: '18px', lineHeight: '1.6' }}>
-            Whether you're a complete beginner or looking to refine your skills, our workshops 
-            offer a calm space to learn, create, and connect with clay.
-          </p>
+            <p className="text-[#A35D38] tracking-widest mb-2 uppercase text-sm">
+              LEARN THE CRAFT
+            </p>
+            <h1 className="text-5xl md:text-6xl text-[#2F2925] mb-4">Our Courses</h1>
+            <p className="text-xl text-[#6B6560] max-w-2xl mx-auto">
+              Join us to discover the therapeutic art of pottery and create beautiful, functional pieces.
+            </p>
+          </motion.div>
         </div>
+      </section>
 
-        {/* Classes */}
-        <div className="mb-20 border-b-4 border-[#A67C52] pb-20">
-          <h2 
-            className="mb-12 text-[#3E2F24] text-center sm:text-left"
-            style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(32px, 5vw, 40px)' }}
+      {/* Interactive Calendar Section */}
+      <section className="py-16 bg-[#F5F2EB]">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-8"
           >
-            Our Courses
-          </h2>
+            <h2 className="text-4xl text-[#2F2925] mb-4">Class Availability</h2>
+            <p className="text-[#6B6560]">
+              Classes run on weekends. Click on an available date to book your session.
+            </p>
+          </motion.div>
 
-          <div className="space-y-12">
-            {classes.map((classItem, index) => (
-              <Card
-                key={index}
-                className="overflow-hidden border-0 shadow-[0_4px_12px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.12)] transition-shadow"
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="bg-white rounded-lg shadow-xl p-6 md:p-8"
+          >
+            {/* Calendar Header */}
+            <div className="flex items-center justify-between mb-6">
+              <button
+                onClick={handlePrevMonth}
+                className="p-2 hover:bg-[#F5F2EB] rounded-full transition-colors"
+                aria-label="Previous month"
               >
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
-                  {/* Image */}
-                  <div className="aspect-[4/3] md:aspect-auto overflow-hidden bg-[#E5E0DC] rounded-t-lg md:rounded-l-lg md:rounded-tr-none">
-                    <ImageWithFallback
-                      src={classItem.image}
-                      alt={classItem.title}
+                <ChevronLeft className="w-6 h-6 text-[#2F2925]" />
+              </button>
+              <h3 className="text-2xl text-[#2F2925]">
+                {monthNames[currentMonth]} {currentYear}
+              </h3>
+              <button
+                onClick={handleNextMonth}
+                className="p-2 hover:bg-[#F5F2EB] rounded-full transition-colors"
+                aria-label="Next month"
+              >
+                <ChevronRight className="w-6 h-6 text-[#2F2925]" />
+              </button>
+            </div>
+
+            {/* Calendar Grid */}
+            <div className="grid grid-cols-7 gap-2 mb-4">
+              {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
+                <div
+                  key={day}
+                  className="text-center text-sm text-[#6B6560] py-2"
+                >
+                  {day}
+                </div>
+              ))}
+            </div>
+
+            <div className="grid grid-cols-7 gap-2">
+              {blanks.map((blank) => (
+                <div key={`blank-${blank}`} className="aspect-square" />
+              ))}
+              {days.map((day) => {
+                const available = isDayAvailable(day);
+                const today = isToday(day);
+                
+                return (
+                  <motion.button
+                    key={day}
+                    onClick={() => handleDayClick(day)}
+                    whileHover={available ? { scale: 1.05 } : {}}
+                    whileTap={available ? { scale: 0.95 } : {}}
+                    disabled={!available}
+                    className={`aspect-square flex items-center justify-center rounded-lg text-sm transition-all ${
+                      today ? 'ring-2 ring-[#A35D38]' : ''
+                    } ${
+                      available
+                        ? 'bg-[#A35D38] text-white hover:bg-[#8B4D2E] cursor-pointer'
+                        : 'bg-[#F5F2EB] text-[#6B6560]/50 cursor-not-allowed'
+                    }`}
+                  >
+                    {day}
+                  </motion.button>
+                );
+              })}
+            </div>
+
+            {/* Legend */}
+            <div className="mt-6 pt-6 border-t border-[#F5F2EB]">
+              <div className="flex flex-wrap items-center justify-center gap-6 text-sm">
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 bg-[#A35D38] rounded" />
+                  <span className="text-[#6B6560]">Weekend (Available)</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 bg-[#F5F2EB] rounded" />
+                  <span className="text-[#6B6560]">Weekday (Unavailable)</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 border-2 border-[#A35D38] rounded" />
+                  <span className="text-[#6B6560]">Today</span>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Booking Modal */}
+      <AnimatePresence>
+        {bookingModalOpen && selectedDate && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={() => setBookingModalOpen(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white rounded-lg shadow-2xl max-w-md w-full p-6 md:p-8"
+            >
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-2xl text-[#2F2925]">Book Your Class</h3>
+                <button
+                  onClick={() => setBookingModalOpen(false)}
+                  className="text-[#6B6560] hover:text-[#A35D38] transition-colors"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+
+              <div className="space-y-6">
+                {/* Selected Date */}
+                <div className="bg-[#F5F2EB] rounded-lg p-4">
+                  <p className="text-sm text-[#6B6560] mb-1">SELECTED DATE</p>
+                  <p className="text-lg text-[#2F2925]">
+                    {monthNames[currentMonth]} {selectedDate}, {currentYear}
+                  </p>
+                </div>
+
+                {/* Course Selection */}
+                <div>
+                  <label className="block text-sm text-[#6B6560] mb-2 uppercase tracking-wide">
+                    Select Course
+                  </label>
+                  <select
+                    value={selectedCourse}
+                    onChange={(e) => setSelectedCourse(e.target.value)}
+                    className="w-full p-3 border border-[#E8E3D9] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A35D38] bg-white"
+                  >
+                    <option value="">Choose a course...</option>
+                    {courses.map((course, idx) => (
+                      <option key={idx} value={course.title}>
+                        {course.title} - {course.price}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Time Slot Selection */}
+                <div>
+                  <label className="block text-sm text-[#6B6560] mb-2 uppercase tracking-wide">
+                    Select Time Slot
+                  </label>
+                  <div className="space-y-2">
+                    {timeSlots.map((slot) => {
+                      const isBooked = isSlotBooked(selectedDate, slot.id);
+                      return (
+                        <button
+                          key={slot.id}
+                          onClick={() => !isBooked && setSelectedTimeSlot(slot.id)}
+                          disabled={isBooked}
+                          className={`w-full p-3 rounded-lg border-2 transition-all ${
+                            isBooked
+                              ? 'bg-[#E8E3D9] border-[#E8E3D9] text-[#6B6560]/50 cursor-not-allowed'
+                              : selectedTimeSlot === slot.id
+                              ? 'bg-[#A35D38] border-[#A35D38] text-white'
+                              : 'bg-white border-[#E8E3D9] text-[#2F2925] hover:border-[#A35D38]'
+                          }`}
+                        >
+                          <div className="flex items-center justify-between">
+                            <span>{slot.label}</span>
+                            {isBooked && <span className="text-xs">(Booked)</span>}
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Booking Button */}
+                <Button
+                  onClick={handleBooking}
+                  disabled={!selectedCourse || !selectedTimeSlot}
+                  className="w-full py-6 bg-[#A35D38] hover:bg-[#8B4D2E] text-white uppercase tracking-widest disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <MessageCircle className="w-4 h-4 mr-2" />
+                  BOOK VIA WHATSAPP
+                </Button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Courses */}
+      <section className="py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="space-y-12">
+            {courses.map((course, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: index * 0.2 }}
+                className="bg-white rounded-sm overflow-hidden shadow-lg"
+              >
+                <div className="grid grid-cols-1 lg:grid-cols-2">
+                  <div className="relative h-64 lg:h-auto">
+                    <img
+                      src={course.image}
+                      alt={course.title}
                       className="w-full h-full object-cover"
                     />
                   </div>
+                  <div className="p-8 lg:p-12">
+                    <h3 className="text-3xl text-[#2F2925] mb-4">{course.title}</h3>
+                    <p className="text-[#6B6560] mb-6">{course.description}</p>
 
-                  {/* Content */}
-                  <div className="p-6 sm:p-8 bg-white flex flex-col">
-                    <div className="flex items-start justify-between mb-3 flex-wrap gap-2">
-                      <h3 
-                        className="text-[#3E2F24] flex-1" 
-                        style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(20px, 3vw, 28px)' }}
-                      >
-                        {classItem.title}
-                      </h3>
-                      <Badge 
-                        className={`ml-2 ${ 
-                          classItem.level === 'Beginner' 
-                            ? 'bg-[#8DA9A0] text-white' 
-                            : 'bg-[#A67C52] text-white'
-                        }`}
-                      >
-                        {classItem.level}
-                      </Badge>
-                    </div>
-
-                    {classItem.prereq && (
-                      <p className="text-[#A67C52] mb-4 italic text-sm sm:text-base" style={{ fontSize: '14px' }}>
-                        {classItem.prereq}
-                      </p>
-                    )}
-
-                    <p className="text-[#6B5D52] mb-6" style={{ fontSize: '16px', lineHeight: '1.6' }}>
-                      {classItem.description}
-                    </p>
-
-                    <div className="space-y-2 mb-4 text-[#3E2F24]" style={{ fontSize: '15px' }}>
-                      <div className="flex items-center gap-2">
-                        <Calendar className="w-4 h-4 text-[#A67C52] flex-shrink-0" />
-                        <span>{classItem.schedule}</span>
+                    <div className="space-y-4 mb-6">
+                      <div className="flex items-center gap-2 text-[#2F2925]">
+                        <Calendar className="w-5 h-5 text-[#A35D38]" />
+                        <span>{course.schedule}</span>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <Clock className="w-4 h-4 text-[#A67C52] flex-shrink-0" />
-                        <span>{classItem.duration}</span>
+                      <div className="flex items-center gap-2 text-[#2F2925]">
+                        <Clock className="w-5 h-5 text-[#A35D38]" />
+                        <span>{course.duration}</span>
                       </div>
+                      <div className="text-3xl text-[#A35D38]">{course.price}</div>
                     </div>
 
-                    {/* Highlights */}
-                    <div className="mb-6 flex-1">
-                      <h4 
-                        className="mb-3 text-[#3E2F24]" 
-                        style={{ fontFamily: 'var(--font-serif)', fontSize: '18px' }}
-                      >
-                        Highlights:
-                      </h4>
-                      <ul className="space-y-2">
-                        {classItem.highlights.map((highlight, idx) => (
-                          <li key={idx} className="flex items-start gap-2 text-[#6B5D52]" style={{ fontSize: '14px' }}>
-                            <Check className="w-4 h-4 text-[#A67C52] flex-shrink-0 mt-0.5" />
-                            <span>{highlight}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                    <ul className="space-y-3 mb-6">
+                      {course.highlights.map((highlight, idx) => (
+                        <li key={idx} className="flex items-start gap-2">
+                          <CheckCircle className="w-5 h-5 text-[#A35D38] mt-0.5 flex-shrink-0" />
+                          <span className="text-[#6B6560]">{highlight}</span>
+                        </li>
+                      ))}
+                    </ul>
 
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pt-4 border-t border-[#3E2F24]/10 gap-4">
-                      <span 
-                        className="text-[#A67C52]"
-                        style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(20px, 4vw, 28px)' }}
-                      >
-                        {classItem.price}
-                      </span>
-                      <Button
-                        onClick={() => handleWhatsAppBooking(classItem.title)}
-                        className="bg-[#A67C52] hover:bg-[#8B6644] text-white rounded-lg w-full sm:w-auto"
-                      >
-                        <MessageCircle className="w-4 h-4 mr-2" />
-                        Book Now
-                      </Button>
-                    </div>
+                    <Button 
+                      onClick={() => {
+                        setSelectedCourse(course.title);
+                        setBookingModalOpen(true);
+                      }}
+                      className="w-full py-6 bg-[#A35D38] hover:bg-[#8B4D2E] text-white uppercase tracking-widest"
+                    >
+                      BOOK THIS COURSE
+                    </Button>
                   </div>
                 </div>
-              </Card>
+              </motion.div>
             ))}
           </div>
         </div>
+      </section>
 
-        {/* Workshop Gallery */}
-        <div className="mb-20 border-b-4 border-[#A67C52] pb-20">
-          <h2 
-            className="mb-12 text-center text-[#3E2F24]"
-            style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(32px, 5vw, 40px)' }}
+      {/* What's Included */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-12"
           >
-            From Our Workshops
-          </h2>
+            <h2 className="text-4xl text-[#2F2925] mb-4">What's Included</h2>
+          </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-            {[
-              'https://images.unsplash.com/photo-1753164726043-31e583f8a9b8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYW5kcyUyMHNoYXBpbmclMjBjbGF5fGVufDF8fHx8MTc2MTQ1NDAyM3ww&ixlib=rb-4.1.0&q=80&w=1080',
-              'https://images.unsplash.com/photo-1710834925630-7dee6c880b07?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3R0ZXJ5JTIwY2xhc3MlMjB3b3Jrc2hvcHxlbnwxfHx8fDE3NjE0NTQwMjJ8MA&ixlib=rb-4.1.0&q=80&w=1080',
-              'https://images.unsplash.com/photo-1637548580984-10c48d61b168?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjZXJhbWljJTIwZ2xhemluZyUyMHByb2Nlc3N8ZW58MXx8fHwxNzYxNDU0MDI0fDA&ixlib=rb-4.1.0&q=80&w=1080',
-              'https://images.unsplash.com/photo-1662845114342-256fdc45981d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3R0ZXJ5JTIwdG9vbHMlMjBzdHVkaW98ZW58MXx8fHwxNzYxNDU0MDI0fDA&ixlib=rb-4.1.0&q=80&w=1080',
-            ].map((image, index) => (
-              <div key={index} className="aspect-square overflow-hidden rounded-lg">
-                <ImageWithFallback
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {whatsIncluded.map((item, index) => {
+              const IconComponent = item.icon;
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="text-center"
+                >
+                  <div className="w-16 h-16 bg-[#A35D38]/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <IconComponent className="w-8 h-8 text-[#A35D38]" />
+                  </div>
+                  <h3 className="text-xl text-[#2F2925] mb-2">{item.title}</h3>
+                  <p className="text-[#6B6560]">{item.description}</p>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Workshop Gallery */}
+      <section className="py-16 bg-[#F5F2EB]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-4xl text-[#2F2925] mb-4">Workshop Moments</h2>
+            <p className="text-[#6B6560]">See what happens in our classes</p>
+          </motion.div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {workshopGallery.map((image, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="aspect-square overflow-hidden rounded-sm"
+              >
+                <img
                   src={image}
-                  alt={`Workshop gallery ${index + 1}`}
+                  alt={`Workshop moment ${index + 1}`}
                   className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
                 />
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
-
-        {/* What's Included */}
-        <div className="bg-[#E5E0DC] rounded-lg p-8 sm:p-10 max-w-3xl mx-auto border-4 border-[#A67C52]">
-          <h3 
-            className="mb-8 text-center text-[#3E2F24]"
-            style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(24px, 4vw, 32px)' }}
-          >
-            What's Included
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-[#3E2F24]">
-            <div className="flex items-start gap-3">
-              <div className="w-2 h-2 bg-[#A67C52] rounded-full mt-2 flex-shrink-0" />
-              <div>
-                <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '18px' }}>All Materials</h4>
-                <p className="text-[#6B5D52]" style={{ fontSize: '16px', lineHeight: '1.6' }}>
-                  Clay, tools, and glazes provided
-                </p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <div className="w-2 h-2 bg-[#A67C52] rounded-full mt-2 flex-shrink-0" />
-              <div>
-                <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '18px' }}>Expert Instruction</h4>
-                <p className="text-[#6B5D52]" style={{ fontSize: '16px', lineHeight: '1.6' }}>
-                  Learn from experienced ceramicists
-                </p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <div className="w-2 h-2 bg-[#A67C52] rounded-full mt-2 flex-shrink-0" />
-              <div>
-                <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '18px' }}>Firing Included</h4>
-                <p className="text-[#6B5D52]" style={{ fontSize: '16px', lineHeight: '1.6' }}>
-                  We'll fire and glaze your pieces
-                </p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <div className="w-2 h-2 bg-[#A67C52] rounded-full mt-2 flex-shrink-0" />
-              <div>
-                <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '18px' }}>Take Home</h4>
-                <p className="text-[#6B5D52]" style={{ fontSize: '16px', lineHeight: '1.6' }}>
-                  Keep your finished creations
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      </section>
     </div>
   );
 }

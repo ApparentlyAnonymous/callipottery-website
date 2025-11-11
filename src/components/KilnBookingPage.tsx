@@ -1,311 +1,241 @@
+import { motion } from 'motion/react';
+import { AlertCircle, Thermometer, Clock, MessageCircle } from 'lucide-react';
 import { Button } from './ui/button';
-import { Card } from './ui/card';
-import { ImageWithFallback } from './figma/ImageWithFallback';
-import { Flame, Package } from 'lucide-react';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from './ui/table';
+import { Alert, AlertDescription } from './ui/alert';
 
-export function KilnBookingPage() {
-  const handleWhatsAppBooking = () => {
-    window.open(
-      'https://wa.me/919876543210?text=I would like to book kiln time at Callipottery Studio',
-      '_blank'
-    );
-  };
+const kilnData = [
+  {
+    model: 'GX2327D Kiln',
+    innerDimensions: '23" x 27"',
+    outerDimensions: '32" x 38"',
+    capacity: '7.27 cu ft',
+    ratePerFiring: '₹1,500',
+  },
+  {
+    model: 'BX1822D Kiln',
+    innerDimensions: '18" x 22"',
+    outerDimensions: '27" x 33"',
+    capacity: '3.93 cu ft',
+    ratePerFiring: '₹1,000',
+  },
+];
 
+const firingPolicies = [
+  'All pottery must be bone dry before firing',
+  'Typical turnaround time: 3-5 business days',
+  'We are not responsible for warping, cracking, or damage during firing',
+  'Glazing services available upon request',
+  'Advanced booking required (minimum 48 hours)',
+  'Cancellations must be made 24 hours in advance',
+];
+
+export default function KilnBookingPage() {
   return (
-    <div className="min-h-screen py-12 px-4 border-t-4 border-[#A67C52]">
-      <div className="container mx-auto max-w-6xl">
-        {/* Hero Section */}
-        <div className="relative h-64 md:h-96 rounded-2xl overflow-hidden mb-12 border-4 border-[#A67C52]">
-          <ImageWithFallback
-            src="https://images.unsplash.com/photo-1650065962232-e4b7f95ebf1f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxraWxuJTIwZmlyZSUyMGNlcmFtaWNzfGVufDF8fHx8MTc2MTQ1NDAyMnww&ixlib=rb-4.1.0&q=80&w=1080"
-            alt="Glowing kiln"
+    <div className="min-h-screen pt-20 bg-[#F5F2EB]">
+      {/* Header */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <div className="w-20 h-20 bg-[#A35D38] rounded-full flex items-center justify-center mx-auto mb-6">
+              <Thermometer className="w-10 h-10 text-white" />
+            </div>
+            <p className="text-[#A35D38] tracking-widest mb-2 uppercase text-sm">
+              Professional Firing Services
+            </p>
+            <h1 className="text-5xl md:text-6xl text-[#2F2925] mb-4">Fire & Finish</h1>
+            <p className="text-xl text-[#6B6560] max-w-2xl mx-auto">
+              Book our professional kilns for your ceramic pieces. We offer various firing
+              temperatures and glazing options to bring your creations to life.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Hero Image */}
+      <section className="py-0">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+          className="relative h-96 overflow-hidden"
+        >
+          <img
+            src="https://images.unsplash.com/photo-1744893679502-f31ac2777a0c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjZXJhbWljJTIwa2lsbiUyMGZpcmluZ3xlbnwxfHx8fDE3NjI3MTA4MDF8MA&ixlib=rb-4.1.0&q=80&w=1080"
+            alt="Kiln firing"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#3E2F24]/80 via-[#3E2F24]/40 to-transparent flex items-end">
-            <div className="p-8">
-              <h1 
-                className="text-4xl sm:text-5xl md:text-6xl text-white mb-4"
-                style={{ fontFamily: 'var(--font-serif)' }}
-              >
-                Kiln Booking
-              </h1>
-              <p 
-                className="text-xl text-[#F7F3EF]"
-                style={{ fontFamily: 'var(--font-sans)', fontStyle: 'italic' }}
-              >
-                Fire & Finish
-              </p>
+          <div className="absolute inset-0 bg-gradient-to-t from-[#2F2925]/60 to-transparent" />
+        </motion.div>
+      </section>
+
+      {/* Kiln Details Table */}
+      <section className="py-16">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="mb-12"
+          >
+            <h2 className="text-4xl text-[#2F2925] mb-4 text-center">Kiln Specifications</h2>
+            <p className="text-[#6B6560] text-center mb-8">
+              Choose the kiln size that best fits your project
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="bg-white rounded-sm overflow-hidden shadow-lg"
+          >
+            <Table>
+              <TableHeader>
+                <TableRow className="bg-[#2F2925]">
+                  <TableHead className="text-white">Kiln Model</TableHead>
+                  <TableHead className="text-white">Inner Dimensions</TableHead>
+                  <TableHead className="text-white">Outer Dimensions</TableHead>
+                  <TableHead className="text-white">Capacity</TableHead>
+                  <TableHead className="text-white">Rate Per Firing</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {kilnData.map((kiln, index) => (
+                  <TableRow key={index} className="hover:bg-[#F5F2EB] transition-colors">
+                    <TableCell>{kiln.model}</TableCell>
+                    <TableCell>{kiln.innerDimensions}</TableCell>
+                    <TableCell>{kiln.outerDimensions}</TableCell>
+                    <TableCell>{kiln.capacity}</TableCell>
+                    <TableCell className="text-[#A35D38]">{kiln.ratePerFiring}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="mt-8 text-center"
+          >
+            <a
+              href="https://wa.me/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block"
+            >
+              <Button className="bg-[#A35D38] hover:bg-[#8B4D2E] text-white px-12 py-6 uppercase tracking-widest">
+                <MessageCircle className="mr-2 w-5 h-5" />
+                BOOK KILN TIME ON WHATSAPP
+              </Button>
+            </a>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Firing Policy */}
+      <section className="py-16 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <h2 className="text-4xl text-[#2F2925] mb-8 text-center">Firing Policy</h2>
+
+            <Alert className="bg-[#A35D38]/10 border-[#A35D38] mb-8">
+              <AlertCircle className="h-5 w-5 text-[#A35D38]" />
+              <AlertDescription className="text-[#2F2925]">
+                Please read our firing guidelines carefully before booking
+              </AlertDescription>
+            </Alert>
+
+            <div className="bg-[#F5F2EB] rounded-sm p-8">
+              <ul className="space-y-4">
+                {firingPolicies.map((policy, index) => (
+                  <motion.li
+                    key={index}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    className="flex items-start gap-3"
+                  >
+                    <div className="w-2 h-2 bg-[#A35D38] rounded-full mt-2 flex-shrink-0" />
+                    <span className="text-[#2F2925]">{policy}</span>
+                  </motion.li>
+                ))}
+              </ul>
             </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Additional Services */}
+      <section className="py-16 bg-[#F5F2EB]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="bg-white p-8 rounded-sm text-center"
+            >
+              <Thermometer className="w-12 h-12 text-[#A35D38] mx-auto mb-4" />
+              <h3 className="text-2xl text-[#2F2925] mb-3">Multiple Temperatures</h3>
+              <p className="text-[#6B6560]">
+                Bisque, glaze, and specialty firing options available
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.1 }}
+              className="bg-white p-8 rounded-sm text-center"
+            >
+              <Clock className="w-12 h-12 text-[#A35D38] mx-auto mb-4" />
+              <h3 className="text-2xl text-[#2F2925] mb-3">Fast Turnaround</h3>
+              <p className="text-[#6B6560]">
+                Your pieces ready in 3-5 business days
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="bg-white p-8 rounded-sm text-center"
+            >
+              <MessageCircle className="w-12 h-12 text-[#A35D38] mx-auto mb-4" />
+              <h3 className="text-2xl text-[#2F2925] mb-3">Expert Support</h3>
+              <p className="text-[#6B6560]">
+                Get advice on firing temperatures and techniques
+              </p>
+            </motion.div>
           </div>
         </div>
-
-        {/* Introduction */}
-        <div className="text-center mb-12 max-w-3xl mx-auto border-b-4 border-[#A67C52] pb-12">
-          <p className="text-lg text-[#3E2F24] leading-relaxed">
-            Book our professional kilns for your ceramic pieces. We offer various firing temperatures 
-            and glazing options to bring your creations to life. Our experienced team ensures proper 
-            loading and firing for optimal results.
-          </p>
-        </div>
-
-        {/* Kiln 1: GX2327D */}
-        <div className="mb-12 border-b-4 border-[#A67C52] pb-12">
-          <Card className="overflow-hidden border-0 shadow-[0_4px_12px_rgba(0,0,0,0.08)]">
-            <div className="bg-[#A67C52] text-white p-6">
-              <div className="flex items-center gap-3 mb-2">
-                <Flame className="w-8 h-8" />
-                <h2 
-                  className="text-3xl"
-                  style={{ fontFamily: 'var(--font-serif)' }}
-                >
-                  GX2327D Square Cone Art Kiln
-                </h2>
-              </div>
-              <p className="text-[#F7F3EF]" style={{ fontSize: '18px' }}>
-                23"×23"×27" | Shelf: 21"×21" square
-              </p>
-            </div>
-
-            <div className="p-8 bg-white">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                {/* Bisque Firing */}
-                <div>
-                  <h3 
-                    className="text-2xl mb-4 text-[#3E2F24] flex items-center gap-2"
-                    style={{ fontFamily: 'var(--font-serif)' }}
-                  >
-                    <Package className="w-6 h-6 text-[#A67C52]" />
-                    Bisque Firing
-                  </h3>
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center p-3 bg-[#F7F3EF] rounded-lg">
-                      <span className="text-[#3E2F24]">Full kiln</span>
-                      <span 
-                        className="text-[#A67C52]"
-                        style={{ fontFamily: 'var(--font-serif)', fontSize: '20px' }}
-                      >
-                        ₹9,000
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center p-3 bg-[#F7F3EF] rounded-lg">
-                      <span className="text-[#3E2F24]">Per shelf</span>
-                      <span 
-                        className="text-[#A67C52]"
-                        style={{ fontFamily: 'var(--font-serif)', fontSize: '20px' }}
-                      >
-                        ₹1,500
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Glaze Firing */}
-                <div>
-                  <h3 
-                    className="text-2xl mb-4 text-[#3E2F24] flex items-center gap-2"
-                    style={{ fontFamily: 'var(--font-serif)' }}
-                  >
-                    <Flame className="w-6 h-6 text-[#A67C52]" />
-                    Glaze Firing
-                  </h3>
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center p-3 bg-[#F7F3EF] rounded-lg">
-                      <span className="text-[#3E2F24]">Full kiln</span>
-                      <span 
-                        className="text-[#A67C52]"
-                        style={{ fontFamily: 'var(--font-serif)', fontSize: '20px' }}
-                      >
-                        ₹10,500
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center p-3 bg-[#F7F3EF] rounded-lg">
-                      <span className="text-[#3E2F24]">Per shelf</span>
-                      <span 
-                        className="text-[#A67C52]"
-                        style={{ fontFamily: 'var(--font-serif)', fontSize: '20px' }}
-                      >
-                        ₹1,750
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Capacity */}
-              <div className="bg-[#E5E0DC] p-6 rounded-lg">
-                <h4 
-                  className="mb-4 text-[#3E2F24]"
-                  style={{ fontFamily: 'var(--font-serif)', fontSize: '20px' }}
-                >
-                  Capacity
-                </h4>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-[#3E2F24]">
-                  <div>
-                    <p className="text-sm text-[#6B5D52] mb-1">Per Shelf (Mugs)</p>
-                    <p style={{ fontFamily: 'var(--font-serif)', fontSize: '18px' }}>23–25 mugs (3"×3")</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-[#6B5D52] mb-1">Per Shelf (Plates)</p>
-                    <p style={{ fontFamily: 'var(--font-serif)', fontSize: '18px' }}>4 dinner plates (10")</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-[#6B5D52] mb-1">Total Shelves</p>
-                    <p style={{ fontFamily: 'var(--font-serif)', fontSize: '18px' }}>6 full + 2 half</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Card>
-        </div>
-
-        {/* Kiln 2: BX1822D */}
-        <div className="mb-12 border-b-4 border-[#A67C52] pb-12">
-          <Card className="overflow-hidden border-0 shadow-[0_4px_12px_rgba(0,0,0,0.08)]">
-            <div className="bg-[#8DA9A0] text-white p-6">
-              <div className="flex items-center gap-3 mb-2">
-                <Flame className="w-8 h-8" />
-                <h2 
-                  className="text-3xl"
-                  style={{ fontFamily: 'var(--font-serif)' }}
-                >
-                  BX1822D Cone Art Kiln
-                </h2>
-              </div>
-              <p className="text-[#F7F3EF]" style={{ fontSize: '18px' }}>
-                17.5"×17.5"×22.5"
-              </p>
-            </div>
-
-            <div className="p-8 bg-white">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                {/* Bisque Firing */}
-                <div>
-                  <h3 
-                    className="text-2xl mb-4 text-[#3E2F24] flex items-center gap-2"
-                    style={{ fontFamily: 'var(--font-serif)' }}
-                  >
-                    <Package className="w-6 h-6 text-[#8DA9A0]" />
-                    Bisque Firing
-                  </h3>
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center p-3 bg-[#F7F3EF] rounded-lg">
-                      <span className="text-[#3E2F24]">Full kiln</span>
-                      <span 
-                        className="text-[#8DA9A0]"
-                        style={{ fontFamily: 'var(--font-serif)', fontSize: '20px' }}
-                      >
-                        ₹1,800
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center p-3 bg-[#F7F3EF] rounded-lg">
-                      <span className="text-[#3E2F24]">Per shelf</span>
-                      <span 
-                        className="text-[#8DA9A0]"
-                        style={{ fontFamily: 'var(--font-serif)', fontSize: '20px' }}
-                      >
-                        ₹600
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Glaze Firing */}
-                <div>
-                  <h3 
-                    className="text-2xl mb-4 text-[#3E2F24] flex items-center gap-2"
-                    style={{ fontFamily: 'var(--font-serif)' }}
-                  >
-                    <Flame className="w-6 h-6 text-[#8DA9A0]" />
-                    Glaze Firing
-                  </h3>
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center p-3 bg-[#F7F3EF] rounded-lg">
-                      <span className="text-[#3E2F24]">Full kiln</span>
-                      <span 
-                        className="text-[#8DA9A0]"
-                        style={{ fontFamily: 'var(--font-serif)', fontSize: '20px' }}
-                      >
-                        ₹2,300
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center p-3 bg-[#F7F3EF] rounded-lg">
-                      <span className="text-[#3E2F24]">Per shelf</span>
-                      <span 
-                        className="text-[#8DA9A0]"
-                        style={{ fontFamily: 'var(--font-serif)', fontSize: '20px' }}
-                      >
-                        ₹700
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Capacity */}
-              <div className="bg-[#E5E0DC] p-6 rounded-lg">
-                <h4 
-                  className="mb-4 text-[#3E2F24]"
-                  style={{ fontFamily: 'var(--font-serif)', fontSize: '20px' }}
-                >
-                  Capacity
-                </h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-[#3E2F24]">
-                  <div>
-                    <p className="text-sm text-[#6B5D52] mb-1">Per Shelf (Mugs)</p>
-                    <p style={{ fontFamily: 'var(--font-serif)', fontSize: '18px' }}>10–12 mugs (4")</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-[#6B5D52] mb-1">Total Shelves</p>
-                    <p style={{ fontFamily: 'var(--font-serif)', fontSize: '18px' }}>4 shelves</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Card>
-        </div>
-
-        {/* CTA */}
-        <div className="text-center mb-12 border-b-4 border-[#A67C52] pb-12">
-          <Button
-            onClick={handleWhatsAppBooking}
-            className="bg-[#A67C52] hover:bg-[#8B6644] text-white px-12 py-6 rounded-full text-lg"
-          >
-            Book Kiln Time on WhatsApp
-          </Button>
-        </div>
-
-        {/* Firing Policy */}
-        <div className="p-6 sm:p-8 bg-[#E5E0DC] rounded-lg border-4 border-[#A67C52]">
-          <h3 
-            className="text-xl sm:text-2xl mb-6 text-[#3E2F24]"
-            style={{ fontFamily: 'var(--font-serif)' }}
-          >
-            Firing Policy
-          </h3>
-          <div className="space-y-3 text-[#3E2F24]" style={{ fontFamily: 'var(--font-sans)', fontSize: '16px' }}>
-            <p className="italic flex items-start gap-2">
-              <span className="text-[#A67C52] flex-shrink-0">•</span>
-              <span>Pieces must be bone dry before firing</span>
-            </p>
-            <p className="italic flex items-start gap-2">
-              <span className="text-[#A67C52] flex-shrink-0">•</span>
-              <span>Firing takes 3-5 days including cooling time</span>
-            </p>
-            <p className="italic flex items-start gap-2">
-              <span className="text-[#A67C52] flex-shrink-0">•</span>
-              <span>We are not responsible for pieces that crack or warp due to improper construction</span>
-            </p>
-            <p className="italic flex items-start gap-2">
-              <span className="text-[#A67C52] flex-shrink-0">•</span>
-              <span>Payment required in advance to reserve kiln space</span>
-            </p>
-            <p className="italic flex items-start gap-2">
-              <span className="text-[#A67C52] flex-shrink-0">•</span>
-              <span>Cancellations accepted up to 48 hours before scheduled firing</span>
-            </p>
-          </div>
-        </div>
-      </div>
+      </section>
     </div>
   );
 }

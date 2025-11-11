@@ -1,12 +1,36 @@
 import { useState } from 'react';
+import { motion } from 'motion/react';
+import { Send, Phone, Mail, MessageCircle, MapPin } from 'lucide-react';
 import { Button } from './ui/button';
-import { Card } from './ui/card';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './ui/accordion';
-import { Mail, Phone, MessageCircle, Instagram, MapPin } from 'lucide-react';
+import { Label } from './ui/label';
+import { toast } from 'sonner@2.0.3';
 
-export function ContactPage() {
+const faqs = [
+  {
+    question: 'Do you ship internationally?',
+    answer:
+      'Currently, we ship within India only. For international orders, please contact us directly.',
+  },
+  {
+    question: 'How do I register for a class?',
+    answer:
+      "You can register via WhatsApp or by filling out the contact form. We'll respond within 24 hours with available dates.",
+  },
+  {
+    question: 'What is your firing turnaround time?',
+    answer:
+      'Standard firing takes 3-5 business days. Rush services may be available upon request.',
+  },
+  {
+    question: 'Can I visit the studio without an appointment?',
+    answer:
+      'Walk-ins are welcome during opening hours! However, for classes or kiln booking, please schedule in advance.',
+  },
+];
+
+export default function ContactPage() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -15,261 +39,236 @@ export function ContactPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    alert('Message sent! We\'ll get back to you soon.');
+    toast.success('Message sent! We\'ll get back to you soon.');
     setFormData({ name: '', email: '', message: '' });
   };
 
-  const handleWhatsApp = () => {
-    window.open('https://wa.me/919876543210?text=Hello, I have a question', '_blank');
-  };
-
-  const faqs = [
-    {
-      question: 'Do you offer shipping for ceramics?',
-      answer: 'Yes! We ship across India using secure, eco-friendly packaging. Shipping costs are calculated at checkout based on location and item size. Local Bangalore orders can be delivered within 2-3 days.',
-    },
-    {
-      question: 'How do I sign up for a class or workshop?',
-      answer: 'You can book classes via WhatsApp or email. Simply let us know which class you\'re interested in, and we\'ll confirm availability and send payment details. Early booking is recommended as spots fill quickly.',
-    },
-    {
-      question: 'What are the kiln firing times and policies?',
-      answer: 'Kiln firing takes 3-5 days including cooling time. Pieces must be bone dry before firing. We fire on Tuesdays and Fridays. Payment is required in advance to reserve your spot. Cancellations accepted up to 48 hours before scheduled firing.',
-    },
-    {
-      question: 'Can I become a studio member?',
-      answer: 'Absolutely! We offer monthly memberships for open studio access. Members get unlimited studio time, priority kiln booking, dedicated storage space, and discounts on clay and glazes. Contact us for current membership rates.',
-    },
-    {
-      question: 'Do you accept custom orders?',
-      answer: 'Yes, we love creating custom pieces! Whether it\'s dinnerware sets, wedding gifts, or unique decorative pieces, we work with you to bring your vision to life. Lead time is typically 4-6 weeks depending on complexity.',
-    },
-    {
-      question: 'What if my piece breaks during firing?',
-      answer: 'While rare, kiln losses can happen. We take utmost care in loading and firing, but we cannot guarantee pieces that have structural issues from construction. We\'ll always communicate any concerns before firing and work with you to prevent issues.',
-    },
-  ];
-
   return (
-    <div className="min-h-screen py-12 px-4 border-t-4 border-[#A67C52]">
-      <div className="container mx-auto max-w-6xl">
-        {/* Header */}
-        <div className="text-center mb-12 border-b-4 border-[#A67C52] pb-12">
-          <h1 
-            className="text-4xl sm:text-5xl md:text-6xl mb-4 text-[#3E2F24]"
-            style={{ fontFamily: 'var(--font-serif)' }}
+    <div className="min-h-screen pt-20 bg-[#F5F2EB]">
+      {/* Header */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
           >
-            Let's Talk While the Clay Rests
-          </h1>
-          <p className="text-lg text-[#6B5D52] max-w-2xl mx-auto">
-            Have questions or ready to start your pottery journey? We're here to help.
-          </p>
+            <div className="w-20 h-20 bg-[#A35D38] rounded-full flex items-center justify-center mx-auto mb-6">
+              <MessageCircle className="w-10 h-10 text-white" />
+            </div>
+            <p className="text-[#A35D38] tracking-widest mb-2 uppercase text-sm">
+              Get in Touch
+            </p>
+            <h1 className="text-5xl md:text-6xl text-[#2F2925] mb-4">Contact Us</h1>
+            <p className="text-xl text-[#6B6560] max-w-2xl mx-auto">
+              Have a question? Want to commission a piece? We'd love to hear from you.
+            </p>
+          </motion.div>
         </div>
+      </section>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16 border-b-4 border-[#A67C52] pb-16">
-          {/* Contact Form */}
-          <div>
-            <Card className="p-8 border-4 border-[#A67C52] shadow-[0_4px_12px_rgba(0,0,0,0.08)]">
-              <h2 
-                className="text-2xl mb-6 text-[#3E2F24]"
-                style={{ fontFamily: 'var(--font-serif)' }}
-              >
-                Send Us a Message
-              </h2>
+      {/* Contact Form & Info */}
+      <section className="py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            {/* Contact Form */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <div className="bg-white p-8 rounded-sm shadow-lg">
+                <h2 className="text-3xl text-[#2F2925] mb-6">Send us a Message</h2>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div>
+                    <Label htmlFor="name">Name</Label>
+                    <Input
+                      id="name"
+                      type="text"
+                      placeholder="Your name"
+                      value={formData.name}
+                      onChange={(e) =>
+                        setFormData({ ...formData, name: e.target.value })
+                      }
+                      required
+                      className="mt-2"
+                    />
+                  </div>
 
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label htmlFor="name" className="block mb-2 text-[#3E2F24]">
-                    Your Name
-                  </label>
-                  <Input
-                    id="name"
-                    type="text"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    required
-                    className="bg-white border-[#3E2F24]/20"
-                    placeholder="Enter your name"
-                  />
-                </div>
+                  <div>
+                    <Label htmlFor="email">Email</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="your@email.com"
+                      value={formData.email}
+                      onChange={(e) =>
+                        setFormData({ ...formData, email: e.target.value })
+                      }
+                      required
+                      className="mt-2"
+                    />
+                  </div>
 
-                <div>
-                  <label htmlFor="email" className="block mb-2 text-[#3E2F24]">
-                    Email Address
-                  </label>
-                  <Input
-                    id="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    required
-                    className="bg-white border-[#3E2F24]/20"
-                    placeholder="your@email.com"
-                  />
-                </div>
+                  <div>
+                    <Label htmlFor="message">Message</Label>
+                    <Textarea
+                      id="message"
+                      placeholder="Tell us about your inquiry..."
+                      value={formData.message}
+                      onChange={(e) =>
+                        setFormData({ ...formData, message: e.target.value })
+                      }
+                      required
+                      rows={6}
+                      className="mt-2"
+                    />
+                  </div>
 
-                <div>
-                  <label htmlFor="message" className="block mb-2 text-[#3E2F24]">
-                    Message
-                  </label>
-                  <Textarea
-                    id="message"
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    required
-                    className="bg-white border-[#3E2F24]/20 min-h-[150px]"
-                    placeholder="Tell us about your inquiry..."
-                  />
-                </div>
-
-                <Button
-                  type="submit"
-                  className="w-full bg-[#A67C52] hover:bg-[#8B6644] text-white"
-                >
-                  Send Message
-                </Button>
-              </form>
-            </Card>
-          </div>
-
-          {/* Contact Info */}
-          <div className="space-y-6">
-            <Card className="p-6 border-4 border-[#A67C52] hover:shadow-lg transition-shadow">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-[#A67C52] rounded-full flex items-center justify-center flex-shrink-0">
-                  <MessageCircle className="w-6 h-6 text-white" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="mb-2 text-[#3E2F24]" style={{ fontFamily: 'var(--font-serif)' }}>
-                    WhatsApp
-                  </h3>
-                  <p className="text-[#6B5D52] mb-3">
-                    For quick responses and bookings
-                  </p>
                   <Button
-                    onClick={handleWhatsApp}
-                    variant="outline"
-                    className="border-[#A67C52] text-[#A67C52] hover:bg-[#A67C52] hover:text-white"
+                    type="submit"
+                    className="w-full bg-[#A35D38] hover:bg-[#8B4D2E] text-white py-6 uppercase tracking-widest"
                   >
-                    Contact via WhatsApp
+                    <Send className="w-5 h-5 mr-2" />
+                    SEND MESSAGE
                   </Button>
-                </div>
+                </form>
               </div>
-            </Card>
+            </motion.div>
 
-            <Card className="p-6 border-4 border-[#A67C52] hover:shadow-lg transition-shadow">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-[#8DA9A0] rounded-full flex items-center justify-center flex-shrink-0">
-                  <Mail className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="mb-2 text-[#3E2F24]" style={{ fontFamily: 'var(--font-serif)' }}>
-                    Email
-                  </h3>
-                  <a 
-                    href="mailto:hello@callipottery.in"
-                    className="text-[#A67C52] hover:underline text-lg"
+            {/* Contact Info & Social */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="space-y-6"
+            >
+              {/* Quick Contact */}
+              <div className="bg-white p-8 rounded-sm shadow-lg">
+                <h3 className="text-2xl text-[#2F2925] mb-6">Quick Contact</h3>
+                <div className="space-y-4">
+                  <a
+                    href="https://wa.me/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-4 p-4 bg-[#F5F2EB] rounded hover:bg-[#E8E3D9] transition-colors group"
                   >
-                    hello@callipottery.in
+                    <div className="w-12 h-12 bg-[#A35D38] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <MessageCircle className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <div className="text-sm text-[#6B6560]">WhatsApp</div>
+                      <div className="text-[#2F2925]">Message us directly</div>
+                    </div>
+                  </a>
+
+                  <a
+                    href="tel:+91XXXXXXXXXX"
+                    className="flex items-center gap-4 p-4 bg-[#F5F2EB] rounded hover:bg-[#E8E3D9] transition-colors group"
+                  >
+                    <div className="w-12 h-12 bg-[#A35D38] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <Phone className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <div className="text-sm text-[#6B6560]">Phone</div>
+                      <div className="text-[#2F2925]">+91 (XXX) XXX-XXXX</div>
+                    </div>
+                  </a>
+
+                  <a
+                    href="mailto:info@callipottery.com"
+                    className="flex items-center gap-4 p-4 bg-[#F5F2EB] rounded hover:bg-[#E8E3D9] transition-colors group"
+                  >
+                    <div className="w-12 h-12 bg-[#A35D38] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <Mail className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <div className="text-sm text-[#6B6560]">Email</div>
+                      <div className="text-[#2F2925]">info@callipottery.com</div>
+                    </div>
                   </a>
                 </div>
               </div>
-            </Card>
 
-            <Card className="p-6 border-4 border-[#A67C52] hover:shadow-lg transition-shadow">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-[#8DA9A0] rounded-full flex items-center justify-center flex-shrink-0">
-                  <Phone className="w-6 h-6 text-white" />
+              {/* Studio Location */}
+              <div className="bg-white p-8 rounded-sm shadow-lg">
+                <h3 className="text-2xl text-[#2F2925] mb-4">Studio Location</h3>
+                <div className="flex items-start gap-4">
+                  <MapPin className="w-6 h-6 text-[#A35D38] flex-shrink-0 mt-1" />
+                  <div className="text-[#6B6560]">
+                    <p>Callipottery Studio</p>
+                    <p>[Street Address]</p>
+                    <p>[City, State, ZIP]</p>
+                    <p>India</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="mb-2 text-[#3E2F24]" style={{ fontFamily: 'var(--font-serif)' }}>
-                    Phone
-                  </h3>
-                  <a 
-                    href="tel:+919876543210"
-                    className="text-[#A67C52] hover:underline text-lg"
+              </div>
+
+              {/* Social Media */}
+              <div className="bg-[#2F2925] p-8 rounded-sm shadow-lg">
+                <h3 className="text-2xl text-white mb-4">Follow Our Journey</h3>
+                <p className="text-[#E8E3D9] mb-6">
+                  Stay updated with our latest creations, workshops, and studio happenings.
+                </p>
+                <div className="flex gap-4">
+                  <a
+                    href="https://instagram.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-12 h-12 bg-[#A35D38] rounded-full flex items-center justify-center hover:bg-white hover:text-[#A35D38] transition-all"
                   >
-                    +91 98765 43210
+                    <MessageCircle className="w-6 h-6" />
                   </a>
-                  <p className="text-[#6B5D52] mt-1">Mon-Sat, 10 AM - 6 PM</p>
+                  <a
+                    href="https://youtube.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-12 h-12 bg-[#A35D38] rounded-full flex items-center justify-center hover:bg-white hover:text-[#A35D38] transition-all"
+                  >
+                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                    </svg>
+                  </a>
                 </div>
               </div>
-            </Card>
-
-            <Card className="p-6 border-4 border-[#A67C52] hover:shadow-lg transition-shadow">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-[#8DA9A0] rounded-full flex items-center justify-center flex-shrink-0">
-                  <MapPin className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="mb-2 text-[#3E2F24]" style={{ fontFamily: 'var(--font-serif)' }}>
-                    Visit Us
-                  </h3>
-                  <p className="text-[#3E2F24]">
-                    42 Pottery Lane<br />
-                    Indiranagar, Bangalore<br />
-                    Karnataka 560038
-                  </p>
-                </div>
-              </div>
-            </Card>
-
-            {/* Social Media */}
-            <Card className="p-6 border-4 border-[#A67C52] bg-[#F7F3EF]">
-              <h3 className="mb-4 text-[#3E2F24]" style={{ fontFamily: 'var(--font-serif)' }}>
-                Follow Our Journey
-              </h3>
-              <div className="flex gap-3">
-                <a
-                  href="https://instagram.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-4 py-2 bg-white rounded-lg hover:bg-[#A67C52] hover:text-white transition-colors"
-                >
-                  <Instagram size={20} />
-                  <span>Instagram</span>
-                </a>
-                <a
-                  href="https://pinterest.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-4 py-2 bg-white rounded-lg hover:bg-[#A67C52] hover:text-white transition-colors"
-                >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z"/>
-                  </svg>
-                  <span>Pinterest</span>
-                </a>
-              </div>
-            </Card>
+            </motion.div>
           </div>
         </div>
+      </section>
 
-        {/* FAQ Section */}
-        <div>
-          <h2 
-            className="text-3xl mb-8 text-center text-[#3E2F24]"
-            style={{ fontFamily: 'var(--font-serif)' }}
+      {/* FAQ */}
+      <section className="py-16 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
           >
-            Frequently Asked Questions
-          </h2>
+            <h2 className="text-4xl text-[#2F2925] mb-8 text-center">
+              Frequently Asked Questions
+            </h2>
 
-          <Card className="border-4 border-[#A67C52]">
-            <Accordion type="single" collapsible className="w-full">
+            <div className="space-y-6">
               {faqs.map((faq, index) => (
-                <AccordionItem key={index} value={`item-${index}`}>
-                  <AccordionTrigger className="px-6 text-left text-[#3E2F24] hover:text-[#A67C52]">
-                    <span style={{ fontFamily: 'var(--font-serif)' }}>{faq.question}</span>
-                  </AccordionTrigger>
-                  <AccordionContent className="px-6 pb-4 text-[#3E2F24]">
-                    {faq.answer}
-                  </AccordionContent>
-                </AccordionItem>
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="bg-[#F5F2EB] p-6 rounded-sm"
+                >
+                  <h3 className="text-xl text-[#2F2925] mb-2">{faq.question}</h3>
+                  <p className="text-[#6B6560]">{faq.answer}</p>
+                </motion.div>
               ))}
-            </Accordion>
-          </Card>
+            </div>
+          </motion.div>
         </div>
-      </div>
+      </section>
     </div>
   );
 }

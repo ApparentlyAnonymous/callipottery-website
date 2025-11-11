@@ -1,242 +1,402 @@
+import { motion, useScroll, useTransform } from 'motion/react';
+import { CheckCircle, Clock, Star, Users, CreditCard, Zap, Disc, Wrench, Palette, LayoutGrid, Package, GraduationCap } from 'lucide-react';
 import { Button } from './ui/button';
-import { Card } from './ui/card';
-import { ImageWithFallback } from './figma/ImageWithFallback';
-import { Clock, Wrench, Package2, Users } from 'lucide-react';
+import { Badge } from './ui/badge';
+import { useRef } from 'react';
 
-export function OpenStudioPage() {
-  const features = [
-    {
-      icon: <Wrench className="w-6 h-6 text-[#A67C52]" />,
-      title: 'Professional Tools',
-      description: 'Access to pottery wheels, hand tools, and equipment',
-    },
-    {
-      icon: <Package2 className="w-6 h-6 text-[#A67C52]" />,
-      title: 'Storage Options',
-      description: 'Personal shelf space for works-in-progress',
-    },
-    {
-      icon: <Clock className="w-6 h-6 text-[#A67C52]" />,
-      title: 'Flexible Hours',
-      description: 'Book sessions that fit your schedule',
-    },
-    {
-      icon: <Users className="w-6 h-6 text-[#A67C52]" />,
-      title: 'Community',
-      description: 'Create alongside fellow ceramicists',
-    },
-  ];
+const membershipOptions = [
+  {
+    title: 'One Day Pass',
+    price: '₹600',
+    duration: 'Access for 1 full day',
+    features: [
+      'Wheel throwing access',
+      'Hand building tools',
+      'Studio glazes',
+      'Basic materials included',
+    ],
+    popular: false,
+  },
+  {
+    title: 'One Day Production Pass',
+    price: '₹1,000',
+    duration: 'Access for 1 full day',
+    features: [
+      'All One Day Pass benefits',
+      'Extended clay allowance',
+      'Premium glaze selection',
+      'Priority kiln booking',
+      'Ideal for production work',
+    ],
+    popular: true,
+  },
+  {
+    title: 'Half Day Pass',
+    price: '₹300',
+    duration: 'Access for 4 hours',
+    features: [
+      'Wheel throwing access',
+      'Hand building tools',
+      'Studio glazes',
+      'Perfect for quick sessions',
+    ],
+    popular: false,
+  },
+  {
+    title: 'Half Day Production Pass',
+    price: '₹500',
+    duration: 'Access for 4 hours',
+    features: [
+      'All Half Day Pass benefits',
+      'Extended clay allowance',
+      'Premium glaze selection',
+      'Great for focused projects',
+    ],
+    popular: false,
+  },
+];
 
-  const pricingOptions = [
-    {
-      name: 'Drop-In Session',
-      price: '₹800',
-      duration: '3 hours',
-      includes: ['Tool access', 'Clay purchase available', 'Basic guidance'],
-    },
-    {
-      name: 'Day Pass',
-      price: '₹1,500',
-      duration: 'Full day',
-      includes: ['All-day access', 'Tool access', '2kg clay included', 'Storage space'],
-      popular: true,
-    },
-    {
-      name: 'Monthly Membership',
-      price: '₹6,500',
-      duration: 'Unlimited monthly',
-      includes: ['Unlimited studio time', 'Priority booking', '10kg clay/month', 'Dedicated storage', 'Kiln discount'],
-    },
-  ];
+const studioGuidelines = [
+  'Book your slot in advance via WhatsApp',
+  'Arrive on time - late arrivals may result in reduced session time',
+  'Clean your workspace and tools after use',
+  'Respect other artists and their work',
+  'Label all your pieces with your name and date',
+  'Firing fees are separate and based on piece size',
+  'Children under 12 must be supervised by an adult',
+  'Maximum 8 people per session to ensure quality experience',
+];
 
-  const handleWhatsAppBooking = () => {
-    window.open(
-      'https://wa.me/919876543210?text=I would like to reserve open studio space',
-      '_blank'
-    );
-  };
+const availableItems = [
+  {
+    title: "Potter's Wheels",
+    description: 'Professional electric wheels for all skill levels',
+    icon: Disc,
+  },
+  {
+    title: 'Hand Tools',
+    description: 'Complete set of shaping, trimming, and finishing tools',
+    icon: Wrench,
+  },
+  {
+    title: 'Glazes & Materials',
+    description: 'Wide selection of studio glazes and clay bodies',
+    icon: Palette,
+  },
+  {
+    title: 'Work Tables',
+    description: 'Spacious workstations for hand building',
+    icon: LayoutGrid,
+  },
+  {
+    title: 'Storage Space',
+    description: 'Secure shelving for work in progress',
+    icon: Package,
+  },
+  {
+    title: 'Expert Guidance',
+    description: 'Studio staff available for questions and tips',
+    icon: GraduationCap,
+  },
+];
+
+function PassCard({ option, index }: { option: typeof membershipOptions[0]; index: number }) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: cardRef,
+    offset: ["start end", "end start"]
+  });
+
+  const rotateY = useTransform(
+    scrollYProgress,
+    [0, 0.3, 0.7, 1],
+    [15, 0, 0, -15]
+  );
+
+  const scale = useTransform(
+    scrollYProgress,
+    [0, 0.3, 0.7, 1],
+    [0.85, 1, 1, 0.85]
+  );
+
+  const opacity = useTransform(
+    scrollYProgress,
+    [0, 0.2, 0.8, 1],
+    [0.4, 1, 1, 0.4]
+  );
 
   return (
-    <div className="min-h-screen py-12 px-4 border-t-4 border-[#A67C52]">
-      <div className="container mx-auto max-w-6xl">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 
-            className="text-4xl sm:text-5xl md:text-6xl mb-4 text-[#3E2F24]"
-            style={{ fontFamily: 'var(--font-serif)' }}
-          >
-            Open Studio
-          </h1>
-          <p 
-            className="text-2xl text-[#6B5D52] mb-6"
-            style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic' }}
-          >
-            Create freely, in the calm of community.
-          </p>
+    <motion.div
+      ref={cardRef}
+      style={{
+        perspective: 1000,
+      }}
+      className="flex-shrink-0 w-full md:w-[500px] px-4"
+    >
+      <motion.div
+        style={{
+          rotateY,
+          scale,
+          opacity,
+          transformStyle: "preserve-3d",
+        }}
+        className="group"
+      >
+        {/* Pass Card Design */}
+        <div className="relative aspect-[1.6/1] bg-gradient-to-br from-[#2F2925] to-[#1a1614] rounded-2xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-300">
+          {/* Card Shine Effect */}
+          <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent" />
+          
+          {/* Card Stripe */}
+          <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-r from-[#A35D38] to-[#C47A4D]" />
+          
+          {/* Popular Badge */}
+          {option.popular && (
+            <div className="absolute top-4 right-4 z-10">
+              <div className="bg-[#F5F2EB] text-[#A35D38] px-3 py-1 rounded-full flex items-center gap-1 shadow-lg">
+                <Star className="w-3 h-3 fill-current" />
+                <span className="text-xs uppercase tracking-wide">Popular</span>
+              </div>
+            </div>
+          )}
+          
+          {/* Card Content */}
+          <div className="relative h-full p-6 flex flex-col justify-between">
+            {/* Header */}
+            <div className="pt-8">
+              <div className="flex items-start justify-between mb-4">
+                <div>
+                  <div className="text-[#F5F2EB]/60 text-xs uppercase tracking-wider mb-1">
+                    Pottery Pass
+                  </div>
+                  <h3 className="text-2xl text-[#F5F2EB]">
+                    {option.title}
+                  </h3>
+                </div>
+                <CreditCard className="w-8 h-8 text-[#A35D38]" />
+              </div>
+              
+              <div className="flex items-center gap-2 text-[#F5F2EB]/80 mb-4">
+                <Clock className="w-4 h-4" />
+                <span className="text-sm">{option.duration}</span>
+              </div>
+            </div>
+            
+            {/* Middle - Features (condensed) */}
+            <div className="flex-1">
+              <div className="grid grid-cols-2 gap-2">
+                {option.features.slice(0, 4).map((feature, idx) => (
+                  <div key={idx} className="flex items-center gap-1.5">
+                    <div className="w-1 h-1 rounded-full bg-[#A35D38]" />
+                    <span className="text-xs text-[#F5F2EB]/70">{feature}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            {/* Footer */}
+            <div className="flex items-end justify-between">
+              <div>
+                <div className="text-[#F5F2EB]/60 text-xs mb-1">Price</div>
+                <div className="text-4xl text-[#A35D38]">{option.price}</div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* Two Column Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
-          {/* Left: Text & Features */}
-          <div>
-            <p className="text-lg text-[#3E2F24] mb-8 leading-relaxed">
-              Our open studio is a shared creative space for independent makers. Whether you're 
-              working on a personal project or honing your skills, enjoy access to professional 
-              equipment, quality materials, and a supportive community of fellow artists.
-            </p>
+        {/* Book Now Button */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2 + index * 0.1 }}
+          className="mt-6"
+        >
+          <a
+            href="https://wa.me/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block"
+          >
+            <Button
+              className={`w-full py-6 uppercase tracking-widest ${
+                option.popular
+                  ? 'bg-[#A35D38] hover:bg-[#8B4D2E] text-white'
+                  : 'bg-white border-2 border-[#A35D38] text-[#A35D38] hover:bg-[#A35D38] hover:text-white'
+              }`}
+            >
+              <Zap className="w-4 h-4 mr-2" />
+              BOOK THIS PASS VIA WHATSAPP
+            </Button>
+          </a>
+          
+          {/* Features List Below Card */}
+          <div className="mt-4 bg-white rounded-lg p-4 shadow-sm">
+            <div className="text-xs text-[#6B6560] uppercase tracking-wider mb-3">
+              What's Included:
+            </div>
+            <ul className="space-y-2">
+              {option.features.map((feature, idx) => (
+                <li key={idx} className="flex items-start gap-2 text-sm">
+                  <CheckCircle className="w-4 h-4 text-[#A35D38] mt-0.5 flex-shrink-0" />
+                  <span className="text-[#6B6560]">{feature}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </motion.div>
+      </motion.div>
+    </motion.div>
+  );
+}
 
-            <div className="space-y-6">
-              {features.map((feature, index) => (
-                <div key={index} className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-[#E5E0DC] rounded-full flex items-center justify-center flex-shrink-0">
-                    {feature.icon}
-                  </div>
-                  <div>
-                    <h3 className="mb-1 text-[#3E2F24]" style={{ fontFamily: 'var(--font-serif)' }}>
-                      {feature.title}
-                    </h3>
-                    <p className="text-[#6B5D52]">{feature.description}</p>
-                  </div>
-                </div>
+export default function OpenStudioPage() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  return (
+    <div className="min-h-screen pt-20 bg-[#F5F2EB]">
+      {/* Header */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <div className="w-20 h-20 bg-[#A35D38] rounded-full flex items-center justify-center mx-auto mb-6">
+              <Users className="w-10 h-10 text-white" />
+            </div>
+            <p className="text-[#A35D38] tracking-widest mb-2 uppercase text-sm">
+              Create at Your Own Pace
+            </p>
+            <h1 className="text-5xl md:text-6xl text-[#2F2925] mb-4">Pottery Pass</h1>
+            <h2 className="text-3xl text-[#6B6560] mb-6">Open Studio Access</h2>
+            <p className="text-xl text-[#6B6560] max-w-2xl mx-auto">
+              Explore and create at your own pace in our open studio. Whether you're a beginner
+              or experienced potter, our space is equipped with everything you need.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Studio Image */}
+      <section className="py-0">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+          className="relative h-96 overflow-hidden"
+        >
+          <img
+            src="https://images.unsplash.com/photo-1638341840302-a2d9579b821e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3R0ZXJ5JTIwc3R1ZGlvJTIwd29ya3NwYWNlfGVufDF8fHx8MTc2MjYyNTMyNnww&ixlib=rb-4.1.0&q=80&w=1080"
+            alt="Open studio workspace"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#2F2925]/60 to-transparent" />
+        </motion.div>
+      </section>
+
+      {/* Membership Options - Rolodex Effect */}
+      <section className="py-16 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-4xl text-[#2F2925] mb-4">Choose Your Pass</h2>
+            <p className="text-[#6B6560]">Scroll to explore flexible options for your creative schedule</p>
+          </motion.div>
+
+          {/* Rolodex Container */}
+          <div ref={containerRef} className="relative">
+            <div className="flex flex-col md:flex-row gap-12 md:gap-0 md:space-x-8 overflow-x-auto md:overflow-x-scroll pb-8 snap-x snap-mandatory scrollbar-hide md:px-[calc(50%-250px)]">
+              {membershipOptions.map((option, index) => (
+                <PassCard key={index} option={option} index={index} />
               ))}
             </div>
           </div>
 
-          {/* Right: Image */}
-          <div className="relative h-[500px] rounded-2xl overflow-hidden shadow-xl">
-            <ImageWithFallback
-              src="https://images.unsplash.com/photo-1638341840302-a2d9579b821e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3R0ZXJ5JTIwc3R1ZGlvJTIwd29ya3NwYWNlfGVufDF8fHx8MTc2MTM3NzY4NHww&ixlib=rb-4.1.0&q=80&w=1080"
-              alt="Open pottery studio"
-              className="w-full h-full object-cover"
-            />
+          {/* Scroll Hint */}
+          <div className="text-center mt-8 hidden md:block">
+            <p className="text-sm text-[#6B6560]/60">← Scroll to view all passes →</p>
           </div>
         </div>
+      </section>
 
-        {/* Pricing Options */}
-        <div className="mb-16">
-          <h2 
-            className="text-3xl mb-8 text-center text-[#3E2F24]"
-            style={{ fontFamily: 'var(--font-serif)' }}
+      {/* Studio Guidelines */}
+      <section className="py-16 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
           >
-            Pricing & Membership
-          </h2>
+            <h2 className="text-4xl text-[#2F2925] mb-8 text-center">Studio Guidelines</h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {pricingOptions.map((option, index) => (
-              <Card
-                key={index}
-                className={`p-6 border-[#3E2F24]/10 relative ${
-                  option.popular ? 'ring-2 ring-[#A67C52] shadow-lg' : ''
-                }`}
-              >
-                {option.popular && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#A67C52] text-white px-4 py-1 rounded-full">
-                    Popular
-                  </div>
-                )}
-                
-                <div className="text-center mb-6">
-                  <h3 className="mb-2 text-[#3E2F24]" style={{ fontFamily: 'var(--font-serif)' }}>
-                    {option.name}
-                  </h3>
-                  <div 
-                    className="text-4xl text-[#A67C52] mb-1"
-                    style={{ fontFamily: 'var(--font-serif)' }}
+            <div className="bg-[#F5F2EB] rounded-sm p-8">
+              <ul className="space-y-4">
+                {studioGuidelines.map((guideline, index) => (
+                  <motion.li
+                    key={index}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    className="flex items-start gap-3"
                   >
-                    {option.price}
-                  </div>
-                  <div className="text-[#6B5D52]">{option.duration}</div>
-                </div>
-
-                <div className="space-y-3 mb-6">
-                  {option.includes.map((item, i) => (
-                    <div key={i} className="flex items-start gap-2">
-                      <div className="w-1.5 h-1.5 bg-[#A67C52] rounded-full mt-2 flex-shrink-0" />
-                      <span className="text-[#3E2F24]">{item}</span>
+                    <div className="w-6 h-6 bg-[#A35D38] rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <span className="text-white text-sm">{index + 1}</span>
                     </div>
-                  ))}
-                </div>
+                    <span className="text-[#2F2925]">{guideline}</span>
+                  </motion.li>
+                ))}
+              </ul>
+            </div>
+          </motion.div>
+        </div>
+      </section>
 
-                <Button
-                  onClick={handleWhatsAppBooking}
-                  variant={option.popular ? 'default' : 'outline'}
-                  className={`w-full ${
-                    option.popular
-                      ? 'bg-[#A67C52] hover:bg-[#8B6644] text-white'
-                      : 'border-[#A67C52] text-[#A67C52] hover:bg-[#A67C52] hover:text-white'
-                  }`}
+      {/* What's Available */}
+      <section className="py-16 bg-[#F5F2EB]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-4xl text-[#2F2925] mb-4">What's Available</h2>
+            <p className="text-[#6B6560]">Everything you need for your pottery journey</p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {availableItems.map((item, index) => {
+              const IconComponent = item.icon;
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="bg-white p-6 rounded-sm text-center hover:shadow-lg transition-shadow duration-300 group"
                 >
-                  Reserve Space
-                </Button>
-              </Card>
-            ))}
+                  <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                    <IconComponent className="w-12 h-12 text-[#A35D38] stroke-[1.5] group-hover:scale-110 transition-transform duration-300" />
+                  </div>
+                  <h3 className="text-xl text-[#2F2925] mb-2">{item.title}</h3>
+                  <p className="text-[#6B6560]">{item.description}</p>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
-
-        {/* Session Slots */}
-        <div className="mb-16">
-          <h2 
-            className="text-3xl mb-8 text-center text-[#3E2F24]"
-            style={{ fontFamily: 'var(--font-serif)' }}
-          >
-            Available Session Slots
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {[
-              { day: 'Monday - Friday', time: '10:00 AM - 1:00 PM', status: 'Available' },
-              { day: 'Monday - Friday', time: '2:00 PM - 5:00 PM', status: 'Available' },
-              { day: 'Monday - Friday', time: '6:00 PM - 9:00 PM', status: 'Limited' },
-              { day: 'Saturday', time: '9:00 AM - 12:00 PM', status: 'Limited' },
-              { day: 'Saturday', time: '1:00 PM - 4:00 PM', status: 'Full' },
-              { day: 'Sunday', time: '10:00 AM - 2:00 PM', status: 'Available' },
-            ].map((slot, index) => (
-              <Card
-                key={index}
-                className={`p-4 border-[#3E2F24]/10 ${
-                  slot.status === 'Full' ? 'opacity-50' : ''
-                }`}
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <h4 className="text-[#3E2F24]" style={{ fontFamily: 'var(--font-serif)' }}>
-                    {slot.day}
-                  </h4>
-                  <span
-                    className={`px-2 py-1 rounded text-sm ${
-                      slot.status === 'Available'
-                        ? 'bg-[#8DA9A0] text-white'
-                        : slot.status === 'Limited'
-                        ? 'bg-[#A67C52] text-white'
-                        : 'bg-[#E5E0DC] text-[#6B5D52]'
-                    }`}
-                  >
-                    {slot.status}
-                  </span>
-                </div>
-                <p className="text-[#6B5D52]">{slot.time}</p>
-              </Card>
-            ))}
-          </div>
-        </div>
-
-        {/* Studio Guidelines */}
-        <div className="bg-[#E5E0DC] rounded-lg p-8">
-          <h3 
-            className="text-2xl mb-6 text-center text-[#3E2F24]"
-            style={{ fontFamily: 'var(--font-serif)' }}
-          >
-            Studio Guidelines
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-[#3E2F24]">
-            <div>• Clean your workspace before leaving</div>
-            <div>• Label all pieces with your name and date</div>
-            <div>• Return tools to their designated spots</div>
-            <div>• Respect fellow artists' space and work</div>
-            <div>• Book sessions at least 24 hours in advance</div>
-            <div>• Maximum 3 consecutive hours per drop-in</div>
-          </div>
-        </div>
-      </div>
+      </section>
     </div>
   );
 }

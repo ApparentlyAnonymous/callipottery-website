@@ -1,492 +1,316 @@
-import { motion } from 'motion/react';
+import { useEffect, useRef } from 'react';
+import { motion, useScroll, useTransform, useInView } from 'motion/react';
+import { ArrowRight, CheckCircle } from 'lucide-react';
 import { Button } from './ui/button';
-import { Card } from './ui/card';
-import { ImageWithFallback } from './figma/ImageWithFallback';
-import { Flame, Hand, Palette } from 'lucide-react';
 
 interface HomePageProps {
   onNavigate: (page: string) => void;
 }
 
-export function HomePage({ onNavigate }: HomePageProps) {
-  const handleWhatsApp = (message: string) => {
-    window.open(`https://wa.me/919876543210?text=${encodeURIComponent(message)}`, '_blank');
-  };
+const products = [
+  {
+    id: 1,
+    name: 'Handcrafted Mug',
+    category: 'Mugs',
+    image: 'https://images.unsplash.com/photo-1666447606111-33167792af81?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjZXJhbWljJTIwbXVnJTIwaGFuZG1hZGV8ZW58MXx8fHwxNzYyNzEwODAwfDA&ixlib=rb-4.1.0&q=80&w=1080',
+  },
+  {
+    id: 2,
+    name: 'Artisan Plate',
+    category: 'Plates',
+    image: 'https://images.unsplash.com/photo-1759753865666-a6bd3da8971d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjZXJhbWljJTIwcGxhdGUlMjBhcnRpc2FufGVufDF8fHx8MTc2MjcxMDgwMHww&ixlib=rb-4.1.0&q=80&w=1080',
+  },
+  {
+    id: 3,
+    name: 'Ceramic Vase',
+    category: 'Vases',
+    image: 'https://images.unsplash.com/photo-1675604587136-f91dc1a4473b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjZXJhbWljJTIwdmFzZSUyMHBvdHRlcnl8ZW58MXx8fHwxNzYyNTk1NTQxfDA&ixlib=rb-4.1.0&q=80&w=1080',
+  },
+  {
+    id: 4,
+    name: 'Serving Bowl',
+    category: 'Bowls',
+    image: 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjZXJhbWljJTIwYm93bCUyMGhhbmRtYWRlfGVufDF8fHx8MTc2MjcxMDgwMHww&ixlib=rb-4.1.0&q=80&w=1080',
+  },
+];
 
-  const collections = [
-    {
-      name: 'Mugs & Cups',
-      image: 'https://images.unsplash.com/photo-1666447606111-33167792af81?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjZXJhbWljJTIwbXVncyUyMGhhbmRtYWRlfGVufDF8fHx8MTc2MTQ1NDAyMXww&ixlib=rb-4.1.0&q=80&w=1080',
-      description: 'Start your mornings with intention',
-    },
-    {
-      name: 'Bowls',
-      image: 'https://images.unsplash.com/photo-1761210719325-283557e92487?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjZXJhbWljJTIwYm93bHMlMjBhcnRpc2FufGVufDF8fHx8MTc2MTQ1NDAyMXww&ixlib=rb-4.1.0&q=80&w=1080',
-      description: 'Gather, serve, and nourish',
-    },
-    {
-      name: 'Plates',
-      image: 'https://images.unsplash.com/photo-1623682522867-ef176aa9c883?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjZXJhbWljJTIwcGxhdGVzJTIwcG90dGVyeXxlbnwxfHx8fDE3NjE0NTQwMjF8MA&ixlib=rb-4.1.0&q=80&w=1080',
-      description: 'Everyday beauty on the table',
-    },
-    {
-      name: 'Vases',
-      image: 'https://images.unsplash.com/photo-1722501428493-1db3d0df9023?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjZXJhbWljJTIwdmFzZXMlMjBoYW5kY3JhZnRlZHxlbnwxfHx8fDE3NjE0NTQwMjJ8MA&ixlib=rb-4.1.0&q=80&w=1080',
-      description: 'Display nature with artistry',
-    },
-  ];
+const courses = [
+  {
+    title: 'Wheel Throwing',
+    level: 'Beginner',
+    description: 'Discover the art of shaping clay on the potter\'s wheel.',
+    image: 'https://images.unsplash.com/photo-1753164725052-47a9c5e8067f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3R0ZXJ5JTIwd2hlZWwlMjB3b3Jrc2hvcHxlbnwxfHx8fDE3NjI3MTA4MDB8MA&ixlib=rb-4.1.0&q=80&w=1080',
+  },
+  {
+    title: 'Hand Building',
+    level: 'Beginner Level 1',
+    description: 'Master the art of hand building using slabs, coils, and attachments.',
+    image: 'https://images.unsplash.com/photo-1662845114342-256fdc45981d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYW5kYnVpbGRpbmclMjBwb3R0ZXJ5JTIwY29pbHxlbnwxfHx8fDE3NjI3MTA4MDJ8MA&ixlib=rb-4.1.0&q=80&w=1080',
+  },
+  {
+    title: 'Glaze Application',
+    level: 'Level 1',
+    description: 'Learn how to transform your pottery into finished works of art.',
+    image: 'https://images.unsplash.com/photo-1637548580984-10c48d61b168?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3R0ZXJ5JTIwZ2xhemluZyUyMHByb2Nlc3N8ZW58MXx8fHwxNzYyNzEwODAxfDA&ixlib=rb-4.1.0&q=80&w=1080',
+  },
+];
 
-  const workshops = [
-    {
-      title: 'Wheel-Throwing',
-      icon: <Flame className="w-12 h-12 text-[#A67C52]" />,
-      description: 'Learn to center clay and create functional pieces on the pottery wheel.',
-    },
-    {
-      title: 'Hand-Building',
-      icon: <Hand className="w-12 h-12 text-[#A67C52]" />,
-      description: 'Explore coil, slab, and pinch techniques to craft unique ceramics.',
-    },
-    {
-      title: 'Glazing & Firing',
-      icon: <Palette className="w-12 h-12 text-[#A67C52]" />,
-      description: 'Master the art of surface treatments and kiln firing processes.',
-    },
-  ];
-
-  const testimonials = [
-    {
-      quote: "Clay remembers every touch. At Callipottery, I learned to slow down and create with my hands.",
-      author: "Priya K.",
-    },
-    {
-      quote: "The studio is my sanctuary. Every class brings me closer to understanding the beauty of imperfection.",
-      author: "Rahul M.",
-    },
-    {
-      quote: "From my first bowl to my first exhibition, this studio has been my creative home.",
-      author: "Aisha S.",
-    },
-  ];
+function FadeUpSection({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <div className="min-h-screen bg-[#F7F3EF]">
-      {/* Hero Section - Classic Block Layout */}
-      <section className="relative py-20 lg:py-32 overflow-hidden bg-white">
-        <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            {/* Left - Text Block */}
-            <motion.div 
-              className="bg-white p-8 lg:p-12 rounded-lg shadow-xl"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <motion.h1 
-                className="text-[#3E2F24] mb-6"
-                style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(48px, 7vw, 72px)', lineHeight: '1.1' }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-              >
-                Crafted by Hand.<br />Centered in Calm.
-              </motion.h1>
-              <motion.p 
-                className="text-[#6B5D52] mb-8"
-                style={{ fontFamily: 'var(--font-sans)', fontSize: '18px', lineHeight: '1.8' }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-              >
-                Every piece tells a story of touch, time, and transformation. At Callipottery Studio, we blend ancient craft with modern design to create ceramics that bring beauty and intention to your everyday life.
-              </motion.p>
-              <motion.div 
-                className="flex flex-col sm:flex-row gap-4"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.6 }}
-              >
-                <Button
-                  onClick={() => onNavigate('shop')}
-                  className="bg-[#A67C52] hover:bg-[#8B6644] text-white px-8 py-6 rounded-lg shadow-lg"
-                >
-                  Shop Ceramics
-                </Button>
-                <Button
-                  onClick={() => handleWhatsApp('I would like to book a workshop at Callipottery Studio')}
-                  variant="outline"
-                  className="border-2 border-[#A67C52] text-[#A67C52] bg-white hover:bg-[#A67C52] hover:text-white px-8 py-6 rounded-lg"
-                >
-                  Book a Workshop
-                </Button>
-              </motion.div>
-            </motion.div>
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 50 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+      transition={{ duration: 0.8, delay }}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
-            {/* Right - Image Block */}
-            <motion.div 
-              className="relative"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+export default function HomePage({ onNavigate }: HomePageProps) {
+  const heroRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
+  const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.8, 0.3]);
+
+  return (
+    <div className="min-h-screen">
+      {/* Hero Section with Parallax */}
+      <section ref={heroRef} className="relative h-screen overflow-hidden">
+        <motion.div style={{ y }} className="absolute inset-0">
+          <div
+            className="w-full h-full bg-cover bg-center"
+            style={{
+              backgroundImage: `url('https://images.unsplash.com/photo-1740329362227-45c2f46a1f66?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3R0ZXJ5JTIwdGFibGUlMjBzZXR0aW5nJTIwbmF0dXJhbCUyMGxpZ2h0fGVufDF8fHx8MTc2MjcxMDc5OHww&ixlib=rb-4.1.0&q=80&w=1080')`,
+            }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-b from-[#2F2925]/40 via-[#2F2925]/30 to-[#F5F2EB]" />
+          </div>
+        </motion.div>
+
+        <motion.div
+          style={{ opacity }}
+          className="relative z-10 h-full flex items-center justify-center"
+        >
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1, delay: 0.3 }}
+              className="bg-white/95 backdrop-blur-sm p-8 md:p-12 max-w-2xl rounded-sm shadow-2xl"
             >
-              <div className="bg-white p-4 rounded-lg shadow-xl canvas-texture">
-                <div className="aspect-[4/3] rounded-lg overflow-hidden ceramic-texture">
-                  <ImageWithFallback
-                    src="https://images.unsplash.com/photo-1675101337462-a19b63af8b1b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3R0ZXJ5JTIwaGFuZHMlMjBjbGF5fGVufDF8fHx8MTc2MTk3NzA0NXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-                    alt="Hands shaping clay on pottery wheel"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              </div>
+              <p className="text-[#A35D38] tracking-widest mb-4 uppercase text-sm">
+                Objects of Quiet Beauty
+              </p>
+              <h1 className="text-5xl md:text-6xl lg:text-7xl text-[#2F2925] mb-6">
+                Made by Hand.
+              </h1>
+              <p className="text-xl text-[#6B6560] mb-8 leading-relaxed">
+                Discover the art of hand-thrown pottery and the beauty of imperfection.
+              </p>
+              <Button
+                onClick={() => onNavigate('shop')}
+                className="bg-[#A35D38] hover:bg-[#8B4D2E] text-white px-8 py-6 group"
+              >
+                Shop the Barrel Collection
+                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Button>
             </motion.div>
           </div>
-        </div>
+        </motion.div>
       </section>
 
-      {/* Brush Stroke Divider */}
-      <div className="brush-divider my-12" />
-
-      {/* Studio Introduction Block */}
-      <section className="py-20 lg:py-32 bg-white">
-        <div className="container mx-auto px-4 lg:px-8 max-w-5xl">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            {/* Terracotta Header */}
-            <div className="terracotta-header p-8 lg:p-12 rounded-t-lg text-center">
-              <h2 
-                className="text-white"
-                style={{ fontFamily: 'var(--font-serif)' }}
-              >
-                Our Clay, Our Way
+      {/* Featured Products */}
+      <section className="py-20 bg-[#F5F2EB]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeUpSection>
+            <div className="text-center mb-16">
+              <p className="text-[#A35D38] tracking-widest mb-2 uppercase text-sm">
+                Featured Collection
+              </p>
+              <h2 className="text-4xl md:text-5xl text-[#2F2925]">
+                Handcrafted Pieces
               </h2>
             </div>
-            {/* Content Block */}
-            <div className="bg-[#F7F3EF] p-8 lg:p-12 rounded-b-lg shadow-xl"
-            >
-              <p 
-                className="text-[#3E2F24] mb-6 max-w-3xl mx-auto"
-                style={{ fontSize: '18px', lineHeight: '1.8' }}
-              >
-                At Callipottery Studio, we believe every pot begins as a pause — a moment to connect 
-                with earth, fire, and yourself. Founded in 2020, our studio is a haven for makers, 
-                dreamers, and anyone seeking to slow down and create something beautiful with their hands.
-              </p>
-              <p 
-                className="text-[#3E2F24] max-w-3xl mx-auto"
-                style={{ fontSize: '18px', lineHeight: '1.8' }}
-              >
-                We blend traditional pottery techniques with contemporary design, creating pieces that 
-                honor the craft while celebrating modern minimalism. Each creation is a meditation in clay.
-              </p>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+          </FadeUpSection>
 
-      {/* Brush Stroke Divider */}
-      <div className="brush-divider my-12" />
-
-      {/* Collections Grid - Block Layout */}
-      <section className="py-20 lg:py-32 bg-[#F7F3EF]">
-        <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
-          {/* Terracotta Header */}
-          <div className="terracotta-header py-6 px-8 rounded-lg mb-16 text-center max-w-md mx-auto">
-            <h2 
-              className="text-white"
-              style={{ fontFamily: 'var(--font-serif)' }}
-            >
-              Our Collections
-            </h2>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {collections.map((collection, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-              >
-                <Card
-                  className="group overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all cursor-pointer bg-white canvas-texture"
-                  onClick={() => onNavigate('shop')}
-                >
-                  <div className="p-4">
-                    <div className="aspect-square overflow-hidden rounded-lg mb-4 ceramic-texture relative">
-                      <ImageWithFallback
-                        src={collection.image}
-                        alt={collection.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                      />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {products.map((product, index) => (
+              <FadeUpSection key={product.id} delay={index * 0.1}>
+                <div className="group cursor-pointer">
+                  <div className="relative overflow-hidden rounded-sm mb-4 aspect-square bg-white">
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-[#2F2925]/0 group-hover:bg-[#2F2925]/20 transition-colors duration-300 flex items-center justify-center">
+                      <Button
+                        onClick={() => onNavigate('shop')}
+                        className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white text-[#2F2925] hover:bg-[#A35D38] hover:text-white"
+                      >
+                        View Collection
+                      </Button>
                     </div>
-                    <h3 
-                      className="text-center text-[#3E2F24] mb-2" 
-                      style={{ fontFamily: 'var(--font-serif)', fontSize: '20px' }}
-                    >
-                      {collection.name}
-                    </h3>
-                    <p 
-                      className="text-center text-[#6B5D52] text-sm"
-                      style={{ fontFamily: 'var(--font-sans)' }}
-                    >
-                      {collection.description}
-                    </p>
                   </div>
-                </Card>
-              </motion.div>
+                  <p className="text-sm text-[#6B6560] mb-1">{product.category}</p>
+                  <h3 className="text-lg text-[#2F2925]">{product.name}</h3>
+                </div>
+              </FadeUpSection>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Brush Stroke Divider */}
-      <div className="brush-divider my-12" />
+      {/* Studio Intro */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <FadeUpSection>
+              <div className="relative h-[500px] rounded-sm overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1753164726043-31e583f8a9b8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYW5kcyUyMHNoYXBpbmclMjBjbGF5JTIwcG90dGVyeXxlbnwxfHx8fDE3NjI3MTA4MDB8MA&ixlib=rb-4.1.0&q=80&w=1080"
+                  alt="Hands shaping clay"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </FadeUpSection>
 
-      {/* Workshops Block */}
-      <section className="py-20 lg:py-32 bg-white">
-        <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
-          {/* Terracotta Header */}
-          <div className="terracotta-header py-6 px-8 rounded-lg mb-4 text-center max-w-lg mx-auto">
-            <h2 
-              className="text-white"
-              style={{ fontFamily: 'var(--font-serif)' }}
-            >
-              Workshops & Classes
-            </h2>
-          </div>
-          <p 
-            className="text-center mb-16 text-[#6B5D52]"
-            style={{ fontFamily: 'var(--font-sans)', fontStyle: 'italic', fontSize: '18px' }}
-          >
-            Find peace in your hands.
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {workshops.map((workshop, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.15 }}
-              >
-                <Card className="p-8 text-center bg-[#F7F3EF] border-0 shadow-lg hover:shadow-2xl transition-all h-full">
-                  <div className="flex justify-center mb-6">
-                    {workshop.icon}
-                  </div>
-                  <h3 
-                    className="mb-4 text-[#3E2F24]" 
-                    style={{ fontFamily: 'var(--font-serif)', fontSize: '24px' }}
-                  >
-                    {workshop.title}
-                  </h3>
-                  <p className="text-[#6B5D52] mb-6" style={{ fontSize: '16px', lineHeight: '1.6' }}>
-                    {workshop.description}
-                  </p>
-                  <Button
-                    onClick={() => onNavigate('classes')}
-                    variant="outline"
-                    className="border-[#A67C52] text-[#A67C52] hover:bg-[#A67C52] hover:text-white rounded-lg"
-                  >
-                    Learn More
-                  </Button>
-                </Card>
-              </motion.div>
-            ))}
+            <FadeUpSection delay={0.2}>
+              <div>
+                <p className="text-[#A35D38] tracking-widest mb-4 uppercase text-sm">
+                  Our Philosophy
+                </p>
+                <h2 className="text-4xl md:text-5xl text-[#2F2925] mb-6">
+                  Shaped by Clay
+                </h2>
+                <blockquote className="text-xl text-[#6B6560] italic mb-8 leading-relaxed border-l-4 border-[#A35D38] pl-6">
+                  "We strive to make the impossible possible through the soil. A man shaped by clay,
+                  I dream to create innovations born from the earth itself…"
+                </blockquote>
+                <p className="text-[#2F2925] mb-2">— Pradip Narayan Rahigade</p>
+                <p className="text-[#6B6560] mb-8">Founder, Callipottery Studio</p>
+                <Button
+                  onClick={() => onNavigate('about')}
+                  variant="outline"
+                  className="border-[#A35D38] text-[#A35D38] hover:bg-[#A35D38] hover:text-white"
+                >
+                  Meet the Artist
+                  <ArrowRight className="ml-2 w-4 h-4" />
+                </Button>
+              </div>
+            </FadeUpSection>
           </div>
         </div>
       </section>
 
-      {/* Brush Stroke Divider */}
-      <div className="brush-divider my-12" />
-
-      {/* Studio Services Block */}
-      <section className="py-20 lg:py-32 bg-[#F7F3EF]">
-        <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <Card className="overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-shadow h-full bg-white canvas-texture">
-                <div className="aspect-video overflow-hidden ceramic-texture">
-                  <ImageWithFallback
-                    src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3R0ZXJ5JTIwa2lsbnxlbnwxfHx8fDE3NjE0NTQwMjJ8MA&ixlib=rb-4.1.0&q=80&w=1080"
-                    alt="Kiln firing"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="p-8">
-                  <h3 
-                    className="mb-3 text-[#3E2F24]" 
-                    style={{ fontFamily: 'var(--font-serif)', fontSize: '24px' }}
-                  >
-                    Book Kiln Time
-                  </h3>
-                  <p className="text-[#6B5D52] mb-6" style={{ fontSize: '16px', lineHeight: '1.6' }}>
-                    Fire your creations in our professional kilns. Multiple cone options available.
-                  </p>
-                  <Button
-                    onClick={() => handleWhatsApp('I would like to book kiln time')}
-                    className="w-full bg-[#A67C52] hover:bg-[#8B6644] text-white rounded-lg"
-                  >
-                    Book via WhatsApp
-                  </Button>
-                </div>
-              </Card>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <Card className="overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-shadow h-full bg-white canvas-texture">
-                <div className="aspect-video overflow-hidden ceramic-texture">
-                  <ImageWithFallback
-                    src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3R0ZXJ5JTIwc3R1ZGlvJTIwd29ya3NwYWNlfGVufDF8fHx8MTc2MTQ1NDAyMnww&ixlib=rb-4.1.0&q=80&w=1080"
-                    alt="Open studio"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="p-8">
-                  <h3 
-                    className="mb-3 text-[#3E2F24]" 
-                    style={{ fontFamily: 'var(--font-serif)', fontSize: '24px' }}
-                  >
-                    Reserve Studio Space
-                  </h3>
-                  <p className="text-[#6B5D52] mb-6" style={{ fontSize: '16px', lineHeight: '1.6' }}>
-                    Work independently in our fully-equipped open studio. Tools and materials available.
-                  </p>
-                  <Button
-                    onClick={() => handleWhatsApp('I would like to reserve studio space')}
-                    className="w-full bg-[#A67C52] hover:bg-[#8B6644] text-white rounded-lg"
-                  >
-                    Book via WhatsApp
-                  </Button>
-                </div>
-              </Card>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Brush Stroke Divider */}
-      <div className="brush-divider my-12" />
-
-      {/* Impact Stats Block */}
-      <section className="py-20 lg:py-32 bg-white">
-        <div className="container mx-auto px-4 lg:px-8 max-w-6xl">
-          <motion.div
-            className="bg-[#F7F3EF] p-8 lg:p-12 rounded-lg shadow-xl border-2 border-[#E5E0DC]"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-              <div>
-                <div className="text-[#A67C52]" style={{ fontFamily: 'var(--font-serif)', fontSize: '48px' }}>
-                  500+
-                </div>
-                <p className="text-[#3E2F24] mt-2" style={{ fontSize: '14px' }}>
-                  Pieces Crafted
-                </p>
-              </div>
-              <div>
-                <div className="text-[#A67C52]" style={{ fontFamily: 'var(--font-serif)', fontSize: '48px' }}>
-                  200+
-                </div>
-                <p className="text-[#3E2F24] mt-2" style={{ fontSize: '14px' }}>
-                  Students Taught
-                </p>
-              </div>
-              <div>
-                <div className="text-[#A67C52]" style={{ fontFamily: 'var(--font-serif)', fontSize: '48px' }}>
-                  4
-                </div>
-                <p className="text-[#3E2F24] mt-2" style={{ fontSize: '14px' }}>
-                  Years of Calm
-                </p>
-              </div>
-              <div>
-                <div className="text-[#A67C52]" style={{ fontFamily: 'var(--font-serif)', fontSize: '48px' }}>
-                  100%
-                </div>
-                <p className="text-[#3E2F24] mt-2" style={{ fontSize: '14px' }}>
-                  Handmade
-                </p>
-              </div>
+      {/* Workshops Preview */}
+      <section className="py-20 bg-[#F5F2EB]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeUpSection>
+            <div className="text-center mb-16">
+              <p className="text-[#A35D38] tracking-widest mb-2 uppercase text-sm">
+                Learn With Us
+              </p>
+              <h2 className="text-4xl md:text-5xl text-[#2F2925]">Our Courses</h2>
             </div>
-          </motion.div>
-        </div>
-      </section>
+          </FadeUpSection>
 
-      {/* Brush Stroke Divider */}
-      <div className="brush-divider my-12" />
-
-      {/* Testimonials Block */}
-      <section className="py-20 lg:py-32 bg-[#F7F3EF]">
-        <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
-          {/* Terracotta Header */}
-          <div className="terracotta-header py-6 px-8 rounded-lg mb-16 text-center max-w-lg mx-auto">
-            <h2 
-              className="text-white"
-              style={{ fontFamily: 'var(--font-serif)' }}
-            >
-              Stories from Our Studio
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.15 }}
-              >
-                <Card className="p-8 border-0 bg-white shadow-lg hover:shadow-2xl transition-shadow h-full">
-                  <p 
-                    className="text-[#3E2F24] mb-6 italic"
-                    style={{ fontFamily: 'var(--font-sans)', fontSize: '18px', lineHeight: '1.6' }}
-                  >
-                    "{testimonial.quote}"
-                  </p>
-                  <p className="text-[#A67C52]" style={{ fontSize: '16px' }}>
-                    — {testimonial.author}
-                  </p>
-                </Card>
-              </motion.div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            {courses.map((course, index) => (
+              <FadeUpSection key={index} delay={index * 0.1}>
+                <div className="bg-white rounded-sm overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+                  <div className="relative h-64">
+                    <img
+                      src={course.image}
+                      alt={course.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="p-6">
+                    <div className="inline-block px-3 py-1 bg-[#A35D38]/10 text-[#A35D38] text-xs mb-3 rounded-full">
+                      {course.level}
+                    </div>
+                    <h3 className="text-2xl text-[#2F2925] mb-3">{course.title}</h3>
+                    <p className="text-[#6B6560] mb-4">{course.description}</p>
+                    <Button
+                      onClick={() => onNavigate('classes')}
+                      variant="outline"
+                      className="w-full border-[#A35D38] text-[#A35D38] hover:bg-[#A35D38] hover:text-white uppercase tracking-widest"
+                    >
+                      BOOK NOW
+                    </Button>
+                  </div>
+                </div>
+              </FadeUpSection>
             ))}
           </div>
+
+          <FadeUpSection delay={0.4}>
+            <div className="text-center">
+              <Button
+                onClick={() => onNavigate('classes')}
+                className="bg-[#A35D38] hover:bg-[#8B4D2E] text-white px-8 py-6"
+              >
+                View All Classes
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
+            </div>
+          </FadeUpSection>
         </div>
       </section>
 
-      {/* Brush Stroke Divider */}
-      <div className="brush-divider my-12" />
+      {/* Kiln & Studio Teasers */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <FadeUpSection>
+              <div className="bg-[#2F2925] text-white p-10 rounded-sm h-full flex flex-col justify-between">
+                <div>
+                  <h3 className="text-3xl mb-4">Fire & Finish</h3>
+                  <p className="text-[#E8E3D9] mb-6 leading-relaxed">
+                    Book kiln time for your ceramic pieces. Professional firing services with
+                    various temperature options.
+                  </p>
+                </div>
+                <Button
+                  onClick={() => onNavigate('kiln')}
+                  className="bg-[#A35D38] hover:bg-[#8B4D2E] text-white w-full"
+                >
+                  Book Kiln Time
+                </Button>
+              </div>
+            </FadeUpSection>
 
-      {/* Quote Banner Block */}
-      <section className="py-20 bg-[#3E2F24]">
-        <div className="container mx-auto px-4 lg:px-8 max-w-4xl text-center">
-          <p 
-            className="text-[#F7F3EF]"
-            style={{ fontFamily: 'var(--font-sans)', fontStyle: 'italic', fontSize: '32px', lineHeight: '1.4' }}
-          >
-            "Clay remembers every touch."
-          </p>
+            <FadeUpSection delay={0.2}>
+              <div className="bg-[#A35D38] text-white p-10 rounded-sm h-full flex flex-col justify-between">
+                <div>
+                  <h3 className="text-3xl mb-4">Pottery Pass</h3>
+                  <p className="text-[#F5F2EB] mb-6 leading-relaxed">
+                    Explore our open studio. Create at your own pace with access to wheels, tools,
+                    and expert guidance.
+                  </p>
+                </div>
+                <Button
+                  onClick={() => onNavigate('studio')}
+                  className="bg-white text-[#A35D38] hover:bg-[#F5F2EB] w-full"
+                >
+                  Explore Open Studio
+                </Button>
+              </div>
+            </FadeUpSection>
+          </div>
         </div>
       </section>
+
     </div>
   );
 }

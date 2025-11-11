@@ -1,234 +1,218 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
+import { Search, Filter, ShoppingCart } from 'lucide-react';
 import { Button } from './ui/button';
-import { Card } from './ui/card';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
-import { Badge } from './ui/badge';
-import { ImageWithFallback } from './figma/ImageWithFallback';
-import { MessageCircle } from 'lucide-react';
+import { Input } from './ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from './ui/select';
+import { useCart } from './CartContext';
+import { toast } from 'sonner@2.0.3';
 
-export function ShopPage() {
-  const [selectedCategory, setSelectedCategory] = useState('all');
-  const [selectedGlaze, setSelectedGlaze] = useState('all');
+const products = [
+  {
+    id: 1,
+    name: 'Terracotta Mug',
+    category: 'Mugs',
+    price: '₹650',
+    color: 'Terracotta',
+    image: 'https://images.unsplash.com/photo-1666447606111-33167792af81?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjZXJhbWljJTIwbXVnJTIwaGFuZG1hZGV8ZW58MXx8fHwxNzYyNzEwODAwfDA&ixlib=rb-4.1.0&q=80&w=1080',
+    inStock: true,
+  },
+  {
+    id: 2,
+    name: 'Rustic Dinner Plate',
+    category: 'Plates',
+    price: '₹850',
+    color: 'Cream',
+    image: 'https://images.unsplash.com/photo-1759753865666-a6bd3da8971d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjZXJhbWljJTIwcGxhdGUlMjBhcnRpc2FufGVufDF8fHx8MTc2MjcxMDgwMHww&ixlib=rb-4.1.0&q=80&w=1080',
+    inStock: true,
+  },
+  {
+    id: 3,
+    name: 'Minimalist Vase',
+    category: 'Vases',
+    price: '₹1,200',
+    color: 'Natural',
+    image: 'https://images.unsplash.com/photo-1675604587136-f91dc1a4473b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjZXJhbWljJTIwdmFzZSUyMHBvdHRlcnl8ZW58MXx8fHwxNzYyNTk1NTQxfDA&ixlib=rb-4.1.0&q=80&w=1080',
+    inStock: true,
+  },
+  {
+    id: 4,
+    name: 'Serving Bowl',
+    category: 'Bowls',
+    price: '₹950',
+    color: 'Terracotta',
+    image: 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjZXJhbWljJTIwYm93bCUyMGhhbmRtYWRlfGVufDF8fHx8MTc2MjcxMDgwMHww&ixlib=rb-4.1.0&q=80&w=1080',
+    inStock: true,
+  },
+  {
+    id: 5,
+    name: 'Coffee Mug Set',
+    category: 'Mugs',
+    price: '₹1,800',
+    color: 'Mixed',
+    image: 'https://images.unsplash.com/photo-1666447606111-33167792af81?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjZXJhbWljJTIwbXVnJTIwaGFuZG1hZGV8ZW58MXx8fHwxNzYyNzEwODAwfDA&ixlib=rb-4.1.0&q=80&w=1080',
+    inStock: true,
+  },
+  {
+    id: 6,
+    name: 'Salad Bowl',
+    category: 'Bowls',
+    price: '₹1,100',
+    color: 'Cream',
+    image: 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjZXJhbWljJTIwYm93bCUyMGhhbmRtYWRlfGVufDF8fHx8MTc2MjcxMDgwMHww&ixlib=rb-4.1.0&q=80&w=1080',
+    inStock: false,
+  },
+];
 
-  const products = [
-    {
-      id: 1,
-      name: 'Morning Ritual Mug',
-      category: 'mugs',
-      price: '₹850',
-      glaze: 'cream',
-      image: 'https://images.unsplash.com/photo-1666447606111-33167792af81?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjZXJhbWljJTIwbXVncyUyMGhhbmRtYWRlfGVufDF8fHx8MTc2MTQ1NDAyMXww&ixlib=rb-4.1.0&q=80&w=1080',
-      description: 'Hand-thrown stoneware mug with ergonomic handle',
-    },
-    {
-      id: 2,
-      name: 'Terracotta Cup Set',
-      category: 'mugs',
-      price: '₹1,200',
-      glaze: 'terracotta',
-      image: 'https://images.unsplash.com/photo-1614334420922-8e2aa2bd52c2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0ZXJyYWNvdHRhJTIwcG90dGVyeSUyMGVhcnRoeXxlbnwxfHx8fDE3NjE0NTQwMjV8MA&ixlib=rb-4.1.0&q=80&w=1080',
-      description: 'Set of 2 earthy terracotta cups',
-    },
-    {
-      id: 3,
-      name: 'Nesting Bowls',
-      category: 'bowls',
-      price: '₹2,400',
-      glaze: 'blue',
-      image: 'https://images.unsplash.com/photo-1761210719325-283557e92487?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjZXJhbWljJTIwYm93bHMlMjBhcnRpc2FufGVufDF8fHx8MTc2MTQ1NDAyMXww&ixlib=rb-4.1.0&q=80&w=1080',
-      description: 'Set of 3 nesting bowls with glaze-blue finish',
-    },
-    {
-      id: 4,
-      name: 'Serving Bowl',
-      category: 'bowls',
-      price: '₹1,650',
-      glaze: 'cream',
-      image: 'https://images.unsplash.com/photo-1761210719325-283557e92487?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjZXJhbWljJTIwYm93bHMlMjBhcnRpc2FufGVufDF8fHx8MTc2MTQ1NDAyMXww&ixlib=rb-4.1.0&q=80&w=1080',
-      description: 'Large serving bowl perfect for salads',
-    },
-    {
-      id: 5,
-      name: 'Dinner Plate Set',
-      category: 'plates',
-      price: '₹3,200',
-      glaze: 'cream',
-      image: 'https://images.unsplash.com/photo-1623682522867-ef176aa9c883?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjZXJhbWljJTIwcGxhdGVzJTIwcG90dGVyeXxlbnwxfHx8fDE3NjE0NTQwMjF8MA&ixlib=rb-4.1.0&q=80&w=1080',
-      description: 'Set of 4 handcrafted dinner plates',
-    },
-    {
-      id: 6,
-      name: 'Breakfast Plate',
-      category: 'plates',
-      price: '₹950',
-      glaze: 'olive',
-      image: 'https://images.unsplash.com/photo-1623682522867-ef176aa9c883?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjZXJhbWljJTIwcGxhdGVzJTIwcG90dGVyeXxlbnwxfHx8fDE3NjE0NTQwMjF8MA&ixlib=rb-4.1.0&q=80&w=1080',
-      description: 'Perfect sized plate for breakfast',
-    },
-    {
-      id: 7,
-      name: 'Minimalist Vase',
-      category: 'vases',
-      price: '₹1,850',
-      glaze: 'blue',
-      image: 'https://images.unsplash.com/photo-1722501428493-1db3d0df9023?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjZXJhbWljJTIwdmFzZXMlMjBoYW5kY3JhZnRlZHxlbnwxfHx8fDE3NjE0NTQwMjJ8MA&ixlib=rb-4.1.0&q=80&w=1080',
-      description: 'Modern bud vase with subtle texture',
-    },
-    {
-      id: 8,
-      name: 'Statement Vase',
-      category: 'vases',
-      price: '₹2,950',
-      glaze: 'terracotta',
-      image: 'https://images.unsplash.com/photo-1722501428493-1db3d0df9023?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjZXJhbWljJTIwdmFzZXMlMjBoYW5kY3JhZnRlZHxlbnwxfHx8fDE3NjE0NTQwMjJ8MA&ixlib=rb-4.1.0&q=80&w=1080',
-      description: 'Large decorative vase for dried flowers',
-    },
-    {
-      id: 9,
-      name: 'Espresso Cup Duo',
-      category: 'mugs',
-      price: '₹980',
-      glaze: 'olive',
-      image: 'https://images.unsplash.com/photo-1666447606111-33167792af81?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjZXJhbWljJTIwbXVncyUyMGhhbmRtYWRlfGVufDF8fHx8MTc2MTQ1NDAyMXww&ixlib=rb-4.1.0&q=80&w=1080',
-      description: 'Pair of delicate espresso cups',
-    },
-  ];
+export default function ShopPage() {
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [searchQuery, setSearchQuery] = useState('');
+  const { addItem } = useCart();
 
   const filteredProducts = products.filter((product) => {
-    const categoryMatch = selectedCategory === 'all' || product.category === selectedCategory;
-    const glazeMatch = selectedGlaze === 'all' || product.glaze === selectedGlaze;
-    return categoryMatch && glazeMatch;
+    const matchesCategory = selectedCategory === 'All' || product.category === selectedCategory;
+    const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
   });
 
-  const handleWhatsAppOrder = (productName: string) => {
-    window.open(
-      `https://wa.me/919876543210?text=${encodeURIComponent(`I would like to order: ${productName}`)}`,
-      '_blank'
-    );
-  };
-
   return (
-    <div className="min-h-screen py-24 px-4 border-t-4 border-[#A67C52]">
-      <div className="container mx-auto">
-        {/* Header */}
-        <motion.div 
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <h1 
-            className="mb-4 text-[#3E2F24]"
-            style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(40px, 8vw, 64px)' }}
+    <div className="min-h-screen pt-20 bg-[#F5F2EB]">
+      {/* Header */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
           >
-            The Callipottery Collection
-          </h1>
-          <p className="text-[#6B5D52] max-w-2xl mx-auto" style={{ fontSize: '18px', lineHeight: '1.6' }}>
-            Each piece is handcrafted with care, celebrating the unique beauty of artisan pottery.
-          </p>
-        </motion.div>
-
-        {/* Filters */}
-        <div className="flex flex-col sm:flex-row gap-4 mb-16 max-w-2xl mx-auto">
-          <div className="flex-1">
-            <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-              <SelectTrigger className="bg-white border-[#3E2F24]/15 rounded-lg">
-                <SelectValue placeholder="All Categories" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Categories</SelectItem>
-                <SelectItem value="mugs">Mugs & Cups</SelectItem>
-                <SelectItem value="bowls">Bowls</SelectItem>
-                <SelectItem value="plates">Plates</SelectItem>
-                <SelectItem value="vases">Vases</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="flex-1">
-            <Select value={selectedGlaze} onValueChange={setSelectedGlaze}>
-              <SelectTrigger className="bg-white border-[#3E2F24]/15 rounded-lg">
-                <SelectValue placeholder="All Glazes" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Glazes</SelectItem>
-                <SelectItem value="cream">Cream</SelectItem>
-                <SelectItem value="terracotta">Terracotta</SelectItem>
-                <SelectItem value="blue">Glaze Blue</SelectItem>
-                <SelectItem value="olive">Olive</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+            <p className="text-[#A35D38] tracking-widest mb-2 uppercase text-sm">
+              Our Collection
+            </p>
+            <h1 className="text-5xl md:text-6xl text-[#2F2925] mb-4">Shop</h1>
+            <p className="text-xl text-[#6B6560] max-w-2xl mx-auto">
+              Each piece is handcrafted with care, celebrating the beauty of imperfection.
+            </p>
+          </motion.div>
         </div>
+      </section>
 
-        {/* Product Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProducts.map((product, index) => (
-            <motion.div
-              key={product.id}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              whileHover={{ y: -8 }}
-            >
-              <Card className="group overflow-hidden border-0 shadow-[0_4px_12px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.12)] transition-all h-full bg-white">
-                <div className="aspect-square overflow-hidden bg-[#E5E0DC] rounded-lg">
-                  <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ duration: 0.4 }}
-                  >
-                    <ImageWithFallback
-                      src={product.image}
-                      alt={product.name}
-                      className="w-full h-full object-cover"
-                    />
-                  </motion.div>
-                </div>
-              
-              <div className="p-6 bg-white text-center">
-                <h3 
-                  className="mb-3 text-[#3E2F24]" 
-                  style={{ fontFamily: 'var(--font-serif)', fontSize: '20px' }}
-                >
-                  {product.name}
-                </h3>
-                
-                <div className="text-[#A67C52] mb-4" style={{ fontFamily: 'var(--font-sans)', fontSize: '16px' }}>
-                  {product.price}
-                </div>
-                
-                <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
-                  <Button
-                    onClick={() => handleWhatsAppOrder(product.name)}
-                    className="bg-[#A67C52] hover:bg-[#8B6644] text-white rounded-lg w-full"
-                  >
-                    <MessageCircle className="w-4 h-4 mr-2" />
-                    Order via WhatsApp
-                  </Button>
-                </motion.div>
+      {/* Filters & Search */}
+      <section className="py-8 bg-[#F5F2EB]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
+            <div className="flex items-center gap-4 w-full md:w-auto">
+              <div className="relative flex-1 md:w-64">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#6B6560] w-5 h-5" />
+                <Input
+                  type="text"
+                  placeholder="Search products..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10 bg-white border-[#6B6560]/20"
+                />
               </div>
-              </Card>
-            </motion.div>
-          ))}
-        </div>
+            </div>
 
-        {/* Care Instructions */}
-        <div className="mt-24 p-10 bg-[#E5E0DC] rounded-lg max-w-3xl mx-auto">
-          <h3 
-            className="mb-6 text-[#3E2F24] text-center" 
-            style={{ fontFamily: 'var(--font-serif)', fontSize: '24px' }}
-          >
-            Caring for Your Ceramics
-          </h3>
-          <div className="space-y-3 text-[#3E2F24]" style={{ fontSize: '16px', lineHeight: '1.6' }}>
-            <p>• Hand wash with gentle soap for longevity</p>
-            <p>• Microwave and dishwasher safe (unless specified)</p>
-            <p>• Avoid thermal shock – no extreme temperature changes</p>
-            <p>• Each piece is unique with slight variations celebrating handcraft</p>
+            <div className="flex items-center gap-4 w-full md:w-auto">
+              <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                <SelectTrigger className="w-full md:w-48 bg-white">
+                  <Filter className="w-4 h-4 mr-2" />
+                  <SelectValue placeholder="Category" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="All">All Categories</SelectItem>
+                  <SelectItem value="Mugs">Mugs</SelectItem>
+                  <SelectItem value="Plates">Plates</SelectItem>
+                  <SelectItem value="Bowls">Bowls</SelectItem>
+                  <SelectItem value="Vases">Vases</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* Product Grid */}
+      <section className="py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredProducts.map((product, index) => (
+              <motion.div
+                key={product.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="group bg-white rounded-sm overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300"
+              >
+                <div className="relative aspect-square overflow-hidden">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  {!product.inStock && (
+                    <div className="absolute inset-0 bg-[#2F2925]/70 flex items-center justify-center">
+                      <span className="text-white px-4 py-2 bg-[#A35D38]">Out of Stock</span>
+                    </div>
+                  )}
+                  <div className="absolute inset-0 bg-[#2F2925]/0 group-hover:bg-[#2F2925]/10 transition-colors duration-300" />
+                </div>
+
+                <div className="p-6">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm text-[#6B6560]">{product.category}</span>
+                    <span className="text-sm text-[#6B6560]">{product.color}</span>
+                  </div>
+                  <h3 className="text-xl text-[#2F2925] mb-2">{product.name}</h3>
+                  <p className="text-2xl text-[#A35D38] mb-4">{product.price}</p>
+
+                  <div className="space-y-2">
+                    <Button
+                      onClick={() => {
+                        addItem({
+                          id: product.id,
+                          name: product.name,
+                          price: product.price,
+                          image: product.image,
+                          category: product.category,
+                        });
+                        toast.success(`${product.name} added to cart!`);
+                      }}
+                      className="w-full bg-[#A35D38] hover:bg-[#8B4D2E] text-white uppercase tracking-widest"
+                      disabled={!product.inStock}
+                    >
+                      <ShoppingCart className="w-4 h-4 mr-2" />
+                      {product.inStock ? 'ADD TO CART' : 'UNAVAILABLE'}
+                    </Button>
+                    <a
+                      href="https://wa.me/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block w-full"
+                    >
+                      <Button variant="outline" className="w-full border-[#A35D38] text-[#A35D38] hover:bg-[#A35D38] hover:text-white uppercase tracking-widest">
+                        MESSAGE TO ORDER
+                      </Button>
+                    </a>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {filteredProducts.length === 0 && (
+            <div className="text-center py-16">
+              <p className="text-xl text-[#6B6560]">No products found matching your criteria.</p>
+            </div>
+          )}
+        </div>
+      </section>
     </div>
   );
 }
