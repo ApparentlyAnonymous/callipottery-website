@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { Award, Heart, Lightbulb, Target } from 'lucide-react';
+import pradipImage from '../../lib/Images/pradip.jpeg';
 
 const processes = [
   {
@@ -96,7 +97,7 @@ export default function AboutPage() {
             >
               <div className="relative h-[600px] rounded-sm overflow-hidden">
                 <img
-                  src="https://images.unsplash.com/photo-1605437028949-3346cd3b7bae?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjZXJhbWljJTIwYXJ0aXN0JTIwcG9ydHJhaXR8ZW58MXx8fHwxNzYyNzEwODAxfDA&ixlib=rb-4.1.0&q=80&w=1080"
+                  src={pradipImage}
                   alt="Pradip Narayan Rahigade"
                   className="w-full h-full object-cover"
                 />

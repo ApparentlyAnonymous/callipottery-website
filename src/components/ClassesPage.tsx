@@ -3,6 +3,15 @@ import { CheckCircle, Clock, Calendar, Users, ChevronLeft, ChevronRight, X, Mess
 import { Button } from './ui/button';
 import { useState } from 'react';
 import { toast } from 'sonner@2.0.3';
+import potteryLineImage from '../../lib/Images/WhatsApp Image 2025-10-23 at 16.14.21 copy 2.jpeg';
+import calligraphyImage from '../../lib/Images/WhatsApp Image 2025-10-23 at 16.09.08 copy.jpeg';
+import handsOnWheelImage from '../../lib/Images/WhatsApp Image 2025-10-23 at 16.14.21 copy.jpeg';
+import coupleHandsImage from '../../lib/Images/WhatsApp Image 2025-10-27 at 20.21.11.jpeg';
+import groupWheelImage from '../../lib/Images/WhatsApp Image 2025-10-27 at 20.21.12 (1).jpeg';
+import soloWheelImage from '../../lib/Images/WhatsApp Image 2025-10-27 at 20.21.15.jpeg';
+import proudPiecesImage from '../../lib/Images/WhatsApp Image 2025-10-27 at 20.21.13.jpeg';
+import plaqueHandsImage from '../../lib/Images/WhatsApp Image 2025-10-27 at 20.21.12.jpeg';
+import focusedWheelImage from '../../lib/Images/WhatsApp Image 2025-10-27 at 20.21.14 (1).jpeg';
 
 const courses = [
   {
@@ -18,7 +27,7 @@ const courses = [
       'Create & take home 5 finished pieces',
       'Materials and firings included',
     ],
-    image: 'https://images.unsplash.com/photo-1753164725052-47a9c5e8067f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3R0ZXJ5JTIwd2hlZWwlMjB3b3Jrc2hvcHxlbnwxfHx8fDE3NjI3MTA4MDB8MA&ixlib=rb-4.1.0&q=80&w=1080',
+    image: handsOnWheelImage,
   },
   {
     title: 'Hand Building (Beginner Level 1)',
@@ -33,7 +42,7 @@ const courses = [
       'Expert guidance throughout',
       'All materials and firing included',
     ],
-    image: 'https://images.unsplash.com/photo-1662845114342-256fdc45981d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYW5kYnVpbGRpbmclMjBwb3R0ZXJ5JTIwY29pbHxlbnwxfHx8fDE3NjI3MTA4MDJ8MA&ixlib=rb-4.1.0&q=80&w=1080',
+    image: calligraphyImage,
   },
   {
     title: 'Glaze Application (Level 1)',
@@ -48,15 +57,17 @@ const courses = [
       'Experiment with colors and textures',
       'Glaze materials and firing included',
     ],
-    image: 'https://images.unsplash.com/photo-1637548580984-10c48d61b168?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3R0ZXJ5JTIwZ2xhemluZyUyMHByb2Nlc3N8ZW58MXx8fHwxNjI3MTA4MDF8MA&ixlib=rb-4.1.0&q=80&w=1080',
+    image: potteryLineImage,
   },
 ];
 
-const workshopGallery = [
-  'https://images.unsplash.com/photo-1753164725052-47a9c5e8067f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3R0ZXJ5JTIwd2hlZWwlMjB3b3Jrc2hvcHxlbnwxfHx8fDE3NjI3MTA4MDB8MA&ixlib=rb-4.1.0&q=80&w=1080',
-  'https://images.unsplash.com/photo-1638341840302-a2d9579b821e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3R0ZXJ5JTIwc3R1ZGlvJTIwd29ya3NwYWNlfGVufDF8fHx8MTc2MjYyNTMyNnww&ixlib=rb-4.1.0&q=80&w=1080',
-  'https://images.unsplash.com/photo-1753164726043-31e583f8a9b8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYW5kcyUyMHNoYXBpbmclMjBjbGF5JTIwcG90dGVyeXxlbnwxfHx8fDE3NjI3MTA4MDB8MA&ixlib=rb-4.1.0&q=80&w=1080',
-  'https://images.unsplash.com/photo-1662845114342-256fdc45981d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYW5kYnVpbGRpbmclMjBwb3R0ZXJ5JTIwY29pbHxlbnwxfHx8fDE3NjI3MTA4MDJ8MA&ixlib=rb-4.1.0&q=80&w=1080',
+const workshopMomentImages = [
+  soloWheelImage,
+  groupWheelImage,
+  coupleHandsImage,
+  plaqueHandsImage,
+  proudPiecesImage,
+  focusedWheelImage,
 ];
 
 const whatsIncluded = [
@@ -533,20 +544,20 @@ export default function ClassesPage() {
             <p className="text-[#6B6560]">See what happens in our classes</p>
           </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {workshopGallery.map((image, index) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {workshopMomentImages.map((image, index) => (
               <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
+                key={`workshop-${index}`}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="aspect-square overflow-hidden rounded-sm"
+                transition={{ duration: 0.6, delay: index * 0.05 }}
+                className="rounded-sm overflow-hidden shadow-lg"
               >
                 <img
                   src={image}
                   alt={`Workshop moment ${index + 1}`}
-                  className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                  className="w-full h-80 object-cover"
                 />
               </motion.div>
             ))}

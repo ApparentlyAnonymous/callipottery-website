@@ -1,6 +1,15 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
 import { Search, Filter, ShoppingCart } from 'lucide-react';
+import classicMugImage from '../../lib/Images/coffee mug 695.jpeg';
+import barrelMugImage from '../../lib/Images/beer mug 999 v2.jpeg';
+import handledMugImage from '../../lib/Images/beer mug 999.jpeg';
+import compactMugImage from '../../lib/Images/coffee mug 765.jpeg';
+import tumblerMugImage from '../../lib/Images/coffee mug 945.jpeg';
+import shallowBowlImage from '../../lib/Images/pasta bowl 1155.jpeg';
+import planterWithPlateImage from '../../lib/Images/planter w:plate 965.jpeg';
+import iceBucketImage from '../../lib/Images/ice bucket 2325.jpeg';
+import tallTumblerImage from '../../lib/Images/tumbler 699.jpeg';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import {
@@ -16,57 +25,84 @@ import { toast } from 'sonner@2.0.3';
 const products = [
   {
     id: 1,
-    name: 'Terracotta Mug',
+    name: 'Classic Coffee Mug',
     category: 'Mugs',
     price: '₹650',
     color: 'Terracotta',
-    image: 'https://images.unsplash.com/photo-1666447606111-33167792af81?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjZXJhbWljJTIwbXVnJTIwaGFuZG1hZGV8ZW58MXx8fHwxNzYyNzEwODAwfDA&ixlib=rb-4.1.0&q=80&w=1080',
+    image: classicMugImage,
     inStock: true,
   },
   {
     id: 2,
-    name: 'Rustic Dinner Plate',
-    category: 'Plates',
+    name: 'Rustic Barrel Mug',
+    category: 'Mugs',
     price: '₹850',
-    color: 'Cream',
-    image: 'https://images.unsplash.com/photo-1759753865666-a6bd3da8971d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjZXJhbWljJTIwcGxhdGUlMjBhcnRpc2FufGVufDF8fHx8MTc2MjcxMDgwMHww&ixlib=rb-4.1.0&q=80&w=1080',
+    color: 'Mahogany',
+    image: barrelMugImage,
     inStock: true,
   },
   {
     id: 3,
-    name: 'Minimalist Vase',
-    category: 'Vases',
-    price: '₹1,200',
-    color: 'Natural',
-    image: 'https://images.unsplash.com/photo-1675604587136-f91dc1a4473b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjZXJhbWljJTIwdmFzZSUyMHBvdHRlcnl8ZW58MXx8fHwxNzYyNTk1NTQxfDA&ixlib=rb-4.1.0&q=80&w=1080',
+    name: 'Barrel Handle Mug',
+    category: 'Mugs',
+    price: '₹1,000',
+    color: 'Chestnut',
+    image: handledMugImage,
     inStock: true,
   },
   {
     id: 4,
-    name: 'Serving Bowl',
-    category: 'Bowls',
+    name: 'Compact Barrel Mug',
+    category: 'Mugs',
     price: '₹950',
-    color: 'Terracotta',
-    image: 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjZXJhbWljJTIwYm93bCUyMGhhbmRtYWRlfGVufDF8fHx8MTc2MjcxMDgwMHww&ixlib=rb-4.1.0&q=80&w=1080',
+    color: 'Umber',
+    image: compactMugImage,
     inStock: true,
   },
   {
     id: 5,
-    name: 'Coffee Mug Set',
+    name: 'Barrel Tumbler',
     category: 'Mugs',
-    price: '₹1,800',
-    color: 'Mixed',
-    image: 'https://images.unsplash.com/photo-1666447606111-33167792af81?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjZXJhbWljJTIwbXVnJTIwaGFuZG1hZGV8ZW58MXx8fHwxNzYyNzEwODAwfDA&ixlib=rb-4.1.0&q=80&w=1080',
+    price: '₹1,200',
+    color: 'Charred Copper',
+    image: tumblerMugImage,
     inStock: true,
   },
   {
     id: 6,
-    name: 'Salad Bowl',
+    name: 'Low Serving Bowl',
     category: 'Bowls',
-    price: '₹1,100',
-    color: 'Cream',
-    image: 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjZXJhbWljJTIwYm93bCUyMGhhbmRtYWRlfGVufDF8fHx8MTc2MjcxMDgwMHww&ixlib=rb-4.1.0&q=80&w=1080',
+    price: '₹1,500',
+    color: 'Deep Ember',
+    image: shallowBowlImage,
+    inStock: true,
+  },
+  {
+    id: 7,
+    name: 'Planter with Plate',
+    category: 'Vases',
+    price: '₹2,100',
+    color: 'Ebony',
+    image: planterWithPlateImage,
+    inStock: true,
+  },
+  {
+    id: 8,
+    name: 'Heritage Ice Bucket',
+    category: 'Bowls',
+    price: '₹2,325',
+    color: 'Walnut',
+    image: iceBucketImage,
     inStock: false,
+  },
+  {
+    id: 9,
+    name: 'Tall Barrel Tumbler',
+    category: 'Mugs',
+    price: '₹780',
+    color: 'Mahogany',
+    image: tallTumblerImage,
+    inStock: true,
   },
 ];
 

@@ -1,6 +1,18 @@
 import { useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'motion/react';
 import { ArrowRight, CheckCircle } from 'lucide-react';
+import heroImageSrc from '../../lib/Images/Hero image home.jpeg';
+import beerMugImage from '../../lib/Images/beer mug 999 v2.jpeg';
+import coffeeMug695Image from '../../lib/Images/coffee mug 695.jpeg';
+import coffeeMug765Image from '../../lib/Images/coffee mug 765.jpeg';
+import coffeeMug945Image from '../../lib/Images/coffee mug 945.jpeg';
+import iceBucketImage from '../../lib/Images/ice bucket 2325.jpeg';
+import pastaBowlImage from '../../lib/Images/pasta bowl 1155.jpeg';
+import tumblerImage from '../../lib/Images/tumbler 699.jpeg';
+import kilnImage from '../../lib/Images/kiln.jpg';
+import courseImage1 from '../../lib/Images/1.jpeg'; // or .jpg/.png
+import courseImage2 from '../../lib/Images/2.jpeg';
+import courseImage3 from '../../lib/Images/3.jpeg';
 import { Button } from './ui/button';
 
 interface HomePageProps {
@@ -10,27 +22,27 @@ interface HomePageProps {
 const products = [
   {
     id: 1,
-    name: 'Handcrafted Mug',
+    name: 'Handcrafted Beer Mug',
     category: 'Mugs',
-    image: 'https://images.unsplash.com/photo-1666447606111-33167792af81?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjZXJhbWljJTIwbXVnJTIwaGFuZG1hZGV8ZW58MXx8fHwxNzYyNzEwODAwfDA&ixlib=rb-4.1.0&q=80&w=1080',
+    image: beerMugImage,
   },
   {
     id: 2,
     name: 'Artisan Plate',
     category: 'Plates',
-    image: 'https://images.unsplash.com/photo-1759753865666-a6bd3da8971d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjZXJhbWljJTIwcGxhdGUlMjBhcnRpc2FufGVufDF8fHx8MTc2MjcxMDgwMHww&ixlib=rb-4.1.0&q=80&w=1080',
+    image: coffeeMug695Image,
   },
   {
     id: 3,
     name: 'Ceramic Vase',
     category: 'Vases',
-    image: 'https://images.unsplash.com/photo-1675604587136-f91dc1a4473b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjZXJhbWljJTIwdmFzZSUyMHBvdHRlcnl8ZW58MXx8fHwxNzYyNTk1NTQxfDA&ixlib=rb-4.1.0&q=80&w=1080',
+    image: coffeeMug765Image,
   },
   {
     id: 4,
     name: 'Serving Bowl',
     category: 'Bowls',
-    image: 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjZXJhbWljJTIwYm93bCUyMGhhbmRtYWRlfGVufDF8fHx8MTc2MjcxMDgwMHww&ixlib=rb-4.1.0&q=80&w=1080',
+    image: coffeeMug945Image,
   },
 ];
 
@@ -39,19 +51,19 @@ const courses = [
     title: 'Wheel Throwing',
     level: 'Beginner',
     description: 'Discover the art of shaping clay on the potter\'s wheel.',
-    image: 'https://images.unsplash.com/photo-1753164725052-47a9c5e8067f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3R0ZXJ5JTIwd2hlZWwlMjB3b3Jrc2hvcHxlbnwxfHx8fDE3NjI3MTA4MDB8MA&ixlib=rb-4.1.0&q=80&w=1080',
+    image: courseImage1,
   },
   {
     title: 'Hand Building',
     level: 'Beginner Level 1',
     description: 'Master the art of hand building using slabs, coils, and attachments.',
-    image: 'https://images.unsplash.com/photo-1662845114342-256fdc45981d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYW5kYnVpbGRpbmclMjBwb3R0ZXJ5JTIwY29pbHxlbnwxfHx8fDE3NjI3MTA4MDJ8MA&ixlib=rb-4.1.0&q=80&w=1080',
+    image: courseImage2,
   },
   {
     title: 'Glaze Application',
     level: 'Level 1',
     description: 'Learn how to transform your pottery into finished works of art.',
-    image: 'https://images.unsplash.com/photo-1637548580984-10c48d61b168?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3R0ZXJ5JTIwZ2xhemluZyUyMHByb2Nlc3N8ZW58MXx8fHwxNzYyNzEwODAxfDA&ixlib=rb-4.1.0&q=80&w=1080',
+    image: courseImage3,
   },
 ];
 
@@ -86,12 +98,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
       {/* Hero Section with Parallax */}
       <section ref={heroRef} className="relative h-screen overflow-hidden">
         <motion.div style={{ y }} className="absolute inset-0">
-          <div
-            className="w-full h-full bg-cover bg-center"
-            style={{
-              backgroundImage: `url('https://images.unsplash.com/photo-1740329362227-45c2f46a1f66?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3R0ZXJ5JTIwdGFibGUlMjBzZXR0aW5nJTIwbmF0dXJhbCUyMGxpZ2h0fGVufDF8fHx8MTc2MjcxMDc5OHww&ixlib=rb-4.1.0&q=80&w=1080')`,
-            }}
-          >
+          <div className="w-full h-full bg-cover bg-center" style={{ backgroundImage: `url(${heroImageSrc})` }}>
             <div className="absolute inset-0 bg-gradient-to-b from-[#2F2925]/40 via-[#2F2925]/30 to-[#F5F2EB]" />
           </div>
         </motion.div>
@@ -176,11 +183,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <FadeUpSection>
               <div className="relative h-[500px] rounded-sm overflow-hidden">
-                <img
-                  src="https://images.unsplash.com/photo-1753164726043-31e583f8a9b8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYW5kcyUyMHNoYXBpbmclMjBjbGF5JTIwcG90dGVyeXxlbnwxfHx8fDE3NjI3MTA4MDB8MA&ixlib=rb-4.1.0&q=80&w=1080"
-                  alt="Hands shaping clay"
-                  className="w-full h-full object-cover"
-                />
+                <img src={kilnImage} alt="Kiln ready for firing" className="w-full h-full object-cover" />
               </div>
             </FadeUpSection>
 
