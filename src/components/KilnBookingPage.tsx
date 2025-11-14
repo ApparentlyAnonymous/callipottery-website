@@ -1,7 +1,6 @@
 import { motion } from 'motion/react';
 import { AlertCircle, Thermometer, Clock, MessageCircle } from 'lucide-react';
-// Use public directory for static assets
-const kiln1Image = '/Images/kiln1.jpeg';
+import kiln1Image from '../../lib/Images/kiln1.jpeg';
 import { Button } from './ui/button';
 import {
   Table,
@@ -73,10 +72,11 @@ export default function KilnBookingPage() {
           transition={{ duration: 1 }}
           className="relative h-96 overflow-hidden"
         >
-          <img
-            src={kiln1Image}
-            alt="Kiln"
-            className="w-full h-full object-cover"
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url(${kiln1Image})` }}
+            role="img"
+            aria-label="Kiln ready for firing"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#2F2925]/60 to-transparent" />
         </motion.div>

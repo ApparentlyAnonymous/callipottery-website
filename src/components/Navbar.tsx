@@ -24,7 +24,7 @@ const navStructure = {
         { label: 'All Products', page: 'shop' },
         { label: 'Vessels', page: 'shop' },
         { label: 'Tableware', page: 'shop' },
-        { label: 'Decorative', page: 'shop' },
+        { label: 'Decor', page: 'shop' },
       ]
     },
     { 
@@ -160,13 +160,14 @@ export default function Navbar({ currentPage, onNavigate }: NavbarProps) {
                 whileTap={{ scale: 0.98 }}
                 className="text-[#F5F2EB] hover:text-[#A35D38] transition-colors duration-300"
               >
-                <span className="text-sm md:text-base tracking-[0.3em] font-medium">
-                  CALLIPOTTERY
-                </span>
-                <br />
-                <span className="text-[10px] md:text-xs tracking-[0.2em] text-[#F5F2EB]/70">
-                  HANDCRAFTED STUDIO
-                </span>
+                <div className="flex flex-col items-center leading-tight gap-0.5">
+                  <span className="text-sm md:text-base tracking-[0.3em] font-medium">
+                    CALLIPOTTERY
+                  </span>
+                  <span className="text-[10px] md:text-xs tracking-[0.2em] text-[#F5F2EB]/70">
+                    HANDCRAFTED STUDIO
+                  </span>
+                </div>
               </motion.div>
             </button>
           </div>
